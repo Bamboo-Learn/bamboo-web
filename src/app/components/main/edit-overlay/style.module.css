@@ -1,0 +1,7 @@
+.ButtonHolder {
+    height: 20px;
+}
+
+.ButtonHolder div {
+    float: right;
+}

@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.containerLeft {
+  padding: 48px 84px;
+  height: calc(100% - 96px);
+  width: calc(50% - 168px);
+  max-width: 620px;
+  background: #f1f1f1;
+}
+
+.containerLeft .logoHolder {
+  width: 100%;
+  display: inline-block;
+}
+
+.containerLeft .logoHolder .logo {
+  filter: invert(1) opacity(0.3);
+}
+
+.containerRight {
+  height: 100%;
+  width: auto;
+  padding: 20px;
+  color: #fff;
+  background: #0004;
+  -moz-box-shadow: inset 0 0 80px #00000044;
+  -webkit-box-shadow: inset 0 0 80px #00000044;
+  box-shadow: inset 0 0 80px #00000044;
+}

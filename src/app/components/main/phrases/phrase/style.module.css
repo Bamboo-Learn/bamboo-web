@@ -1,0 +1,172 @@
+/* Chinese */
+
+.ColChinese {
+    width: 50%;
+}
+
+.ColChinese input.InputChinese {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 28px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Confidence */
+
+.ColConfidenceUpright {
+    width: 0px;
+}
+
+.ColConfidence {
+    width: calc(50% - 54px);
+}
+
+.ConfidenceBar {
+    width: 85%;
+    height: 10px;
+    margin: 20px 24px;
+    border-radius: 5px;
+    float: right;
+}
+
+/* Definition */
+
+.ColDefinition {
+    width: 100%;
+}
+
+.ColDefinition p {
+    margin: 4px 54px;
+    font-size: 16px;
+}
+
+.ColDefinition p span.Pinyin {
+    font-size: 16px;
+}
+
+.ColDefinition p span.English {
+    font-size: 12px;
+}
+
+/* Pinyin */
+
+.ColPinyin {
+    display: none;
+    width: 80%;
+    margin-left: 54px;
+    height: 24px;
+}
+
+input.InputPinyin {
+    margin-left: 12px;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+/* English */
+
+.ColEnglish {
+    display: none;
+    width: 80%;
+    /* calc(100% - 54px) */
+    margin-left: 54px;
+    height: 54px;
+}
+
+textarea.InputEnglish {
+    margin-left: 12px;
+    font-size: 12px;
+    width: 96%;
+    pointer-events: none;
+}
+
+/* Actions */
+
+.ColActions {
+    width: 100%;
+    height: 20px;
+}
+
+.ColActions .ButtonHolder {
+    margin: 0 24px;
+}
+
+@media only screen and (min-width: 720px) {
+
+
+    /* Toggle Open */
+
+    .ColToggleOpen {
+        display: none;
+    }
+
+    /* Chinese */
+
+    .ColChinese {
+        width: 120px;
+    }
+
+    input.InputChinese {
+        padding-left: 12px;
+        /* pointer-events: all; */
+    }
+
+    /* Confidence */
+
+    .ColConfidenceUpright {
+        width: 10px;
+    }
+
+    .ColConfidence {
+        display: none;
+    }
+
+    /* Definition */
+
+    .ColDefinition {
+        display: none;
+    }
+
+
+    /* Pinyin */
+
+    .ColPinyin {
+        display: inline;
+        width: 120px;
+    }
+
+    input.InputPinyin {
+        margin-top: 20px;
+        font-size: 14px;
+        /* pointer-events: all; */
+    }
+
+    /* English */
+
+    .ColEnglish {
+        display: inline;
+        width: 50%;
+    }
+
+    textarea.InputEnglish {
+        margin-top: 20px;
+        font-size: 14px;
+        width: 96%;
+        /* pointer-events: all; */
+    }
+
+    .ColActions {
+        opacity: 0;
+        width: 120px;
+    }
+
+    .Row:hover .ColActions {
+        opacity: 1;
+    }
+
+    .ColActions .ButtonHolder {
+        margin-top: 16px;
+    }
+
+}

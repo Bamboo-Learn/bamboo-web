@@ -1,0 +1,26 @@
+
+.LoadingBarHolder {
+  height: 4px;
+}
+
+.LoadingBarHolder .LoadingBar {
+  margin: 0 0;
+}
+
+.LoadingBarHolder .LoadingBar.NoAnimation {
+  -webkit-transition: none;
+  transition: none;
+}
+
+.LoadingBarHolder .LoadingForm.Disabled {
+  opacity: .8;
+  pointer-events: none;
+}
+
+.LoadingBarHolder .LoadingBar.green {
+  background: #33a853;
+}
+
+.LoadingBarHolder .LoadingBar.white {
+  background: #FFF;
+}

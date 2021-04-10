@@ -1,0 +1,94 @@
+.FormRow {
+    width: 100%;
+    min-height: 50px;
+    height: auto;
+    display: inline-block;
+    padding: 6px 0;
+}
+
+.FormRow .LabelHolder {
+    width: 18%;
+    float: left;
+    text-align: right;
+    height: 50px;
+}
+
+.FormRow .LabelHolder .Icon {
+    width: 22px;
+    fill: #999;
+    margin-top: 12px;
+    margin-left: 18px;
+}
+
+.FormRow .LabelHolder .Label {
+    color: #999;
+    padding: 14px 0;
+    font-size: 12px;
+    text-align: center;
+}
+
+.FormRow .InputHolder {
+    width: 82%;
+    float: right;
+}
+
+/* Input */
+
+.FormRow .InputHolder .Input {
+    font-size: 14px;
+    width: calc(100% - 16px);
+    padding: 8px;
+    border-bottom: 1px solid #0002;
+    margin: 6px auto;
+}
+
+.FormRow .ButtonHolder {
+    float: right;
+    margin-top: -35px;
+}
+
+/* Error */
+
+.FormRow.Error .LabelHolder .Icon {
+    fill: #F00;
+}
+
+.FormRow.Error .LabelHolder .Label {
+    color: #F00;
+}
+
+.FormRow.Error .InputHolder .Input {
+    color: #F00;
+    border-bottom: 2px solid #F00;
+}
+
+/* Slider */
+
+.Slider {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    width: 100%;
+    height: 10px;
+    margin: 18px 0;
+    border-radius: 5px;
+    float: right;
+}
+
+.Slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    background: #33a853;
+    cursor: pointer;
+}
+
+.Slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    background: #33a853;
+    cursor: pointer;
+}

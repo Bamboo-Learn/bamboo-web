@@ -1,0 +1,56 @@
+.Button {
+    padding: 4px 14px;
+    border-radius: 4px;
+    transition: all .2s;
+    cursor: pointer;
+    height: 14px;
+    max-width: 54px;
+}
+
+.Button .ButtonIconHolder {
+    width: 12px;
+    float: left;
+}
+
+.Button .ButtonIconHolder .ButtonIcon {
+    width: 12px;
+    fill: #FFF;
+    margin: 1px 6px 0px 0px;
+    float: right;
+}
+
+.Button .Label {
+    color: #FFF;
+    font-size: 12px;
+    float: left;
+    width: calc(100% - 12px);
+    text-align: center;
+    margin: -1px 0;
+}
+
+.Button.green {
+    background: #23833d;
+}
+
+.Button.green:hover,
+.Button.green:focus {
+    background: #23833d;
+}
+
+.Button.dark-green {
+    /* TODO: hover */
+    background: #23833d;
+}
+
+.Button.red {
+    background: #d11e1e;
+}
+
+.Button.blue {
+    background: #2e7fb6;
+}
+
+.Button.grey,
+.Button.gray {
+    background: #999;
+}

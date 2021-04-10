@@ -1,13 +1,52 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input,
+textarea,
+select,
+button {
+  border: none;
+  outline: none;
+  background: none;
+  font-family: "Source Sans Pro", sans-serif;
+  resize: none;
+  padding: 0;
+}
+
+div {
+  /* TODO: don't do this, just do specific ones, I think this impacts performance */
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+@media only screen and (min-width: 720px) {
+
+  input,
+  textarea,
+  select,
+  button {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+  }
+}
+
+
+:root {
+  --light-green: #33a853;
+  --dark-green: #23833d;
 }

@@ -1,0 +1,17 @@
+
+.Container {
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  padding: 0 6px 0 6px;
+  margin-top: 40px
+}
+
+@media only screen and (min-width: 720px) {
+
+  .Container {
+    margin-top: 80px;
+    padding: 0 12px 0 12px;
+  }
+
+}
