@@ -159,7 +159,7 @@ class Form extends React.Component {
 
     const { emailInput, passwordInput, message } = this.state;
     return (
-      <>
+      <div className={Style.Form}>
         <div className={Style.Errors}>
           {emailInput.errors.map((err, i) => (<p key={`email-error-${i}`} className={Style.Error}> {err} </p>))}
           {passwordInput.errors.map((err, i) => (<p key={`password-error-${i}`} className={Style.Error}> {err} </p>))}
@@ -173,6 +173,7 @@ class Form extends React.Component {
           buttonVisible={false}
           isError={emailInput.errors.length > 0}
         />
+
         <Text
           icon="Padlock"
           onChange={(e) => this.updatePassword(e)}
@@ -182,20 +183,24 @@ class Form extends React.Component {
           isPassword={true}
           isError={passwordInput.errors.length > 0}
         />
+
         {message !== '' && <div className={Style.Message}>{message}</div>}
+
         <p className={Style.Additional}>
           <span onClick={e => this.sendPasswordResetEmail(e)}>
             {'Reset Password'}
           </span>
         </p>
 
+        <button onClick={e => this.loginWithEmailAndPassword(e)} className={Style.login}>
+          {'Login'}
+        </button>
+
         <button onClick={e => this.createAccountWithEmailAndPassword(e)}>
           {'Create Account'}
         </button>
-        <button onClick={e => this.loginWithEmailAndPassword(e)}>
-          {'Login'}
-        </button>
-      </>
+
+      </div>
     );
   }
 }

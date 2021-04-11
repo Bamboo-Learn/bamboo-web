@@ -12,26 +12,14 @@ class Login extends React.Component {
       <div className={Style.container}>
         <div className={Style.containerLeft}>
           <div className={Style.logoHolder}>
-            <Logo className={Style.logo} />
+            <Logo className={Style.logo} color="green" />
           </div>
-
-          <h1>Login or Sign Up</h1>
-          <p>Start learning Chinese!</p>
-
+          <h1>Sign Up or Login</h1>
+          <p>to start learning Chinese while you browse!</p>
           <Form />
         </div>
         <div className={Style.containerRight}>
           <Slideshow />
-          <h1>Learn Chinese Throughout the Day</h1>
-          <p>
-            Bamboo is a simple Chrome Extension that shows you a Chinese character every time you open a new tab.
-            Just add characters to your library and browse the web to start learning.
-          </p>
-          <p>Add To Chrome Button Here
-            <span onClick={this.openChromeStore}>
-              {'Add to Chrome'}
-            </span>
-          </p>
         </div>
         <Canvas
           style={{
