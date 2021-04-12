@@ -24,6 +24,10 @@ class WelcomeOverlay extends React.Component {
   }
 
   render() {
+    const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    if (!isChrome) {
+      return null;
+    }
     return (
       <Popup
         id="bamboo-welcome-overlay"

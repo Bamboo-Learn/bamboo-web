@@ -1,21 +1,7 @@
 
 
 import React from 'react';
-import { FormRow } from './FormRow.js';
-
-
-<StatusSlider
-  emptyLabel="To Learn"
-  middleLabel="Learning"
-  fullLabel="Learned"
-  value
-  setValue
-  min
-  max
-  step
-
-/>
-
+import { FormRow } from '../FormRow.js';
 
 import Style from './style.module.css';
 
@@ -56,7 +42,7 @@ export class Slider extends React.Component {
         icon={this.props.icon}
         label={this.props.label}
       >
-        {/* TODO: move this input row out of here and use it in the actual form, call it FormRow */}
+        {/* this is different than the one used in the table */}
         <input
           type="range"
           min="0"

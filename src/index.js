@@ -22,9 +22,15 @@ class App extends React.Component {
       <Router>
         <Switch>
           {/* TODO: <Route path="/login/confirm" component={Confirm} /> */}
-          <Route path="/login/reset" component={Reset} />
-          <Route path="/login" render={(props) => (<Login mongodb={this.mongodb} />)} />
-          <Route path={["/confirm", "/"]} render={(props) => (<Main mongodb={this.mongodb} />)} />
+          <Route path="/login/reset">
+            <Reset />
+          </Route>
+          <Route path="/login">
+            <Login mongodb={this.mongodb} />
+          </Route>
+          <Route path={["/confirm", "/"]}>
+            <Main mongodb={this.mongodb} />
+          </Route>
         </Switch>
       </Router>
     );

@@ -6,11 +6,12 @@ import Style from './style.module.css';
 
 class Logo extends React.Component {
   render() {
-    const img = (this.props.color === 'green') ? LogoImgGreen : LogoImg;
+    const { color, className, style } = this.props;
+    const img = (color === 'green') ? LogoImgGreen : LogoImg;
     return (
       <img
-        className={`${Style.Logo} ${this.props.className}`}
-        style={this.props.style}
+        className={`${Style.Logo} ${className}`}
+        style={style}
         src={img}
         alt="Bamboo"
       />

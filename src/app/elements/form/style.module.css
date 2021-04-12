@@ -1,6 +1,6 @@
-.Form {}
-
-/* Form Row */
+.Form {
+  min-width: 320px;
+}
 
 .FormRow {
   width: 100%;
@@ -10,6 +10,8 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+/* Label */
 
 .FormRow .LabelHolder {
   width: 38px;
@@ -30,6 +32,8 @@
   text-align: center;
 }
 
+/* InputHolder */
+
 .FormRow .InputHolder {
   width: calc(100% - 38px);
   display: flex;
@@ -39,36 +43,35 @@
   width: 100%;
 }
 
-.FormRow .AdditionalHolder {
+/* Detail */
+
+.Detail {
+  width: 100%;
+  display: flex;
+  height: 24px;
+  font-size: 12px;
+}
+
+.Detail .Error {
+  width: calc(100% - 138px);
+  color: #F00;
+  margin-left: 38px;
+}
+
+.Detail .Link {
+  width: 100px;
   font-size: 12px;
   color: #999;
   text-align: right;
-  width: 100%;
-  height: 24px;
 }
 
-.FormRow .AdditionalHolder .AdditionalLink {
+.Detail .Link span {
   cursor: pointer;
 }
 
-.FormRow .AdditionalHolder .AdditionalLink:hover {
+.Detail .Link span:hover {
   color: #888;
   text-decoration: underline;
-}
-
-/* Input */
-
-.FormRow .InputHolder .Input {
-  font-size: 14px;
-  width: calc(100% - 16px);
-  padding: 8px;
-  border-bottom: 1px solid #0002;
-  margin: 6px auto;
-}
-
-.FormRow .ButtonHolder {
-  float: right;
-  margin-top: -35px;
 }
 
 /* Error */
@@ -86,48 +89,21 @@
   border-bottom: 2px solid #F00;
 }
 
-.FormRow .ErrorHolder {
-  width: 100%;
-  height: 14px;
-  color: #F00;
-  font-size: 12px;
-  margin-left: 38px;
+
+/* Input */
+
+.Input {
+  font-size: 14px;
+  width: calc(100% - 16px);
+  padding: 8px;
+  border-bottom: 1px solid #0002;
+  margin: 6px auto;
 }
 
-/* Message */
+
+/* TODO: move this or get rid of it even Message */
 
 .FormRow .FormMessage {
   color: #24833d;
   font-weight: bold;
-}
-
-/* Slider */
-
-.Slider {
-  -webkit-appearance: none;
-  appearance: none;
-  outline: none;
-  width: 100%;
-  height: 10px;
-  margin: 18px 0;
-  border-radius: 5px;
-  float: right;
-}
-
-.Slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 18px;
-  background: #33a853;
-  cursor: pointer;
-}
-
-.Slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 18px;
-  background: #33a853;
-  cursor: pointer;
 }

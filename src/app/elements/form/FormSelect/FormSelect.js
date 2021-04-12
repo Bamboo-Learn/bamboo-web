@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { getIcon } from '../icon';
+import { getIcon } from '../../icon';
 
 import Style from './style.module.css';
 
@@ -22,6 +22,7 @@ export class Select extends React.Component {
 
     // render
     return (
+      // TODO: remove FormRow here
       <div className={`${Style.FormRow} ${this.props.isError ? Style.Error : ''}`}>
         <div className={Style.LabelHolder}>
           {this.props.icon && <Icon className={Style.Icon} />}

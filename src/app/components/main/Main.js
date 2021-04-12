@@ -1,12 +1,14 @@
 import React from 'react';
 
-// import LoginOverlay from './login-overlay/LoginOverlay.js';
+import { Header, Sidebar, SidebarItem } from '../../elements';
+import { ChromeWebStoreLink } from '../../helpers';
+
 import SplashOverlay from './splash-overlay/SplashOverlay.js';
-import Header from './header/Header.js'
-import SubHeader from './sub-header/SubHeader.js';
+import EditOverlay from './edit-overlay/EditOverlay.js'; // TODO: get rid of this
+// FIXME: uncomment this just debugging FIXME: import WelcomeOverlay from './welcome-overlay/WelcomeOverlay.js';
+// TODO: turn this into library
 import Phrases from './phrases/Phrases.js'
-import EditOverlay from './edit-overlay/EditOverlay.js';
-import WelcomeOverlay from './welcome-overlay/WelcomeOverlay.js';
+import SubHeader from './sub-header/SubHeader.js';
 
 import Style from './style.module.css';
 
@@ -31,6 +33,8 @@ class Main extends React.Component {
     this.closeSplashOverlay = this.closeSplashOverlay.bind(this);
     this.setEditPhrase = this.setEditPhrase.bind(this);
     this.changePhraseAction = this.changePhraseAction.bind(this);
+    this.logout = this.logout.bind(this);
+    this.openChromeStore = this.openChromeStore.bind(this);
 
     // check if we are logged in, if not redirect
     // do this before the component mounts to avoid seeing any elements
@@ -61,6 +65,14 @@ class Main extends React.Component {
     }
     // TODO: wait for initial phrases to load before removing splash
     this.closeSplashOverlay();
+  }
+
+  logout() {
+    this.props.mongodb.logout();
+  }
+
+  openChromeStore() {
+    window.open(ChromeWebStoreLink, '_blank');
   }
 
   closeSplashOverlay() {
@@ -101,7 +113,7 @@ class Main extends React.Component {
         <SplashOverlay
           isSplashOverlayOpen={this.state.isSplashOverlayOpen}
         />
-        <WelcomeOverlay />
+        {/* <WelcomeOverlay /> */}
         <EditOverlay
           mongodb={mongodb}
           editPhrase={this.state.editPhrase}
@@ -114,6 +126,9 @@ class Main extends React.Component {
           isLoggedIn={this.state.isLoggedIn}
           isLoading={this.state.needsLoad}
         />
+        <Sidebar>
+          <SidebarItem></SidebarItem>
+        </Sidebar>
         <div
           className={Style.Container}
           hidden={!this.state.isLoggedIn}

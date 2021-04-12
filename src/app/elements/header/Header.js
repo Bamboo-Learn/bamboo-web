@@ -1,28 +1,26 @@
 import React from 'react';
-import './Header.css';
-import Logo from './logo.png';
-import { DEFAULT_PHRASE } from '../../helpers';
-import { Button } from '../../elements/button/Button.js';
-import { Loading } from '../../elements/loading/Loading.js';
 
+import { Loading, Logo } from '../../elements';
+
+import Style from './style.module.css';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.setEditPhraseToNewPhrase = this.setEditPhraseToNewPhrase.bind(this);
-    this.logout = this.logout.bind(this);
-  }
+  //   this.setEditPhraseToNewPhrase = this.setEditPhraseToNewPhrase.bind(this);
+  //   this.logout = this.logout.bind(this);
+  // }
 
-  setEditPhraseToNewPhrase() {
-    const userID = this.props.mongodb.userID();
-    const defaultPhrase = DEFAULT_PHRASE(userID);
-    this.props.setEditPhrase(defaultPhrase);
-  }
+  // setEditPhraseToNewPhrase() {
+  //   const userID = this.props.mongodb.userID();
+  //   const defaultPhrase = DEFAULT_PHRASE(userID);
+  //   this.props.setEditPhrase(defaultPhrase);
+  // }
 
-  logout() {
-    this.props.mongodb.logout();
-  }
+  // logout() {
+  //   this.props.mongodb.logout();
+  // }
 
   render() {
     return (
@@ -35,12 +33,9 @@ class Header extends React.Component {
         isLoading={this.props.isLoading}
       >
         <div className={Style.Header}>
-          <img
-            className={Style.Logo}
-            src={Logo}
-            alt="Bamboo"
-          />
-          <div className={Style.AddNewButtonHolder}>
+
+          <Logo className={Style.Logo} />
+          {/* <div className={Style.AddNewButtonHolder}>
             <Button
               icon="Logout"
               onClick={() => this.logout()}
@@ -59,11 +54,11 @@ class Header extends React.Component {
               label="New"
               tab={false}
             />
-          </div>
+          </div> */}
         </div>
       </Loading>
     );
   }
 }
 
-export default Header;
+export { Header };

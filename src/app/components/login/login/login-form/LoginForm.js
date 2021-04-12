@@ -156,25 +156,31 @@ class LoginForm extends React.Component {
     const { emailInput, passwordInput, message } = this.state;
     return (
       <Form>
-        <FormText
+        <FormRow
           icon="User"
-          onChange={(e) => this.updateEmail(e)}
-          value={emailInput.email}
-          placeholder="Email"
-          buttonVisible={false}
           errors={emailInput.errors}
-        />
-        <FormText
+        >
+          <FormText
+            onReturn={e => this.loginWithEmailAndPassword(e)}
+            onChange={(e) => this.updateEmail(e)}
+            value={emailInput.email}
+            placeholder="Email"
+          />
+        </FormRow>
+        <FormRow
           icon="Padlock"
-          onChange={(e) => this.updatePassword(e)}
-          value={passwordInput.password}
-          placeholder="Password"
-          buttonVisible={false}
-          isPassword={true}
           errors={passwordInput.errors}
           linkOnClick={e => this.sendPasswordResetEmail(e)}
           linkText={'Reset Password'}
-        />
+        >
+          <FormText
+            onReturn={e => this.loginWithEmailAndPassword(e)}
+            onChange={(e) => this.updatePassword(e)}
+            value={passwordInput.password}
+            placeholder="Password"
+            isPassword={true}
+          />
+        </FormRow>
         <FormRow>
           <Button
             className={Style.Button}
