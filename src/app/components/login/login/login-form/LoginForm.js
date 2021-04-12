@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Mongodb } from '../../../../helpers';
-import { Text } from '../../../../elements';
+import { FormText, Button, FormMessage, FormRow, Form } from '../../../../elements';
 import { validateEmail, validatePassword } from '../../base';
 
 import Style from './style.module.css';
 
-class Form extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -25,11 +24,6 @@ class Form extends React.Component {
     this.createAccountWithEmailAndPassword = this.createAccountWithEmailAndPassword.bind(this);
     this.loginWithEmailAndPassword = this.loginWithEmailAndPassword.bind(this);
     this.sendPasswordResetEmail = this.sendPasswordResetEmail.bind(this);
-  }
-
-
-  componentDidMount() {
-    this.mongodb = new Mongodb();
   }
 
   updateEmail(e) {
@@ -104,10 +98,11 @@ class Form extends React.Component {
 
   loginWithEmailAndPassword(e) {
     e.preventDefault();
+    const { mongodb } = this.props;
     const { email, password, valid } = this.isValidEmailAndPassword();
     if (!valid) return;
 
-    this.mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
+    mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
       window.location = '/';
     }).catch(err => {
       this.setState({
@@ -125,13 +120,14 @@ class Form extends React.Component {
 
   createAccountWithEmailAndPassword(e) {
     e.preventDefault();
+    const { mongodb } = this.props;
     const { email, password, valid } = this.isValidEmailAndPassword();
     if (!valid) return;
-    this.mongodb.createAccountWithEmailAndPassword({ email, password }).then(data => {
+    mongodb.createAccountWithEmailAndPassword({ email, password }).then(data => {
       this.setState({
         message: 'Account created! Redirecting to application...'
       });
-      this.mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
+      mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
         window.location = '/';
       }).catch(err => {
         console.log(err);
@@ -143,10 +139,11 @@ class Form extends React.Component {
 
   sendPasswordResetEmail(e) {
     e.preventDefault();
+    const { mongodb } = this.props;
     const { email, valid } = this.isValidEmail();
     if (!valid) return;
 
-    this.mongodb.sendPasswordResetEmail({ email }).then(data => {
+    mongodb.sendPasswordResetEmail({ email }).then(data => {
       this.setState({
         message: 'Reset email has been sent.'
       });
@@ -156,53 +153,49 @@ class Form extends React.Component {
   }
 
   render() {
-
     const { emailInput, passwordInput, message } = this.state;
     return (
-      <div className={Style.Form}>
-        <div className={Style.Errors}>
-          {emailInput.errors.map((err, i) => (<p key={`email-error-${i}`} className={Style.Error}> {err} </p>))}
-          {passwordInput.errors.map((err, i) => (<p key={`password-error-${i}`} className={Style.Error}> {err} </p>))}
-        </div>
-
-        <Text
+      <Form>
+        <FormText
           icon="User"
           onChange={(e) => this.updateEmail(e)}
           value={emailInput.email}
           placeholder="Email"
           buttonVisible={false}
-          isError={emailInput.errors.length > 0}
+          errors={emailInput.errors}
         />
-
-        <Text
+        <FormText
           icon="Padlock"
           onChange={(e) => this.updatePassword(e)}
           value={passwordInput.password}
           placeholder="Password"
           buttonVisible={false}
           isPassword={true}
-          isError={passwordInput.errors.length > 0}
+          errors={passwordInput.errors}
+          linkOnClick={e => this.sendPasswordResetEmail(e)}
+          linkText={'Reset Password'}
         />
-
-        {message !== '' && <div className={Style.Message}>{message}</div>}
-
-        <p className={Style.Additional}>
-          <span onClick={e => this.sendPasswordResetEmail(e)}>
-            {'Reset Password'}
-          </span>
-        </p>
-
-        <button onClick={e => this.loginWithEmailAndPassword(e)} className={Style.login}>
-          {'Login'}
-        </button>
-
-        <button onClick={e => this.createAccountWithEmailAndPassword(e)}>
-          {'Create Account'}
-        </button>
-
-      </div>
+        <FormRow>
+          <Button
+            className={Style.Button}
+            onClick={e => this.loginWithEmailAndPassword(e)}
+            color={'orange'}
+            tab={true}
+          >
+            {'Login'}
+          </Button>
+          <Button
+            className={Style.Button}
+            onClick={e => this.createAccountWithEmailAndPassword(e)}
+            tab={true}
+          >
+            {'Create Account'}
+          </Button>
+        </FormRow>
+        <FormMessage>{message}</FormMessage>
+      </Form>
     );
   }
 }
 
-export { Form };
+export { LoginForm };

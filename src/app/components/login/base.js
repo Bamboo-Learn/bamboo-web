@@ -1,8 +1,4 @@
 
-// import { ChromeWebStoreLink } from '../../helpers';
-// openChromeStore() {
-//   window.open(ChromeWebStoreLink, '_blank');
-// }
 
 export function validateEmail({ email }) {
   // eslint-disable-next-line
@@ -12,7 +8,7 @@ export function validateEmail({ email }) {
     email: String(email).toLowerCase().trim(),
     errors: !valid ? ['Email is invalid.'] : []
   }
-  // 'Email already exists, try resetting password'
+  // TODO: 'Email already exists, try resetting password'
 }
 
 export function validatePassword({ password }) {

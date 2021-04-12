@@ -2,31 +2,29 @@ import React from 'react';
 
 import { Canvas, Logo } from '../../../elements';
 
-import { Form } from './form/Form';
-import { Slideshow } from './slideshow/Slideshow';
+import { LoginForm } from './login-form/LoginForm';
+import { Display } from './display/Display';
 import Style from './style.module.css';
 
 class Login extends React.Component {
   render() {
+    const { mongodb } = this.props;
     return (
       <div className={Style.container}>
         <div className={Style.containerLeft}>
           <div className={Style.logoHolder}>
             <Logo className={Style.logo} color="green" />
           </div>
-          <h1>Sign Up or Login</h1>
-          <p>to start learning Chinese while you browse!</p>
-          <Form />
+          <div className={Style.containerLeftBody}>
+            <h1>Login or Sign Up</h1>
+            <p>to start learning Chinese while you browse!</p>
+            <LoginForm mongodb={mongodb} />
+          </div>
         </div>
         <div className={Style.containerRight}>
-          <Slideshow />
+          <Display />
         </div>
-        <Canvas
-          style={{
-            position: 'absolute',
-            zIndex: -1
-          }}
-        />
+        <Canvas className={Style.Canvas} />
       </div>
     );
   }

@@ -5,20 +5,37 @@ import Style from './style.module.css';
 
 export class FormRow extends React.Component {
   render() {
-    const Icon = getIcon(this.props.icon);
+    const { icon, errors, children, label, linkOnClick, linkText } = this.props;
+    const Icon = getIcon(icon);
 
-    if (!this.props.children) {
+    if (!children) {
       return (<span></span>);
     }
 
     return (
-      <div className={`${Style.FormRow} ${this.props.isError ? Style.Error : ''}`}>
-        <div className={Style.LabelHolder}>
-          {this.props.icon && <Icon className={Style.Icon} />}
-          {this.props.label && <div className={Style.Label}>{this.props.label}</div>}
+      <div className={`${Style.FormRow} ${!!errors && errors.length > 0 ? Style.Error : ''}`}>
+        {
+          (icon || label) && <div className={Style.LabelHolder}>
+            {icon && <Icon className={Style.Icon} />}
+            {label && <div className={Style.Label}>{label}</div>}
+          </div>
+        }
+        <div className={`${Style.InputHolder} ${!icon && !label ? Style.InputHolderFullWidth : ''}`}>
+          {children}
         </div>
-        <div className={Style.InputHolder}>
-          {this.props.children}
+        {
+          linkOnClick && linkText && <div className={Style.AdditionalHolder}>
+            <span onClick={linkOnClick} className={Style.AdditionalLink}>
+              {linkText}
+            </span>
+          </div>
+        }
+        <div className={Style.ErrorHolder}>
+          {
+            !!errors && errors.map((error, i) => (
+              <span key={i}>{error}</span>
+            ))
+          }
         </div>
       </div>
     );

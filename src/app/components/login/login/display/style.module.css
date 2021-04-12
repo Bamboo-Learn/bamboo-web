@@ -1,0 +1,24 @@
+.Display {
+  width: 100%;
+  top: calc(50% - 40px);
+  transform: translateY(-50%);
+  position: relative;
+}
+
+.title {
+  text-align: center;
+  width: 60%;
+  margin-left: 20%;
+}
+
+.body {
+  text-align: center;
+  width: 70%;
+  margin-left: 15%;
+}
+
+.button {
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}

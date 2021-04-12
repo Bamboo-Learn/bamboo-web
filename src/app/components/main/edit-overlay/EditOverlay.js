@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Popup, Button, Text, Slider } from '../../../elements';
+import { Popup, Button, FormText, Slider } from '../../../elements';
 import { isSet } from '../../../helpers';
 
 import Style from './style.module.css';
@@ -155,7 +155,7 @@ class EditOverlay extends React.Component {
         isLoading={this.state.isLoading}
       >
         {/* Chinese */}
-        <Text
+        <FormText
           label="Chinese"
           onChange={(e) => this.updateField(e, 'characters')}
           value={phrase.characters}
@@ -167,7 +167,7 @@ class EditOverlay extends React.Component {
         />
 
         {/* Pinyin */}
-        <Text
+        <FormText
           label="Pinyin"
           onChange={(e) => this.updateField(e, 'pinyin')}
           value={phrase.pinyin}
@@ -176,7 +176,7 @@ class EditOverlay extends React.Component {
         />
 
         {/* English TODO: use textarea instead */}
-        <Text
+        <FormText
           label="English"
           onChange={(e) => this.updateField(e, 'english')}
           value={phrase.english}

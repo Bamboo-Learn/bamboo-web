@@ -1,7 +1,6 @@
 import React from 'react';
 
 // import LoginOverlay from './login-overlay/LoginOverlay.js';
-import { Mongodb } from '../../helpers';
 import SplashOverlay from './splash-overlay/SplashOverlay.js';
 import Header from './header/Header.js'
 import SubHeader from './sub-header/SubHeader.js';
@@ -39,13 +38,13 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    this.mongodb = new Mongodb();
     this.confirmLogin();
   }
 
   // TODO: rename this and remove instance of it being used in logic?, a false will always redirect
   isLoggedIn() {
-    if (!this.mongodb || !this.mongodb.isLoggedIn()) {
+    const { mongodb } = this.props;
+    if (!mongodb || !mongodb.isLoggedIn()) {
       window.location = '/login';
       return false;
     }
@@ -53,7 +52,8 @@ class Main extends React.Component {
   }
 
   confirmLogin() {
-    if (this.mongodb.isLoggedIn()) {
+    const { mongodb } = this.props;
+    if (mongodb.isLoggedIn()) {
       this.setState({
         needsLoad: true,
         isLoggedIn: true
@@ -95,6 +95,7 @@ class Main extends React.Component {
   }
 
   render() {
+    const { mongodb } = this.props;
     return (
       <div>
         <SplashOverlay
@@ -102,14 +103,14 @@ class Main extends React.Component {
         />
         <WelcomeOverlay />
         <EditOverlay
-          mongodb={this.mongodb}
+          mongodb={mongodb}
           editPhrase={this.state.editPhrase}
           setEditPhrase={this.setEditPhrase}
           changePhraseAction={this.changePhraseAction}
         />
         <Header
           setEditPhrase={this.setEditPhrase}
-          mongodb={this.mongodb}
+          mongodb={mongodb}
           isLoggedIn={this.state.isLoggedIn}
           isLoading={this.state.needsLoad}
         />
@@ -122,7 +123,7 @@ class Main extends React.Component {
             phrasesCount={this.state.numPhrases}
           />
           <Phrases
-            mongodb={this.mongodb}
+            mongodb={mongodb}
             setEditPhrase={this.setEditPhrase}
             filter={this.state.filter}
             needsLoad={this.state.needsLoad}

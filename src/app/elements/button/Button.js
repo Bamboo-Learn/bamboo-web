@@ -19,9 +19,7 @@ export class Button extends React.Component {
 
   onClick(e) {
     e.preventDefault();
-    console.log('onClick');
     if (this.props.doubleClick && this.state.clickCount === 0) {
-      console.log('firstClick');
       this.setState({
         clickCount: 1
       });
@@ -34,9 +32,11 @@ export class Button extends React.Component {
   }
 
   render() {
-    const Icon = getIcon(this.props.icon);
+    const { hidden, icon, disabled, color, className, tab, children } = this.props;
+    const { clickCount } = this.state;
+    const Icon = getIcon(icon);
 
-    if (this.props.hidden) {
+    if (hidden) {
       // if it is hidden then don't render anything
       return (
         <span></span>
@@ -47,18 +47,21 @@ export class Button extends React.Component {
     return (
       <div
         className={`${Style.Button}
-					${this.props.className}
-					${this.props.disabled ? Style.Disabled : ''}
-					${!!this.props.color ? this.props.color : 'green'}`
+					${className}
+					${disabled ? Style.Disabled : ''}
+					${!!color ? Style[color] : 'green'}`
         }
         onClick={e => this.onClick(e)}
-        tabIndex={this.props.tab ? 0 : -1}
+        tabIndex={tab ? 0 : -1}
       >
-        <div className={Style.ButtonIconHolder}>
-          <Icon className={Style.ButtonIcon}></Icon>
-        </div>
+        {
+          !!icon &&
+          <div className={Style.ButtonIconHolder}>
+            <Icon className={Style.ButtonIcon}></Icon>
+          </div>
+        }
         <div className={Style.Label}>
-          {this.state.clickCount === 0 ? this.props.label : Style.Confirm}
+          {clickCount === 0 ? children : Style.Confirm}
         </div>
       </div>
     );

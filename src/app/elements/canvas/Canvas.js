@@ -16,8 +16,9 @@ class Canvas extends React.Component {
   }
 
   render() {
+    const { className, style } = this.props;
     return (
-      <canvas style={this.props.style} id="canvas"></canvas>
+      <canvas className={className} style={style} id="canvas"></canvas>
     );
   }
 }
