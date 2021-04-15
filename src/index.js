@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 import { Mongodb } from './app/helpers/mongodb.js';
-import Main from './app/components/main/Main.js';
-import { Login, Reset } from './app/components/login';
+import Main from './app/pages/main/Main.js';
+import { Login } from './app/pages/login'; // Reset
 
 import * as serviceWorker from './serviceWorker';
 import './index.css';
@@ -22,9 +22,9 @@ class App extends React.Component {
       <Router>
         <Switch>
           {/* TODO: <Route path="/login/confirm" component={Confirm} /> */}
-          <Route path="/login/reset">
+          {/* <Route path="/login/reset">
             <Reset />
-          </Route>
+          </Route> */}
           <Route path="/login">
             <Login mongodb={this.mongodb} />
           </Route>

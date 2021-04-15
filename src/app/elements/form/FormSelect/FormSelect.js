@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { getIcon } from '../../icon';
+import { getIcon } from 'app/elements/icon';
 
 import Style from './style.module.css';
 

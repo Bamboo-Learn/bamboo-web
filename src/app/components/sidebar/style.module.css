@@ -1,0 +1,25 @@
+.sidebar {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 200px;
+  background: var(--light-green);
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.headerLogo {
+  margin: 20px;
+}
+
+.sidebarItem {
+  width: 100%;
+}
+
+.sidebarFooter {
+  position: absolute;
+  bottom: 0;
+}

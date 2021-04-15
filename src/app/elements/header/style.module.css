@@ -1,7 +1,7 @@
 .Header {
   width: 100%;
   height: 40px;
-  background: #33a853;
+  background: var(--light-green);
   top: 0;
   position: fixed;
   z-index: 10;

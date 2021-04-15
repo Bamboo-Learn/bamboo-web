@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Loading, Logo } from '../../elements';
+import { Loading, Logo } from 'app/elements';
 
 import Style from './style.module.css';
 

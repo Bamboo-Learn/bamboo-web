@@ -32,7 +32,7 @@
   width: 22px;
   height: 22px;
   margin: 16px;
-  background: #23833d;
+  background: var(--dark-green);
   border-radius: 11px;
   cursor: pointer;
 }

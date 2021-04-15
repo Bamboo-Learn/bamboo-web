@@ -62,7 +62,7 @@
 
 .Overlay .Popup .ActionHolder .Action {
     color: #fff !important;
-    background: #33a853;
+    background: var(--light-green);
     float: left;
     text-align: center;
     font-size: 16px;

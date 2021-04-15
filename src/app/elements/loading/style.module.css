@@ -18,7 +18,7 @@
 }
 
 .LoadingBarHolder .LoadingBar.green {
-  background: #33a853;
+  background: var(--light-green);
 }
 
 .LoadingBarHolder .LoadingBar.white {

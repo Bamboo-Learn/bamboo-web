@@ -17,7 +17,7 @@
   width: 18px;
   height: 18px;
   border-radius: 18px;
-  background: #33a853;
+  background: var(--light-green);
   cursor: pointer;
 }
 
@@ -25,6 +25,6 @@
   width: 18px;
   height: 18px;
   border-radius: 18px;
-  background: #33a853;
+  background: var(--light-green);
   cursor: pointer;
 }
