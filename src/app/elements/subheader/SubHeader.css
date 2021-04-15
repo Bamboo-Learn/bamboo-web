@@ -74,7 +74,7 @@
     width: 48px;
 }
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 768px) {
 
     .SubHeader {
         width: calc(100% - 24px);

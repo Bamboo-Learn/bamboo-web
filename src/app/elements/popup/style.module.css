@@ -78,7 +78,7 @@
     background: #999;
 }
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 768px) {
 
     .Overlay .Popup {
         width: 480px;

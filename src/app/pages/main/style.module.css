@@ -7,7 +7,7 @@
   margin-top: 40px
 }
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 768px) {
 
   .Container {
     margin-top: 80px;

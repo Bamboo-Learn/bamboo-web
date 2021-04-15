@@ -18,13 +18,7 @@ button {
   padding: 0;
 }
 
-div {
-  /* TODO: don't do this, just do specific ones, I think this impacts performance */
-  -webkit-transition: .2s;
-  transition: .2s;
-}
-
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 768px) {
 
   input,
   textarea,
@@ -49,4 +43,9 @@ div {
 :root {
   --light-green: #33a853;
   --dark-green: #23833d;
+  --background-orange: #f5f2ee;
+  /* --sm: 576px;
+  --md: 768px;
+  --lg: 992px;
+  --xl: 1200px; */
 }

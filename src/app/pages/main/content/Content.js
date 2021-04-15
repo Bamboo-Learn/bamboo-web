@@ -25,7 +25,7 @@ class Content extends React.Component {
   render() {
     const page = this.getPage();
     return (
-      <div className={Style.Content}>
+      <div className={Style.content}>
         {page}
       </div>
     );

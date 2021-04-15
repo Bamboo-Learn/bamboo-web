@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Splash } from 'app/elements';
-import { ChromeWebStoreLink } from 'app/helpers';
 import { Sidebar } from 'app/components'
 
 import { Content } from './content/Content.js';
@@ -42,8 +41,6 @@ class Main extends React.Component {
     this.changePhraseAction = this.changePhraseAction.bind(this);
 
     this.closeSplashOverlay = this.closeSplashOverlay.bind(this);
-    this.logout = this.logout.bind(this);
-    this.openChromeStore = this.openChromeStore.bind(this);
 
     // check if we are logged in, if not redirect
     // do this before the component mounts to avoid seeing any elements
@@ -76,13 +73,6 @@ class Main extends React.Component {
     this.closeSplashOverlay();
   }
 
-  logout() {
-    this.props.mongodb.logout();
-  }
-
-  openChromeStore() {
-    window.open(ChromeWebStoreLink, '_blank');
-  }
 
   closeSplashOverlay() {
     this.setState({
@@ -116,7 +106,7 @@ class Main extends React.Component {
   }
 
   render() {
-    // const { mongodb } = this.props;
+    const { mongodb } = this.props;
     const { pageID } = this.state;
     return (
       <div>
@@ -136,7 +126,7 @@ class Main extends React.Component {
           isLoggedIn={this.state.isLoggedIn}
           isLoading={this.state.needsLoad}
         /> */}
-        <Sidebar />
+        <Sidebar mongodb={mongodb} />
         <Content pageID={pageID} />
         {/* <div
           className={Style.Container}

@@ -11,7 +11,7 @@
   padding: 18px;
   height: auto;
   width: 100%;
-  background: #f5f2ee;
+  background: var(--background-orange);
   box-shadow: inset 0 0 100px #0001;
   -moz-box-shadow: inset 0 0 100px #0001;
   -webkit-box-shadow: inset 0 0 100px #0001;
@@ -65,7 +65,7 @@
   left: 0;
 }
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 768px) {
   .container {
     overflow: hidden;
     flex-wrap: nowrap;
