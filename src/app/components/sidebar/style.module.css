@@ -5,7 +5,6 @@
   top: 0;
   left: 0;
   display: flex;
-  width: 100%;
 }
 
 .sidebarToggle {
@@ -14,6 +13,7 @@
   height: 100%;
   position: relative;
   z-index: 2;
+  cursor: pointer;
 }
 
 .sidebarPanel {
@@ -56,16 +56,24 @@
   cursor: pointer;
 }
 
-.sidebarItem:hover {
+.sidebarItem.active {
   background: #FFF2;
+}
+
+.sidebarItem:hover {
+  background: #FFF4;
 }
 
 .sidebarFooter .sidebarItem {
   padding: 8px 14px;
 }
 
-.sidebarFooter .sidebarItem:hover {
+.sidebarFooter .sidebarItem.active {
   background: #0001;
+}
+
+.sidebarFooter .sidebarItem:hover {
+  background: #0002;
 }
 
 @media only screen and (min-width: 768px) {

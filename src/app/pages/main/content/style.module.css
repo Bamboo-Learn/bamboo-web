@@ -1,6 +1,9 @@
 .content {
   background: var(--background-orange);
-  width: 100%;
+  width: calc(100% - 40px);
   height: 100%;
   position: absolute;
+  padding: 0 20px;
+  margin-left: 40px;
+  top: 0;
 }

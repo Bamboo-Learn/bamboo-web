@@ -7,8 +7,8 @@ import Main from './app/pages/main/Main.js';
 import { Login } from './app/pages/login'; // Reset
 
 import * as serviceWorker from './serviceWorker';
+import './reset.css';
 import './index.css';
-
 
 class App extends React.Component {
   constructor(props) {

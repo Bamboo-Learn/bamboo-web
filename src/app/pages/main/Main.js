@@ -16,7 +16,7 @@ const PAGE_IDS = [
   'settings'
 ];
 
-// TODO: TODO: TODO: add redux here so we can switch pages wherever
+// TODO: TODO: TODO: add redux here so we can switch pages wherever?
 
 class Main extends React.Component {
   constructor(props) {
@@ -25,22 +25,10 @@ class Main extends React.Component {
     this.state = {
       isSplashOverlayOpen: true,
       pageID: PAGE_IDS[0]
-      // isLoggedIn: false, // TODO: not necessary now that there are multiple pages
-      // editPhrase: {},
-      // filter: {},
-      // phraseAction: { // TODO:
-      //   action: '', // ADD, REMOVE
-      //   phrase: {} // PHRASE
-      // },
-      // numPhrases: 0, // TODO:
     }
 
-    this.updateFilter = this.updateFilter.bind(this);
-    this.setNeedsLoad = this.setNeedsLoad.bind(this);
-    this.setEditPhrase = this.setEditPhrase.bind(this);
-    this.changePhraseAction = this.changePhraseAction.bind(this);
-
     this.closeSplashOverlay = this.closeSplashOverlay.bind(this);
+    this.switchPageCallback = this.switchPageCallback.bind(this);
 
     // check if we are logged in, if not redirect
     // do this before the component mounts to avoid seeing any elements
@@ -73,35 +61,15 @@ class Main extends React.Component {
     this.closeSplashOverlay();
   }
 
-
   closeSplashOverlay() {
     this.setState({
       isSplashOverlayOpen: false
     });
   }
 
-  changePhraseAction(phraseAction) {
+  switchPageCallback(pageID) {
     this.setState({
-      phraseAction
-    })
-  }
-
-  setNeedsLoad(needsLoad) {
-    this.setState({
-      needsLoad
-    });
-  }
-
-  setEditPhrase(phrase) {
-    this.setState({
-      editPhrase: phrase
-    });
-  }
-
-  updateFilter(newFilter, needsLoad) {
-    this.setState({
-      filter: newFilter,
-      needsLoad
+      pageID
     });
   }
 
@@ -110,42 +78,9 @@ class Main extends React.Component {
     const { pageID } = this.state;
     return (
       <div>
-        <Splash
-          isSplashOverlayOpen={this.state.isSplashOverlayOpen}
-        />
-        {/* <WelcomeOverlay /> */}
-        {/* <EditOverlay
-          mongodb={mongodb}
-          editPhrase={this.state.editPhrase}
-          setEditPhrase={this.setEditPhrase}
-          changePhraseAction={this.changePhraseAction}
-        /> */}
-        {/* <Header
-          setEditPhrase={this.setEditPhrase}
-          mongodb={mongodb}
-          isLoggedIn={this.state.isLoggedIn}
-          isLoading={this.state.needsLoad}
-        /> */}
-        <Sidebar mongodb={mongodb} />
+        <Splash isSplashOverlayOpen={this.state.isSplashOverlayOpen} />
+        <Sidebar mongodb={mongodb} switchPageCallback={this.switchPageCallback} pageID={pageID} />
         <Content pageID={pageID} />
-        {/* <div
-          className={Style.Container}
-          hidden={!this.state.isLoggedIn}
-        >
-          <SubHeader
-            updateFilter={this.updateFilter}
-            phrasesCount={this.state.numPhrases}
-          />
-          <Phrases
-            mongodb={mongodb}
-            setEditPhrase={this.setEditPhrase}
-            filter={this.state.filter}
-            needsLoad={this.state.needsLoad}
-            setNeedsLoad={this.setNeedsLoad}
-            changePhraseAction={this.changePhraseAction}
-            phraseAction={this.state.phraseAction}
-          />
-        </div> */}
       </div>
     );
   }
