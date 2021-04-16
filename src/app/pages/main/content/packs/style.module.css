@@ -1,0 +1,5 @@
+
+.packList { 
+  display: flex;
+  flex-wrap: wrap;
+}

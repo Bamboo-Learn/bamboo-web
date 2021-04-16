@@ -1,11 +1,8 @@
+import React from "react";
 
+import Style from "../style.module.css";
 
-import React from 'react';
-import { getIcon } from 'app/elements/icon';
-
-import Style from './style.module.css';
-
-export class Select extends React.Component {
+export class FormSelect extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,28 +15,17 @@ export class Select extends React.Component {
   }
 
   render() {
-    const Icon = getIcon(this.props.icon);
-
-    // render
     return (
-      // TODO: remove FormRow here
-      <div className={`${Style.FormRow} ${this.props.isError ? Style.Error : ''}`}>
-        <div className={Style.LabelHolder}>
-          {this.props.icon && <Icon className={Style.Icon} />}
-          {this.props.label && <div className={Style.Label}>{this.props.label}</div>}
-        </div>
-        <div className={Style.InputHolder}>
-          <select
-            className={Style.Input}
-            placeholder={this.props.placeholder}
-            value={this.props.value || ''}
-            onChange={this.onChange}
-          >
-            {this.props.options.forEach(option => <option value={option.value}>{option.label}</option>)}
-          </select>
-        </div>
-      </div>
+      <select
+        className={Style.Input}
+        placeholder={this.props.placeholder}
+        value={this.props.value || ""}
+        onChange={this.onChange}
+      >
+        {this.props.options.map(({value, label}) => (
+          <option key={value} value={value}>{label}</option>
+        ))}
+      </select>
     );
   }
 }
-

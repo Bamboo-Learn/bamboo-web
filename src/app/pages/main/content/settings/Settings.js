@@ -1,15 +1,65 @@
-import React from 'react';
+import React from "react";
 
-import { Header } from 'app/elements';
+import { PageHeader, PageBody, Form, FormRow, FormSelect, FormMessage, Button } from "app/elements";
+
+const CHARACTER_SETS = [
+  {
+    value: 'simp',
+    label: 'Simplified'
+  },
+  {
+    value: 'trad',
+    label: 'Traditional'
+  }
+];
 
 class Settings extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      characterSetValue: '',
+      message: ''
+    };
+
+    this.updateCharacterSetValue = this.updateCharacterSetValue.bind(this);
+  }
+
+  componentDidMount() {
+    // get current values
+  }
+
+  updateCharacterSetValue(e) {
+    this.setState({
+      characterSetValue: e.target.value
+    });
+  }
+
   render() {
+    const { characterSetValue, message } = this.state;
     return (
       <>
-        <Header>Settings</Header>
+        <PageHeader>Settings</PageHeader>
+        <PageBody>
+          <Form>
+            <FormRow label="Character Set">
+              <FormSelect
+                onChange={this.updateCharacterSetValue}
+                value={characterSetValue}
+                options={CHARACTER_SETS}
+              />
+            </FormRow>
+            <FormRow>
+              <Button onClick={() => {}} tab={true}>
+                {"Update"}
+              </Button>
+            </FormRow>
+            <FormMessage>{message}</FormMessage>
+          </Form>
+        </PageBody>
       </>
     );
   }
 }
 
-export { Settings }
+export { Settings };

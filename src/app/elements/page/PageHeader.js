@@ -2,7 +2,7 @@ import React from 'react';
 
 import Style from './style.module.css';
 
-class Header extends React.Component {
+class PageHeader extends React.Component {
   render() {
     const { children } = this.props;
     return (
@@ -13,4 +13,4 @@ class Header extends React.Component {
   }
 }
 
-export { Header };
+export { PageHeader };

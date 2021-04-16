@@ -5,6 +5,7 @@
   top: 0;
   left: 0;
   display: flex;
+  pointer-events: none;
 }
 
 .sidebarToggle {
@@ -14,6 +15,7 @@
   position: relative;
   z-index: 2;
   cursor: pointer;
+  pointer-events: all;
 }
 
 .sidebarPanel {
@@ -25,6 +27,7 @@
   z-index: 1;
   transition: 0.4s;
   -webkit-transition: 0.4s;
+  pointer-events: all;
 }
 
 .sidebarPanel.closed {

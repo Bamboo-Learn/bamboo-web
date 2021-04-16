@@ -1,11 +1,10 @@
 import React from 'react';
 
-// import { Loading } from 'app/elements';
+import { PageContent } from 'app/elements';
 
-import { Packs } from './packs/Packs.js';
+import { MyPacks, PublicPacks } from './packs';
 import { Study } from './study/Study.js';
 import { Settings } from './settings/Settings.js';
-import Style from './style.module.css';
 
 class Content extends React.Component {
   constructor(props) {
@@ -20,8 +19,9 @@ class Content extends React.Component {
     // eslint-disable-next-line 
     switch (pageID) {
       case 'my-packs':
+        return (<MyPacks mongodb={mongodb} />);
       case 'public-packs':
-        return (<Packs pageID={pageID} mongodb={mongodb} />);
+        return (<PublicPacks mongodb={mongodb} />);
       case 'study-mode':
         return (<Study mongodb={mongodb} />);
       case 'settings':
@@ -30,21 +30,12 @@ class Content extends React.Component {
   }
 
   render() {
-    // const { isLoading } = this.state;
+    const { isLoading } = this.state;
     const page = this.getPage();
     return (
-      // <Loading
-      //   color="green"
-      //   style={{ // TODO: remove style from here
-      //     zIndex: 11,
-      //     position: 'absolute'
-      //   }}
-      //   isLoading={isLoading}
-      // >
-      <div className={Style.content}>
+      <PageContent isLoading={isLoading}>
         {page}
-      </div>
-      // </Loading>
+      </PageContent>
     );
   }
 }

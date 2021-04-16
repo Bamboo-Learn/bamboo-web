@@ -18,10 +18,11 @@ class App extends React.Component {
   }
 
   render() {
+    // TODO: confirm route popup is popup over <Main>
+    // TODO: login reset route <Reset>
     return (
       <Router>
         <Switch>
-          {/* TODO: <Route path="/login/confirm" component={Confirm} /> */}
           {/* <Route path="/login/reset">
             <Reset />
           </Route> */}

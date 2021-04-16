@@ -1,5 +1,6 @@
 .Form {
   min-width: 320px;
+  max-width: 510px;
 }
 
 .FormRow {
@@ -14,7 +15,7 @@
 /* Label */
 
 .FormRow .LabelHolder {
-  width: 38px;
+  width: 130px;
   text-align: right;
   height: 50px;
 }
@@ -27,7 +28,7 @@
 
 .FormRow .LabelHolder .Label {
   color: #999;
-  padding: 14px 0;
+  padding: 18px 0 0;
   font-size: 12px;
   text-align: center;
 }
@@ -35,7 +36,7 @@
 /* InputHolder */
 
 .FormRow .InputHolder {
-  width: calc(100% - 38px);
+  width: calc(100% - 130px);
   display: flex;
 }
 
@@ -54,7 +55,7 @@
 
 .Detail .Error {
   width: calc(100% - 138px);
-  color: #F00;
+  color: #f00;
   margin-left: 38px;
 }
 
@@ -77,18 +78,17 @@
 /* Error */
 
 .FormRow.Error .LabelHolder .Icon {
-  fill: #F00;
+  fill: #f00;
 }
 
 .FormRow.Error .LabelHolder .Label {
-  color: #F00;
+  color: #f00;
 }
 
 .FormRow.Error .InputHolder .Input {
-  color: #F00;
-  border-bottom: 2px solid #F00;
+  color: #f00;
+  border-bottom: 2px solid #f00;
 }
-
 
 /* Input */
 
@@ -99,7 +99,6 @@
   border-bottom: 1px solid #0002;
   margin: 6px auto;
 }
-
 
 /* TODO: move this or get rid of it even Message */
 

@@ -6,5 +6,5 @@ export * from './loading/Loading.js';
 export * from './table';
 export * from './canvas';
 export * from './logo/Logo.js';
-export * from './header/Header.js';
 export * from './splash/Splash.js'
+export * from './page';

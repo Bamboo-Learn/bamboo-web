@@ -1,9 +1,0 @@
-.content {
-  background: var(--background-orange);
-  width: calc(100% - 40px);
-  height: 100%;
-  position: absolute;
-  padding: 0 20px;
-  margin-left: 40px;
-  top: 0;
-}
