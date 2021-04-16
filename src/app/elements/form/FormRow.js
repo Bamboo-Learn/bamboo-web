@@ -5,7 +5,7 @@ import Style from './style.module.css';
 
 export class FormRow extends React.Component {
   render() {
-    const { icon, errors, children, label, linkOnClick, linkText } = this.props;
+    const { icon, errors, children, label, linkOnClick, linkText, message } = this.props;
     const Icon = getIcon(icon);
 
     if (!children) {
@@ -33,10 +33,13 @@ export class FormRow extends React.Component {
         </div>
         <div className={Style.Detail}>
 
-          <div className={Style.Error}>
+          <div className={Style.Message}>
             {
-              !!errors && errors.map((error, i) => (
-                <span key={i}>{error}</span>
+              !!message && <span>{message}</span>
+            }
+            {
+              !message && !!errors && errors.map((error, i) => (
+                <span key={i} className={Style.Error}>{error}</span>
               ))
             }
           </div>
