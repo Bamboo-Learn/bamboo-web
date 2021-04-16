@@ -8,7 +8,7 @@
 /* Container Left */
 
 .containerLeft {
-  padding: 18px;
+  padding: 18px 18px 0;
   height: auto;
   width: 100%;
   background: var(--background-orange);
@@ -27,20 +27,19 @@
 }
 
 .containerLeft .containerLeftBody {
-  position: relative;
-  top: calc(50% - 40px);
-  transform: translateY(-50%);
+  margin: 38px auto 0;
+  width: 360px;
 }
 
 .containerLeft .containerLeftBody h1 {
   font-size: 20px;
-  margin: 42px 0 0;
+  margin: 12px 0;
 }
 
 .containerLeft .containerLeftBody p {
   color: #0009;
   font-size: 14px;
-  margin-bottom: 52px;
+  margin: 12px 0;
 }
 
 /* Container Right */
@@ -72,15 +71,25 @@
   }
 
   .containerLeft {
-    padding: 48px 84px;
-    height: calc(100% - 96px);
-    width: calc(46% - 168px);
-    max-width: 620px;
-    min-width: 320px;
+    padding: 48px 48px;
+    height: 100%;
+    width: 620px;
+  }
+
+  .containerLeftBody {
+    position: relative;
+    top: calc(50% - 40px);
+    transform: translateY(-50%);
   }
 
   .containerRight {
     width: auto;
   }
 
+}
+
+@media only screen and (min-width: 992px) {
+  .containerLeft {
+    padding: 48px 84px;
+  }
 }

@@ -12,13 +12,19 @@ export class FormRow extends React.Component {
       return (<span></span>);
     }
 
+    const isIcon = (!!icon) ? true : false;
+
     return (
-      <div className={`${Style.FormRow} ${!!errors && errors.length > 0 ? Style.Error : ''}`}>
+      <div className={`
+        ${Style.FormRow} 
+        ${!!errors && errors.length > 0 ? Style.Error : ''} 
+        ${isIcon ? Style.IconRow : ''}
+      `}>
         {/* ICON or LABEL */}
         {
           (icon || label) && <div className={Style.LabelHolder}>
-            {icon && <Icon className={Style.Icon} />}
-            {label && <div className={Style.Label}>{label}</div>}
+            {isIcon && <Icon className={Style.Icon} />}
+            {!isIcon && <div className={Style.Label}>{label}</div>}
           </div>
         }
         {/* INPUT */}

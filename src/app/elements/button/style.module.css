@@ -1,5 +1,4 @@
 .Button {
-  height: 14px;
   max-width: 184px;
   padding: 14px 0;
   background: var(--dark-green);
@@ -58,8 +57,7 @@
 
 .Button .Label {
   color: #FFF;
-  width: calc(100% - 22px);
+  width: 100%;
   text-align: center;
-  padding: 0 8px;
   margin: -1px 0;
 }

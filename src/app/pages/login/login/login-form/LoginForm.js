@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { FormText, Button, FormMessage, FormRow, Form } from 'app/elements';
+import { FormText, Button, FormRow, Form } from 'app/elements';
 import { validateEmail, validatePassword } from '../../base';
 
 import Style from './style.module.css';
@@ -181,7 +181,9 @@ class LoginForm extends React.Component {
             isPassword={true}
           />
         </FormRow>
-        <FormRow>
+        <FormRow
+          message={message} // TODO: make this take a message
+        >
           <Button
             className={Style.Button}
             onClick={e => this.loginWithEmailAndPassword(e)}
@@ -198,7 +200,6 @@ class LoginForm extends React.Component {
             {'Create Account'}
           </Button>
         </FormRow>
-        <FormMessage>{message}</FormMessage>
       </Form>
     );
   }

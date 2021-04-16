@@ -20,6 +20,10 @@
   height: 50px;
 }
 
+.FormRow.IconRow .LabelHolder {
+  width: 32px;
+}
+
 .FormRow .LabelHolder .Icon {
   width: 22px;
   fill: #999;
@@ -39,6 +43,11 @@
   width: calc(100% - 130px);
   display: flex;
 }
+
+.FormRow.IconRow .InputHolder {
+  width: calc(100% - 32px);
+}
+
 
 .FormRow .InputHolder.InputHolderFullWidth {
   width: 100%;
