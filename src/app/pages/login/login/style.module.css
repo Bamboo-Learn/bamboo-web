@@ -77,8 +77,9 @@
   }
 
   .containerLeftBody {
+    margin: 0 !important;
     position: relative;
-    top: calc(50% - 40px);
+    top: 50%;
     transform: translateY(-50%);
   }
 

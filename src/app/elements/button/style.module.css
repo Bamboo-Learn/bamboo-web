@@ -1,4 +1,5 @@
 .Button {
+  width: 184px;
   max-width: 184px;
   padding: 14px 0;
   background: var(--dark-green);

@@ -186,18 +186,18 @@ class LoginForm extends React.Component {
         >
           <Button
             className={Style.Button}
+            onClick={e => this.createAccountWithEmailAndPassword(e)}
+            tab={true}
+          >
+            {'Create Account'}
+          </Button>
+          <Button
+            className={Style.Button}
             onClick={e => this.loginWithEmailAndPassword(e)}
             color={'orange'}
             tab={true}
           >
             {'Login'}
-          </Button>
-          <Button
-            className={Style.Button}
-            onClick={e => this.createAccountWithEmailAndPassword(e)}
-            tab={true}
-          >
-            {'Create Account'}
           </Button>
         </FormRow>
       </Form>

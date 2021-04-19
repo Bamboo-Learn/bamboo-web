@@ -33,7 +33,7 @@
 .FormRow .LabelHolder .Label {
   color: #999;
   padding: 18px 0 0;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -42,12 +42,12 @@
 .FormRow .InputHolder {
   width: calc(100% - 130px);
   display: flex;
+  flex-direction: row-reverse;
 }
 
 .FormRow.IconRow .InputHolder {
   width: calc(100% - 32px);
 }
-
 
 .FormRow .InputHolder.InputHolderFullWidth {
   width: 100%;
@@ -62,10 +62,13 @@
   font-size: 12px;
 }
 
-.Detail .Error {
+.Detail .Message {
   width: calc(100% - 138px);
-  color: #f00;
   margin-left: 38px;
+}
+
+.Detail .Message span.Error {
+  color: #f00;
 }
 
 .Detail .Link {
