@@ -9,13 +9,15 @@
 }
 
 .sidebarToggle {
-  background: var(--dark-green);
+  /* background: var(--dark-green); */
   width: 40px;
   height: 100%;
   position: relative;
   z-index: 2;
   cursor: pointer;
   pointer-events: all;
+  background-image: linear-gradient(0deg, #33a854 0.63%, #23833d 0.63%, #23833d 50%, #33a854 50%, #33a854 50.63%, #23833d 50.63%, #23833d 100%);
+  background-size: 158.00px 158.00px;
 }
 
 .sidebarPanel {
