@@ -1,6 +1,6 @@
 .Display {
   width: 100%;
-  top: calc(50% - 40px);
+  top: 50%;
   transform: translateY(-50%);
   position: relative;
 }

@@ -56,6 +56,7 @@ class Sidebar extends React.Component {
         <div className={`${Style.sidebarPanel} ${!isOpen ? Style.closed : ''}`}>
           <Logo className={Style.headerLogo} />
           <div className={Style.sidebarItems}>
+            <SidebarItem label="Library" isActive={pageID === 'library'} onClick={() => this.switchPage('library')} />
             <SidebarItem label="My Packs" isActive={pageID === 'my-packs'} onClick={() => this.switchPage('my-packs')} />
             <SidebarItem label="Public Packs" isActive={pageID === 'public-packs'} onClick={() => this.switchPage('public-packs')} />
             <SidebarItem label="Study Mode" isActive={pageID === 'study-mode'} onClick={() => this.switchPage('study-mode')} />

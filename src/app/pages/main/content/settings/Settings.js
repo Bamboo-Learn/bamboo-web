@@ -4,12 +4,12 @@ import { PageHeader, PageBody, Form, FormRow, FormSelect, FormMessage, Button } 
 
 const CHARACTER_SETS = [
   {
-    value: 'simp',
-    label: 'Simplified'
-  },
-  {
     value: 'trad',
     label: 'Traditional'
+  },
+  {
+    value: 'simp',
+    label: 'Simplified'
   }
 ];
 
@@ -50,7 +50,7 @@ class Settings extends React.Component {
               />
             </FormRow>
             <FormRow>
-              <Button onClick={() => {}} tab={true}>
+              <Button onClick={() => { }} tab={true}>
                 {"Update"}
               </Button>
             </FormRow>

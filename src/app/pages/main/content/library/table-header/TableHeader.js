@@ -2,7 +2,7 @@ import React from 'react';
 
 import { LevelsIcon, PreviousIcon, NextIcon } from 'app/elements'; // SearchIcon
 
-import Style from './style.module.css';
+import Style from '../style.module.css';
 
 const ORDER_OPTIONS = [
   { name: 'Date Added', value: '' },
@@ -27,7 +27,7 @@ export function makeLoadHistoryString({ search, orderBy, reverse, page }) {
   return `${search}:${orderBy}:${reverse}:${page}`;
 }
 
-class SubHeader extends React.Component {
+class TableHeader extends React.Component {
   constructor(props) {
     super(props);
 
@@ -64,11 +64,11 @@ class SubHeader extends React.Component {
       // if it is not in load history then add it
       this.loadHistory.push(loadHistoryString);
       // update global filter and request reload
-      this.props.updateFilter(this.state, true);
+      // this.props.updateFilter(this.state, true);
       return
     }
     // update global filter with no reload
-    this.props.updateFilter(this.state, false);
+    // this.props.updateFilter(this.state, false);
   }
 
   changeOrderBy(orderBy) {
@@ -228,4 +228,4 @@ class SubHeader extends React.Component {
 }
 
 
-export default SubHeader;
+export { TableHeader };

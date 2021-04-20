@@ -10,6 +10,7 @@ import { Content } from './content/Content.js';
 // import Style from './style.module.css';
 
 const PAGE_IDS = [
+  'library',
   'my-packs',
   'public-packs',
   'study',
@@ -80,7 +81,7 @@ class Main extends React.Component {
       <div>
         <Splash isSplashOverlayOpen={this.state.isSplashOverlayOpen} />
         <Sidebar mongodb={mongodb} switchPageCallback={this.switchPageCallback} pageID={pageID} />
-        <Content pageID={pageID} />
+        <Content mongodb={mongodb} pageID={pageID} />
       </div>
     );
   }

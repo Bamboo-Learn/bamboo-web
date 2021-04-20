@@ -2,6 +2,7 @@ import React from 'react';
 
 import { PageContent } from 'app/elements';
 
+import { Library } from './library';
 import { MyPacks, PublicPacks } from './packs';
 import { Study } from './study/Study.js';
 import { Settings } from './settings/Settings.js';
@@ -18,6 +19,8 @@ class Content extends React.Component {
     const { pageID, mongodb } = this.props;
     // eslint-disable-next-line 
     switch (pageID) {
+      case 'library':
+        return (<Library mongodb={mongodb} />)
       case 'my-packs':
         return (<MyPacks mongodb={mongodb} />);
       case 'public-packs':

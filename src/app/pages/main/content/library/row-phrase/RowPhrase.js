@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Button, Row, Col } from 'app/elements';
 
-import Style from './style.module.css';
+import Style from '../style.module.css';
 
 function confidenceBackground(confidence) {
   const fill = '33a853';
@@ -21,7 +21,7 @@ function confidenceBackground(confidence) {
   };
 }
 
-class PhraseComponent extends React.Component {
+class RowPhrase extends React.Component {
   render() {
     const phrase = this.props.phrase;
     return (
@@ -101,4 +101,4 @@ class PhraseComponent extends React.Component {
   }
 }
 
-export default PhraseComponent;
+export { RowPhrase };

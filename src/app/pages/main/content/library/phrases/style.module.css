@@ -1,9 +1,0 @@
-.Phrases {
-    margin-top: 44px;
-}
-
-@media only screen and (min-width: 768px) {
-    .Phrases {
-        margin-top: 68px;
-    }
-}

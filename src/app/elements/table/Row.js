@@ -40,7 +40,7 @@ class Row extends React.Component {
             width: `${100 * this.props.confidence / 10}%`
           }}
         ></div>
-      </div >
+      </div>
     );
   }
 }
