@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 
 import { PageContent } from 'app/elements';
 
@@ -7,7 +9,9 @@ import { MyPacks, PublicPacks } from './packs';
 import { Study } from './study/Study.js';
 import { Settings } from './settings/Settings.js';
 
-class Content extends React.Component {
+
+
+class RawContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,31 +20,41 @@ class Content extends React.Component {
   }
 
   getPage() {
-    const { pageID, mongodb } = this.props;
+    const { pageID } = this.props.match.params;
+
     // eslint-disable-next-line 
     switch (pageID) {
-      case 'library':
-        return (<Library mongodb={mongodb} />)
       case 'my-packs':
-        return (<MyPacks mongodb={mongodb} />);
+        return MyPacks;
       case 'public-packs':
-        return (<PublicPacks mongodb={mongodb} />);
+        return PublicPacks;
       case 'study-mode':
-        return (<Study mongodb={mongodb} />);
+        return Study;
       case 'settings':
-        return (<Settings mongodb={mongodb} />);
+        return Settings;
+      case 'library':
+      default:
+        return Library
     }
   }
 
   render() {
     const { isLoading } = this.state;
-    const page = this.getPage();
+    const Page = this.getPage();
     return (
       <PageContent isLoading={isLoading}>
-        {page}
+        <Page {...this.props} />
       </PageContent>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    displayCharacterSet: state.displayCharacterSet,
+  };
+};
+
+const Content = connect(mapStateToProps)(withRouter(RawContent));
 
 export { Content }

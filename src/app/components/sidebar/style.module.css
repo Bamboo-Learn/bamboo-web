@@ -8,6 +8,11 @@
   pointer-events: none;
 }
 
+.sidebar a {
+  text-decoration: none;
+  color: unset;
+}
+
 .sidebarToggle {
   /* background: var(--dark-green); */
   width: 40px;

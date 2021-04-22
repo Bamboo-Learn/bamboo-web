@@ -1,18 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { Mongodb } from './app/helpers/mongodb.js';
-import Main from './app/pages/main/Main.js';
-import { Login } from './app/pages/login'; // Reset
+import { Mongodb } from 'app/helpers';
+import { Main, Login } from 'app/pages';
+import { reducer } from 'app/redux';
 
 import * as serviceWorker from './serviceWorker';
 import './reset.css';
 import './index.css';
 
+const { REACT_APP_ENV } = process.env;
+const composeEnhancers = (REACT_APP_ENV === 'PRD') ? compose : composeWithDevTools;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+    // this.store.dispatch(SocketService.startService()); // TODO: mongodb here?
 
     this.mongodb = new Mongodb();
   }
@@ -22,17 +32,19 @@ class App extends React.Component {
     // TODO: login reset route <Reset>
     return (
       <Router>
-        <Switch>
-          {/* <Route path="/login/reset">
+        <Provider store={this.store}>
+          <Switch>
+            {/* <Route path="/login/reset">
             <Reset />
           </Route> */}
-          <Route path="/login">
-            <Login mongodb={this.mongodb} />
-          </Route>
-          <Route path={["/confirm", "/"]}>
-            <Main mongodb={this.mongodb} />
-          </Route>
-        </Switch>
+            <Route path="/login">
+              <Login mongodb={this.mongodb} />
+            </Route>
+            <Route path={["/confirm", "/:pageID", "/"]}>
+              <Main mongodb={this.mongodb} />
+            </Route>
+          </Switch>
+        </Provider>
       </Router>
     );
   }
