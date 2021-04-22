@@ -12,6 +12,8 @@ const initState = {
   phrases: [],
 };
 
+// TODO: make a phrase reducer and a settings reducer to make the logic simpler
+
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_PHRASE:

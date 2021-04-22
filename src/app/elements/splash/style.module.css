@@ -1,19 +1,21 @@
 .SplashOverlay {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: var(--dark-green);
-    z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--dark-green);
+  z-index: 100;
+  transition: filter 0.4s;
+  -webkit-transition: filter 0.4s;
 }
 
 .Visible {
-    opacity: 1;
-    pointer-events: all;
+  filter: opacity(1);
+  pointer-events: all;
 }
 
 .Hidden {
-    opacity: 0;
-    pointer-events: none;
+  filter: opacity(0);
+  pointer-events: none;
 }

@@ -19,25 +19,20 @@ class Main extends React.Component {
       isSplashOverlayOpen: true,
     }
 
-    this.closeSplashOverlay = this.closeSplashOverlay.bind(this);
-
     // check if we are logged in, if not redirect
     // do this before the component mounts to avoid seeing any elements
-    this.isLoggedIn();
+    this.redirectIfNotLoggedIn();
+  }
+
+  redirectIfNotLoggedIn() {
+    const { mongodb } = this.props;
+    if (!mongodb || !mongodb.isLoggedIn()) {
+      window.location = '/login';
+    }
   }
 
   componentDidMount() {
     this.confirmLogin();
-  }
-
-  // TODO: rename this and remove instance of it being used in logic?, a false will always redirect
-  isLoggedIn() {
-    const { mongodb } = this.props;
-    if (!mongodb || !mongodb.isLoggedIn()) {
-      window.location = '/login';
-      return false;
-    }
-    return true;
   }
 
   confirmLogin() {
@@ -45,28 +40,23 @@ class Main extends React.Component {
     if (mongodb.isLoggedIn()) {
       mongodb.loadUserData().then(data => {
         this.setState({
-          userData: data
+          userData: data,
+          isSplashOverlayOpen: false
         });
-        this.closeSplashOverlay();
       });
     }
     // TODO: wait for initial phrases to load before removing splash
   }
 
-  closeSplashOverlay() {
-    this.setState({
-      isSplashOverlayOpen: false
-    });
-  }
-
   render() {
     const { mongodb } = this.props;
+    const { isSplashOverlayOpen } = this.state;
     return (
-      <div>
-        <Splash isSplashOverlayOpen={this.state.isSplashOverlayOpen} />
+      <>
+        <Splash isSplashOverlayOpen={isSplashOverlayOpen} />
         <Sidebar mongodb={mongodb} />
         <Content mongodb={mongodb} />
-      </div>
+      </>
     );
   }
 }

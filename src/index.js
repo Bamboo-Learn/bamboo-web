@@ -23,7 +23,6 @@ class App extends React.Component {
 
     this.store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
     // this.store.dispatch(SocketService.startService()); // TODO: mongodb here?
-
     this.mongodb = new Mongodb();
   }
 
