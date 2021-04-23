@@ -1,27 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import { Phrase, strCompare } from 'app/helpers';
+import { strCompare } from 'app/helpers';
 import { PageHeader, PageBody } from 'app/elements';
+import { appendPhrases, updateFilter } from 'app/redux';
 
 import { TableHeader } from './table-header/TableHeader.js'
 import { RowAddNew, RowPhrase } from './row-phrase'
 
-class Library extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      phrases: [], // TODO: make this a redux thing where the phrases are global
-      filter: {
-        perPage: 30,
-        orderBy: '',
-        reverse: false,
-        page: 0,
-        search: '',
-        pack: ''
-      }
-    }
-  }
+class RawLibrary extends React.Component {
 
   componentDidMount() {
     this.loadPhrases();
@@ -30,22 +17,9 @@ class Library extends React.Component {
   async loadPhrases() {
 
     // get the new phrases and add them to the phrases
-    const { mongodb } = this.props;
-    const { filter, phrases: statePhrases } = this.state;
-    const phrases = [...statePhrases];
+    const { mongodb, filter } = this.props;
     const loadedPhrases = await mongodb.getPhrases(filter);
-    loadedPhrases.forEach((phrase) => {
-      const existingPhrase = phrases.find(p => p._id.equals(phrase._id))
-      if (!existingPhrase) {
-        // if not already in the array then add it
-        phrases.push(new Phrase(phrase));
-      }
-    });
-
-    console.log(phrases);
-
-    // set the phrases to the combinded collection
-    this.setState({ phrases });
+    this.props.appendPhrases(loadedPhrases);
 
     // set needs load to false
     // this.props.setNeedsLoad(false);
@@ -53,25 +27,25 @@ class Library extends React.Component {
 
   displayPhrases() {
     // filters phrases based on the global filter
-    const { orderBy, reverse, page, perPage } = this.state.filter;
-    const displayPhrases = this.state.phrases
-      .sort((a, b) => {
-        const order = strCompare(a.original[orderBy], b.original[orderBy]);
-        return (reverse) ? -1 * order : order;
-      })
-      .slice(page * perPage, (page + 1) * perPage);
-
-    return displayPhrases;
+    const { filter: { orderBy, reverse, page, perPage }, library: { phrases } } = this.props;
+    return phrases;
+    // return phrases.sort((a, b) => {
+    //   const order = strCompare(a.original[orderBy], b.original[orderBy]);
+    //   return (reverse) ? -1 * order : order;
+    // }).slice(page * perPage, (page + 1) * perPage);
   }
 
   render() {
+    const { updateFilter, filter, mongodb } = this.props;
     const displayPhrases = this.displayPhrases();
+
+    console.log({ displayPhrases });
 
     return (
       <>
         <PageHeader>Library</PageHeader>
         <PageBody>
-          <TableHeader />
+          <TableHeader mongodb={mongodb} filter={filter} updateFilter={updateFilter} />
           <div>
             <RowAddNew />
             {
@@ -86,4 +60,18 @@ class Library extends React.Component {
   }
 }
 
-export { Library }
+const mapDispatchToProps = dispatch => ({
+  appendPhrases: (newPhrases) => {
+    dispatch(appendPhrases(newPhrases))
+  },
+  updateFilter: ({ filter, mongodb }) => {
+    dispatch(updateFilter({ filter, mongodb }))
+  }
+});
+
+const Library = connect(
+  null,
+  mapDispatchToProps
+)(RawLibrary);
+
+export { Library };

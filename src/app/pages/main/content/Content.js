@@ -51,7 +51,9 @@ class RawContent extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    displayCharacterSet: state.displayCharacterSet,
+    settings: state.settings,
+    library: state.library,
+    filter: state.filter
   };
 };
 
