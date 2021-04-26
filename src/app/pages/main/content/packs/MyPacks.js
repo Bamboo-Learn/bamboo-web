@@ -26,11 +26,12 @@ class MyPacks extends React.Component {
         <PageBody className={Style.packList}>
           <NewPack />
           {
-            packs.map(({name, cardCount}) => (
+            packs.map(({ name, cardCount }) => (
               <Pack name={name} cardCount={cardCount} />
             ))
           }
-          <Pack name={'All'} />
+          <Pack name={'Unlabled'} cardCount={100} />
+          <Pack name={'All'} cardCount={364} />
         </PageBody>
       </>
     );

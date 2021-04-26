@@ -19,11 +19,7 @@ const initFilter = {
 const filterReducer = (state = initFilter, action) => {
   switch (action.type) {
     case CHANGE_FILTER:
-      // add to filterHistory
-      // TODO: if we need to reload then reload
-      // but reducers shouldn't have side effects
-      // we need to think of a different pattern
-      return { ...state, ...{ filter: action.newFilter } }
+      return { ...action.filter }
     default:
       return state;
   }

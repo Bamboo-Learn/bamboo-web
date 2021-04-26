@@ -103,7 +103,7 @@ class LoginForm extends React.Component {
     if (!valid) return;
 
     mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
-      window.location = '/';
+      window.location = '/library';
     }).catch(err => {
       this.setState({
         emailInput: {
@@ -128,7 +128,7 @@ class LoginForm extends React.Component {
         message: 'Account created! Redirecting to application...'
       });
       mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
-        window.location = '/';
+        window.location = '/library';
       }).catch(err => {
         console.log(err);
       });

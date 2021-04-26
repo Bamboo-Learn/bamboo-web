@@ -1,32 +1,39 @@
 .content {
   background: var(--background-orange);
-  width: calc(100% - 40px);
   height: 100%;
   position: absolute;
-  padding: 0 20px;
   margin-left: 40px;
+  width: calc(100% - 40px);
   top: 0;
   overflow: scroll;
 }
 
 .header {
   font-size: 24px;
-  padding: 10px;
+  padding: 18px 10px 10px;
   font-weight: bold;
   border-bottom: 1px solid #0003;
-  width: calc(100% - 80px);
+  width: 100%;
   position: fixed;
   background: #f4f2ed;
 }
 
 .pageBody {
-  margin-top: 40px;
+  margin-top: 60px;
+  padding: 0 4px;
 }
 
 @media only screen and (min-width: 768px) {
+
+  .content {
+    width: calc(100% - 40px);
+    padding: 0 20px;
+  }
+
   .header {
     padding: 18px 10px;
     font-size: 28px;
+    width: calc(100% - 80px);
   }
 
   .pageBody {

@@ -1,18 +1,19 @@
 
-// append phrases to the library
-export const APPEND_PHRASES = 1;
-export const DELETE_PHRASE = 2;
-export const EDIT_PHRASE = 3;
-// append a new phrase
-export const ADD_NEW_PHRASE = 4;
+// library
+export const APPEND_PHRASES = 1; // append phrases to the library from load
+export const DELETE_PHRASE = 2; // requires change to total count and possibly pack list
+export const EDIT_PHRASE = 3; // possibly requires change to pack list
+export const ADD_NEW_PHRASE = 4; // append a new phrase, requires change to total count and possibly pack list
 
+// filter
 export const CHANGE_FILTER = 5;
 
 // settings
 export const CHANGE_DISPLAY_CHARACTER_SETTING = 6;
 
-// closure to wrap filterHistory
-function makeUpdateFilter() {
+
+// create the update filter dispatching function
+export const updateFilter = (() => {
   const filterHistory = [];
   // returns a function that can be dispatched
   return ({ filter, mongodb }) => {
@@ -25,17 +26,14 @@ function makeUpdateFilter() {
         mongodb.getPhrases(filter).then((loadedPhrases) => {
           // then dispatch append phrases and update the filter
           dispatch(appendPhrases(loadedPhrases));
-          return { type: CHANGE_FILTER, filter };
+          dispatch({ type: CHANGE_FILTER, filter });
         });
       }
-    } else {
-      return { type: CHANGE_FILTER, filter }
     }
+    return { type: CHANGE_FILTER, filter };
   }
-}
+})(); // closure to wrap filterHistory
 
-// create the update filter dispatching function
-export const updateFilter = makeUpdateFilter();
 
 export const appendPhrases = (phrases) => ({
   type: APPEND_PHRASES,

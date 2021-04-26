@@ -2,7 +2,7 @@ import React from 'react';
 
 import { LevelsIcon, PreviousIcon, NextIcon } from 'app/elements'; // SearchIcon
 
-import Style from '../style.module.css';
+import Style from './style.module.css';
 
 const ORDER_OPTIONS = [
   { name: 'Date Added', value: '' },
@@ -37,7 +37,7 @@ class TableHeader extends React.Component {
         reverse = true;
       }
     }
-    const newFilter = { ...filter, ...{ orderBy, reverse } }
+    const newFilter = { ...filter, ...{ orderBy, reverse } };
     updateFilter({ filter: newFilter, mongodb });
   }
 

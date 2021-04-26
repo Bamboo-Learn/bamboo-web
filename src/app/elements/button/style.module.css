@@ -20,11 +20,11 @@
 }
 
 .Button.orange {
-  background: #ce995c;
+  background: var(--dark-orange);
 }
 
 .Button.orange:hover {
-  background: #e7b172;
+  background: var(--light-orange);
 }
 
 .Button.dark-green {

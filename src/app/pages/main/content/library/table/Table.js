@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Col } from './Col.js';
-
 import Style from './style.module.css';
 
 class Row extends React.Component {
@@ -21,23 +19,25 @@ class Row extends React.Component {
   }
 
   render() {
+    const { isOpen } = this.state;
+    const { openable, children, confidence } = this.props;
     return (
-      <div className={`${Style.Row} ${this.state.isOpen ? Style.Open : Style.Min}`}>
+      <div className={`${Style.Row} ${isOpen ? Style.Open : Style.Min}`}>
         {
-          this.props.openable &&
+          openable &&
           <Col className={Style.ColToggleOpen}>
             <div className={`${Style.Toggle} noselect`} onClick={(e) => this.toggleOpen(e)}>
-              <div className={`${Style.Arrow} ${this.state.isOpen ? Style.Open : ''}`}></div>
+              <div className={`${Style.Arrow} ${isOpen ? Style.Open : ''}`}></div>
             </div>
           </Col>
         }
 
-        {this.props.children}
+        {children}
 
         <div
           className={Style.Background}
           style={{
-            width: `${100 * this.props.confidence / 10}%`
+            width: `${100 * confidence / 10}%`
           }}
         ></div>
       </div>
@@ -45,4 +45,15 @@ class Row extends React.Component {
   }
 }
 
-export { Row };
+class Col extends React.Component {
+  render() {
+    const { children, className, style } = this.props;
+    return (
+      <div className={`${Style.Col} ${className}`} style={style}>
+        {children}
+      </div>
+    );
+  }
+}
+
+export { Row, Col };

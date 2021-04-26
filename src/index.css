@@ -1,9 +1,22 @@
+:root {
+  --light-green: #33a853;
+  --dark-green: #23833d;
+  --background-orange: #f5f2ee;
+  --light-orange: #e7b172;
+  --dark-orange: #ce995c;
+  /* --sm: 576px;
+  --md: 768px;
+  --lg: 992px;
+  --xl: 1200px; */
+}
+
 body,
 html {
   width: 100%;
   height: 100%;
   margin: 0 auto;
   font-family: "Source Sans Pro", sans-serif;
+  background: var(--background-orange);
 }
 
 input,
@@ -37,15 +50,4 @@ button {
     user-select: none;
     /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
   }
-}
-
-
-:root {
-  --light-green: #33a853;
-  --dark-green: #23833d;
-  --background-orange: #f5f2ee;
-  /* --sm: 576px;
-  --md: 768px;
-  --lg: 992px;
-  --xl: 1200px; */
 }

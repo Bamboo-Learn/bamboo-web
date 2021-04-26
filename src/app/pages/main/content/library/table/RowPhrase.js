@@ -1,9 +1,10 @@
 
 import React from 'react';
 
-import { Button, Row, Col } from 'app/elements';
+import { Button } from 'app/elements';
 
-import Style from '../style.module.css';
+import { Row, Col } from './Table.js';
+import Style from './style.module.css';
 
 function confidenceBackground(confidence) {
   const fill = '33a853';
@@ -23,15 +24,15 @@ function confidenceBackground(confidence) {
 
 class RowPhrase extends React.Component {
   render() {
-    const phrase = this.props.phrase;
+    const { phrase: { confidence, characters, pinyin, english } } = this.props;
     return (
-      <Row openable={true} confidence={phrase.confidence}>
+      <Row openable={true} confidence={confidence}>
 
         {/* Confidence */}
         <Col
           className={Style.ColConfidenceUpright}
           style={{
-            background: (phrase.confidence === 0) ? '#999' : (phrase.confidence === 10) ? '#33a853' : '#23833d'
+            background: (confidence === 0) ? '#999' : (confidence === 10) ? '#23833d' : '#33a853'
           }}
         >
         </Col>
@@ -42,7 +43,7 @@ class RowPhrase extends React.Component {
           <input
             className={Style.InputChinese}
             type="text"
-            value={phrase.characters}
+            value={characters}
             onChange={() => { }} // TODO:
           />
         </Col>
@@ -51,7 +52,7 @@ class RowPhrase extends React.Component {
         <Col className={Style.ColConfidence}>
           <div
             className="ConfidenceBar noselect"
-            style={confidenceBackground(phrase.confidence)}
+            style={confidenceBackground(confidence)}
           >
           </div>
         </Col>
@@ -59,7 +60,7 @@ class RowPhrase extends React.Component {
         {/* Small Definition */}
         <Col className={Style.ColDefinition}>
           <p>
-            <span className={Style.Pinyin}>{phrase.pinyin}</span> &mdash; <span className={Style.English}>{phrase.english}</span>
+            <span className={Style.Pinyin}>{pinyin}</span> &mdash; <span className={Style.English}>{english}</span>
           </p>
         </Col>
 
@@ -67,7 +68,7 @@ class RowPhrase extends React.Component {
         <Col className={Style.ColPinyin}>
           <input
             className={Style.InputPinyin}
-            value={phrase.pinyin}
+            value={pinyin}
             onChange={() => { }}
           />
         </Col>
@@ -77,7 +78,7 @@ class RowPhrase extends React.Component {
           <textarea
             className={Style.InputEnglish}
             type="text"
-            value={phrase.english}
+            value={english}
             onChange={() => { }}
           >
           </textarea>

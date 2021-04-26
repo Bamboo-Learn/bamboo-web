@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Splash } from 'app/elements';
-import { Sidebar } from 'app/components'
+import { updateFilter } from 'app/redux';
 
+import { Sidebar } from './components';
 import { Content } from './content/Content.js';
 // import EditOverlay from './edit-overlay/EditOverlay.js'; // TODO: get rid of this
 // FIXME: uncomment this just debugging FIXME: import WelcomeOverlay from './welcome-overlay/WelcomeOverlay.js';
@@ -11,7 +13,7 @@ import { Content } from './content/Content.js';
 
 // TODO: TODO: TODO: add redux here so we can switch pages wherever?
 
-class Main extends React.Component {
+class RawMain extends React.Component {
   constructor(props) {
     super(props);
 
@@ -36,13 +38,14 @@ class Main extends React.Component {
   }
 
   confirmLogin() {
-    const { mongodb } = this.props;
+    const { mongodb, filter, updateFilter } = this.props;
     if (mongodb.isLoggedIn()) {
       mongodb.loadUserData().then(data => {
         this.setState({
           userData: data,
           isSplashOverlayOpen: false
         });
+        updateFilter({ filter, mongodb });
       });
     }
     // TODO: wait for initial phrases to load before removing splash
@@ -60,5 +63,24 @@ class Main extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    settings: state.settings,
+    library: state.library,
+    filter: state.filter
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  updateFilter: ({ filter, mongodb }) => {
+    dispatch(updateFilter({ filter, mongodb }))
+  }
+});
+
+const Main = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RawMain);
 
 export { Main };

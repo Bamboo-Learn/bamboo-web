@@ -1,5 +1,4 @@
 .Form {
-  min-width: 320px;
   max-width: 510px;
 }
 
@@ -15,9 +14,8 @@
 /* Label */
 
 .FormRow .LabelHolder {
-  width: 130px;
+  width: 100%;
   text-align: right;
-  height: 50px;
 }
 
 .FormRow.IconRow .LabelHolder {
@@ -32,15 +30,15 @@
 
 .FormRow .LabelHolder .Label {
   color: #999;
-  padding: 18px 0 0;
+  padding: 18px 8px 0;
   font-size: 14px;
-  text-align: center;
+  text-align: left;
 }
 
 /* InputHolder */
 
 .FormRow .InputHolder {
-  width: calc(100% - 130px);
+  width: 100%;
   display: flex;
   flex-direction: row-reverse;
 }
@@ -117,4 +115,65 @@
 .FormRow .FormMessage {
   color: #24833d;
   font-weight: bold;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .Form {}
+
+  .FormRow {}
+
+  /* Label */
+
+  .FormRow .LabelHolder {
+    width: 130px;
+    height: 50px;
+  }
+
+  .FormRow.IconRow .LabelHolder {}
+
+  .FormRow .LabelHolder .Icon {}
+
+  .FormRow .LabelHolder .Label {
+    text-align: center;
+  }
+
+  /* InputHolder */
+
+  .FormRow .InputHolder {}
+
+  .FormRow.IconRow .InputHolder {}
+
+  .FormRow .InputHolder.InputHolderFullWidth {}
+
+  /* Detail */
+
+  .Detail {}
+
+  .Detail .Message {}
+
+  .Detail .Message span.Error {}
+
+  .Detail .Link {}
+
+  .Detail .Link span {}
+
+  .Detail .Link span:hover {}
+
+  /* Error */
+
+  .FormRow.Error .LabelHolder .Icon {}
+
+  .FormRow.Error .LabelHolder .Label {}
+
+  .FormRow.Error .InputHolder .Input {}
+
+  /* Input */
+
+  .Input {}
+
+  /* TODO: move this or get rid of it even Message */
+
+  .FormRow .FormMessage {}
+
 }

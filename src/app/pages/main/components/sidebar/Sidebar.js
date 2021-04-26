@@ -66,7 +66,7 @@ class RawSidebar extends React.Component {
           <Logo className={Style.headerLogo} />
           <div className={Style.sidebarItems}>
             <Link to="/library">
-              <SidebarItem label="Library" isActive={pageID === 'library'} onClick={this.closeSidebar} />
+              <SidebarItem label="Library" isActive={!pageID || pageID === 'library'} onClick={this.closeSidebar} />
             </Link>
             <Link to="/my-packs">
               <SidebarItem label="My Packs" isActive={pageID === 'my-packs'} onClick={this.closeSidebar} />

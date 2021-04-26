@@ -1,20 +1,33 @@
-
 .packHolder {
-  width: calc(100% / 5);
+  width: 50%;
 }
 
 .pack {
-  height: 80px;
-  background: #00000008;
-  margin: 8px;
+  height: 60px;
+  background: var(--light-orange);
+  margin: 4px;
   border-radius: 6px;
   cursor: pointer;
 }
 
 .name {
   text-align: center;
+  font-size: 18px;
+  padding: 12px 0 0;
 }
 
 .cardCount {
+  text-align: center;
+  font-size: 14px;
+  color: #0008;
+}
 
+.actionRow {
+  display: flex;
+}
+
+@media only screen and (min-width: 768px) {
+  .packHolder {
+    width: calc(100% / 5);
+  }
 }

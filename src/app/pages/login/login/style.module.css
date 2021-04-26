@@ -9,12 +9,13 @@
 
 .containerLeft {
   padding: 18px 18px 0;
-  height: auto;
+  height: 100%;
   width: 100%;
   background: var(--background-orange);
   box-shadow: inset 0 0 100px #0001;
   -moz-box-shadow: inset 0 0 100px #0001;
   -webkit-box-shadow: inset 0 0 100px #0001;
+  z-index: 2;
 }
 
 .containerLeft .logoHolder {
@@ -28,7 +29,6 @@
 
 .containerLeft .containerLeftBody {
   margin: 38px auto 0;
-  width: 360px;
 }
 
 .containerLeft .containerLeftBody h1 {
@@ -45,21 +45,15 @@
 /* Container Right */
 
 .containerRight {
-  height: 100%;
-  width: 100%;
-  position: relative;
-  color: #fff;
-  background: #0003;
-  box-shadow: inset 0 0 100px #000a;
-  -moz-box-shadow: inset 0 0 100px #000a;
-  -webkit-box-shadow: inset 0 0 100px #000a;
+  display: none;
+  z-index: 2;
 }
 
 /* Canvas */
 
 .Canvas {
   position: fixed;
-  z-index: -1;
+  z-index: 1;
   top: 0;
   left: 0;
 }
@@ -81,10 +75,19 @@
     position: relative;
     top: calc(50% - 40px);
     transform: translateY(-50%);
+    width: 360px;
   }
 
   .containerRight {
+    display: inline;
+    height: 100%;
     width: auto;
+    position: relative;
+    color: #fff;
+    background: #0003;
+    box-shadow: inset 0 0 100px #000a;
+    -moz-box-shadow: inset 0 0 100px #000a;
+    -webkit-box-shadow: inset 0 0 100px #000a;
   }
 
 }

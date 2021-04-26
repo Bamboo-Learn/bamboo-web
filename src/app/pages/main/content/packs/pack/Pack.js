@@ -9,7 +9,7 @@ class Pack extends React.Component {
       <div className={Style.packHolder}>
         <div className={Style.pack}>
           <div className={Style.name}>{name}</div>
-          <div className={Style.cardCount}>{cardCount}</div>
+          <div className={Style.cardCount}>{cardCount} {` cards`}</div>
         </div>
       </div>
     );
@@ -21,7 +21,7 @@ class NewPack extends React.Component {
     return (
       <div className={Style.packHolder}>
         <div className={Style.pack}>
-          <div className={Style.name}>Add New Pack</div>
+          <div className={Style.name}>Add New</div>
         </div>
       </div>
     );
