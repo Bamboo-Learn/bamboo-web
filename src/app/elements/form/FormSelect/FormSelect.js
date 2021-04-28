@@ -2,7 +2,7 @@ import React from "react";
 
 import Style from "../style.module.css";
 
-export class FormSelect extends React.Component {
+class FormSelect extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,17 +15,19 @@ export class FormSelect extends React.Component {
   }
 
   render() {
+    const { options, value } = this.props;
     return (
       <select
         className={Style.Input}
-        placeholder={this.props.placeholder}
-        value={this.props.value || ""}
+        value={value || ""}
         onChange={this.onChange}
       >
-        {this.props.options.map(({value, label}) => (
+        {options.map(({ value, label }) => (
           <option key={value} value={value}>{label}</option>
         ))}
       </select>
     );
   }
 }
+
+export { FormSelect };

@@ -5,27 +5,28 @@ import { strCompare } from 'app/helpers';
 import { PageHeader, PageBody } from 'app/elements';
 import { appendPhrases, updateFilter } from 'app/redux';
 
-import { RowAddNew, RowPhrase, TableHeader } from './table'
+import { Filter } from './filter/Filter.js';
+import { RowAddNew } from './table'; // RowPhrase, TableHeader
 
 class RawLibrary extends React.Component {
   displayPhrases() {
     // filters phrases based on the global filter
-    const { filter: { orderBy, reverse, page, perPage }, library: { phrases } } = this.props;
-    const displayPhrases = [...phrases].sort((a, b) => {
-      const order = strCompare(a.original[orderBy], b.original[orderBy]);
-      return (reverse) ? -1 * order : order;
-    }); // .slice(page * perPage, (page + 1) * perPage);
+    const { filter: { orderBy, order }, library: { phrases } } = this.props; // page, perPage
+    const displayPhrases = [...phrases].sort((a, b) => (
+      order * strCompare(a.original[orderBy], b.original[orderBy])
+    )); // .slice(page * perPage, (page + 1) * perPage);
     return displayPhrases;
   }
 
   render() {
     const { updateFilter, filter, mongodb } = this.props;
-    const displayPhrases = this.displayPhrases();
+    // const displayPhrases = this.displayPhrases();
 
     return (
       <>
         <PageHeader>Library</PageHeader>
         <PageBody>
+          <Filter mongodb={mongodb} filter={filter} updateFilter={updateFilter} />
           {/* <TableHeader mongodb={mongodb} filter={filter} updateFilter={updateFilter} /> */}
           <div>
             <RowAddNew mongodb={mongodb} />

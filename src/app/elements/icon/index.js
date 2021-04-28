@@ -6,13 +6,13 @@ import { CancelIcon } from "./CancelIcon";
 import { GarbageIcon } from "./GarbageIcon";
 import { AddIcon } from "./AddIcon";
 import { EditIcon } from "./EditIcon";
+import { LevelsIcon } from './LevelsIcon';
+import { NextIcon } from "./NextIcon";
+import { PreviousIcon } from "./PreviousIcon";
 
 export { CheckIcon } from "./CheckIcon";
 export { ClipboardIcon } from "./ClipboardIcon";
-export { LevelsIcon } from "./LevelsIcon";
 export { LookupIcon } from "./LookupIcon";
-export { NextIcon } from "./NextIcon";
-export { PreviousIcon } from "./PreviousIcon";
 export { SearchIcon } from "./SearchIcon";
 
 // TODO: use these icons instead https://github.com/feathericons/feather#feather
@@ -34,6 +34,12 @@ export const getIcon = (icon) => {
       return GarbageIcon;
     case 'Edit':
       return EditIcon;
+    case 'Filter':
+      return LevelsIcon;
+    case 'Next':
+      return NextIcon;
+    case 'Previous':
+      return PreviousIcon;
     default:
       return CancelIcon;
   }
@@ -46,5 +52,8 @@ export {
   GarbageIcon,
   UserIcon,
   EditIcon,
-  PadlockIcon
+  PadlockIcon,
+  LevelsIcon,
+  NextIcon,
+  PreviousIcon
 };

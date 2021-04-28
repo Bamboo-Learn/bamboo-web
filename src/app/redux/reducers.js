@@ -10,7 +10,7 @@ import { APPEND_PHRASES, DELETE_PHRASE, EDIT_PHRASE, CHANGE_DISPLAY_CHARACTER_SE
 const initFilter = {
   perPage: 30,
   orderBy: '',
-  reverse: false,
+  order: 1,
   page: 0,
   search: '',
   pack: ''

@@ -64,13 +64,13 @@ export class Mongodb {
     return await collection.find({ character: { $in: [...characters] } }).toArray();
   }
 
-  async getPhrases({ perPage, page, orderBy, reverse }) {
+  async getPhrases({ perPage, page, orderBy, order }) {
     if (!this.isLoggedIn()) {
       return [];
     }
     const sort = `{ 
       "${orderBy === '' ? '_id' : orderBy}" : 
-      ${reverse ? "-1" : "1"}
+      ${order}
     }`;
     const collection = this.db.collection('phrases');
     const pipeline = [
