@@ -1,3 +1,3 @@
 
-export * from './reducers.js';
-export * from './actions.js';
+export * from './reducers.ts';
+export * from './actions.ts';

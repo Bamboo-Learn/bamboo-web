@@ -1,8 +1,9 @@
 .filter {
+  position: fixed;
+  top: 53px;
   background: var(--background-orange);
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
   overflow: hidden;
   border-bottom: 1px solid #0002;
   padding-bottom: 10px;

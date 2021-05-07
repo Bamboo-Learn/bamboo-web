@@ -4,16 +4,22 @@ import {
   RemoteMongoClient,
   UserPasswordAuthProviderClient,
   UserPasswordCredential,
-  GoogleRedirectCredential
+  GoogleRedirectCredential,
+  StitchAppClient, RemoteMongoDatabase
 } from 'mongodb-stitch-browser-sdk';
+import { Phrase } from './phrase';
 
 export class Mongodb {
+
+  client: StitchAppClient
+  db: RemoteMongoDatabase
+
   constructor() {
     this.client = Stitch.initializeDefaultAppClient('bamboo-rwymp');
     this.db = this.client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('bamboo-db');
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     if (this.client.auth.hasRedirectResult()) {
       this.client.auth.handleRedirectResult();
       return true;
@@ -21,17 +27,17 @@ export class Mongodb {
     return this.client.auth.isLoggedIn;
   }
 
-  async loginWithEmailAndPassword({ email, password }) {
+  async loginWithEmailAndPassword({ email, password }: { email: string, password: string }) {
     const credential = new UserPasswordCredential(email, password);
     return await this.client.auth.loginWithCredential(credential);
   }
 
-  async createAccountWithEmailAndPassword({ email, password }) {
+  async createAccountWithEmailAndPassword({ email, password }: { email: string, password: string }) {
     const emailPasswordClient = Stitch.defaultAppClient.auth.getProviderClient(UserPasswordAuthProviderClient.factory);
     return await emailPasswordClient.registerWithEmail(email, password);
   }
 
-  async sendPasswordResetEmail({ email }) {
+  async sendPasswordResetEmail({ email }: { email: string }) {
     const emailPasswordClient = Stitch.defaultAppClient.auth.getProviderClient(UserPasswordAuthProviderClient.factory);
     return await emailPasswordClient.sendResetPasswordEmail(email);
   }
@@ -44,7 +50,7 @@ export class Mongodb {
 
   async logout() {
     await this.client.auth.logout();
-    window.location = '/';
+    window.location.href = '/';
   }
 
   userID() {
@@ -56,15 +62,15 @@ export class Mongodb {
 
 
   // TODO: handle errors in all of these (in case network is gone)
-  async getCharacters(characters) {
+  async getCharacters(characters: string) {
     if (!this.isLoggedIn()) {
       return;
     }
     const collection = this.db.collection('characters');
-    return await collection.find({ character: { $in: [...characters] } }).toArray();
+    return await collection.find({ character: { $in: characters.split('') } }).toArray();
   }
 
-  async getPhrases({ perPage, page, orderBy, order }) {
+  async getPhrases({ perPage, page, orderBy, order }: { perPage: number, page: number, orderBy: string, order: number }) {
     if (!this.isLoggedIn()) {
       return [];
     }
@@ -82,12 +88,18 @@ export class Mongodb {
     return await collection.aggregate(pipeline).toArray();
   }
 
-  async savePhrase(phrase) {
+  async savePhrase(phrase: Phrase) {
     if (!this.isLoggedIn()) {
       return;
     }
     const collection = this.db.collection('phrases');
-    const storePhrase = phrase.getStorable(this.userID());
+    const userID = this.userID();
+
+    if (!userID) {
+      return;
+    }
+
+    const storePhrase = phrase.getStorable(userID);
 
     if (!storePhrase._id) {
       return await collection.insertOne(storePhrase);
@@ -95,7 +107,7 @@ export class Mongodb {
     return await collection.updateOne({ _id: storePhrase._id }, storePhrase);
   }
 
-  async removePhrase(phrase) {
+  async removePhrase(phrase: Phrase) {
     if (!this.isLoggedIn()) {
       return;
     }

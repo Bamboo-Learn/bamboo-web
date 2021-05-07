@@ -1,13 +1,22 @@
 
 import { combineReducers } from 'redux';
 
-import { Phrase } from 'app/helpers';
+import { Phrase, DBPhraseInterface } from 'app/helpers';
 
-import { APPEND_PHRASES, DELETE_PHRASE, EDIT_PHRASE, CHANGE_DISPLAY_CHARACTER_SETTING, CHANGE_FILTER } from './actions.js';
+import { APPEND_PHRASES, DELETE_PHRASE, EDIT_PHRASE, CHANGE_DISPLAY_CHARACTER_SETTING, CHANGE_FILTER } from './actions';
 
 // Filter Reducer
 
-const initFilter = {
+export interface Filter {
+  perPage: number,
+  orderBy: string,
+  order: number,
+  page: number,
+  search: string,
+  pack: string
+}
+
+const initFilter: Filter = {
   perPage: 30,
   orderBy: '',
   order: 1,
@@ -16,7 +25,7 @@ const initFilter = {
   pack: ''
 }
 
-const filterReducer = (state = initFilter, action) => {
+const filterReducer = (state = initFilter, action: any) => {
   switch (action.type) {
     case CHANGE_FILTER:
       return { ...action.filter }
@@ -27,18 +36,24 @@ const filterReducer = (state = initFilter, action) => {
 
 // Library Reducer
 
-const initLibrary = {
+export interface Library {
+  phrases: Phrase[],
+  packs: { name: string, count: number }[],
+  totalSize: number
+}
+
+const initLibrary: Library = {
   phrases: [],
   packs: [],
   totalSize: 0,
 };
 
-const libraryReducer = (state = initLibrary, action) => {
+const libraryReducer = (state = initLibrary, action: any) => {
   switch (action.type) {
     case APPEND_PHRASES:
       const phrases = [...state.phrases];
-      action.phrases.forEach((phrase) => {
-        const existingPhrase = phrases.find(p => p._id.equals(phrase._id))
+      action.phrases.forEach((phrase: DBPhraseInterface) => {
+        const existingPhrase = phrases.find((p: Phrase) => p._id.equals(phrase._id))
         if (!existingPhrase) {
           // if not already in the array then add it
           phrases.push(new Phrase(phrase));
@@ -57,12 +72,16 @@ const libraryReducer = (state = initLibrary, action) => {
 
 // Settings Reducer
 
-const initSettings = {
+interface Settings {
+  displayCharacterSet: 'simp' | 'trad'
+}
+
+const initSettings: Settings = {
   // user data
   displayCharacterSet: 'trad',
 };
 
-const settingsReducer = (state = initSettings, action) => {
+const settingsReducer = (state = initSettings, action: any) => {
   switch (action.type) {
     case CHANGE_DISPLAY_CHARACTER_SETTING:
       return { ...state, ...{ displayCharacterSet: action.displayCharacterSet } };
@@ -70,6 +89,12 @@ const settingsReducer = (state = initSettings, action) => {
       return state;
   }
 }
+
+// TODO: Page Reducer
+
+// const initPage = {
+//   isLoading: true
+// };
 
 const reducer = combineReducers({
   filter: filterReducer,

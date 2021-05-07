@@ -6,7 +6,9 @@ import { PageHeader, PageBody } from 'app/elements';
 import { appendPhrases, updateFilter } from 'app/redux';
 
 import { Filter } from './filter/Filter.js';
-import { RowAddNew } from './table'; // RowPhrase, TableHeader
+import { RowAddNew, RowPhrase } from './table'; // TableHeader
+
+import Style from './style.module.css';
 
 class RawLibrary extends React.Component {
   displayPhrases() {
@@ -20,7 +22,7 @@ class RawLibrary extends React.Component {
 
   render() {
     const { updateFilter, filter, mongodb } = this.props;
-    // const displayPhrases = this.displayPhrases();
+    const displayPhrases = this.displayPhrases();
 
     return (
       <>
@@ -28,13 +30,13 @@ class RawLibrary extends React.Component {
         <PageBody>
           <Filter mongodb={mongodb} filter={filter} updateFilter={updateFilter} />
           {/* <TableHeader mongodb={mongodb} filter={filter} updateFilter={updateFilter} /> */}
-          <div>
+          <div className={Style.tableBody}>
             <RowAddNew mongodb={mongodb} />
-            {/* {
+            {
               displayPhrases.map((phrase) => (
                 <RowPhrase key={phrase._id} phrase={phrase} />
               ))
-            } */}
+            }
           </div>
         </PageBody>
       </>

@@ -1,4 +1,4 @@
-export { Mongodb } from './mongodb.js';
-export { Phrase, DEFAULT_PHRASE } from './phrase.js';
-export * from './utils.js';
+export { Mongodb } from './mongodb';
+export * from './phrase';
+export * from './utils';
 export * from './chrome.js';
