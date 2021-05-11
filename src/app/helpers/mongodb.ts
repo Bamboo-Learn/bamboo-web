@@ -1,99 +1,117 @@
 
-import {
-  Stitch,
-  RemoteMongoClient,
-  UserPasswordAuthProviderClient,
-  UserPasswordCredential,
-  GoogleRedirectCredential,
-  StitchAppClient, RemoteMongoDatabase
-} from 'mongodb-stitch-browser-sdk';
+import * as Realm from 'realm-web';
+
 import { Phrase } from './phrase';
+
+// https://docs.mongodb.com/realm/web/init-realmclient/
+// TODO: this should just be helper functions that take a Realm.App
 
 export class Mongodb {
 
-  client: StitchAppClient
-  db: RemoteMongoDatabase
+  static RealmAppID: string = 'bamboo-rwymp';
+  static ClientName: string = 'mongodb-atlas';
+  static DBName: string = 'bamboo-db';
 
-  constructor() {
-    this.client = Stitch.initializeDefaultAppClient('bamboo-rwymp');
-    this.db = this.client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('bamboo-db');
+  // Init
+
+  static init(): Realm.App {
+    return new Realm.App({ id: Mongodb.RealmAppID });
   }
 
-  isLoggedIn(): boolean {
-    if (this.client.auth.hasRedirectResult()) {
-      this.client.auth.handleRedirectResult();
-      return true;
+  // Info
+
+  static userID() {
+    return Mongodb.getUser().id;
+  }
+
+  static isLoggedIn(): boolean {
+    //   if (this.client.auth.hasRedirectResult()) {
+    //     this.client.auth.handleRedirectResult();
+    //     return true;
+    //   }
+    //   return this.client.auth.isLoggedIn;
+    const user = Mongodb.getUser();
+    return !!user;
+  }
+
+  // Authentication
+
+  static async createAccountWithEmailAndPassword({ email, password }: { email: string, password: string }) {
+    const app = Mongodb.getApp();
+    return await app.emailPasswordAuth.registerUser(email, password);
+  }
+
+  static async confirmNewAccount() {
+    // TODO: get the token and stuff 
+  }
+
+  static async loginWithEmailAndPassword({ email, password }: { email: string, password: string }) {
+    const credentials = Realm.Credentials.emailPassword(email, password);
+    try {
+      const app = Mongodb.getApp();
+      const user: Realm.User = await app.logIn(credentials);
+      return user;
+    } catch (err) {
+      return err;
     }
-    return this.client.auth.isLoggedIn;
   }
 
-  async loginWithEmailAndPassword({ email, password }: { email: string, password: string }) {
-    const credential = new UserPasswordCredential(email, password);
-    return await this.client.auth.loginWithCredential(credential);
+  static async sendPasswordResetEmail({ email }: { email: string }) {
+    const app = Mongodb.getApp();
+    return await app.emailPasswordAuth.sendResetPasswordEmail(email);
   }
 
-  async createAccountWithEmailAndPassword({ email, password }: { email: string, password: string }) {
-    const emailPasswordClient = Stitch.defaultAppClient.auth.getProviderClient(UserPasswordAuthProviderClient.factory);
-    return await emailPasswordClient.registerWithEmail(email, password);
+  static async logout() {
+    const user = Mongodb.getUser();
+    await user.logout();
+    window.location.href = '/'; // redirect to home page after logout
   }
 
-  async sendPasswordResetEmail({ email }: { email: string }) {
-    const emailPasswordClient = Stitch.defaultAppClient.auth.getProviderClient(UserPasswordAuthProviderClient.factory);
-    return await emailPasswordClient.sendResetPasswordEmail(email);
-  }
+  // loginWithGoogle() {
+  //   // https://docs.mongodb.com/stitch/authentication/linking/
+  //   const credential = new GoogleRedirectCredential();
+  //   this.client.auth.loginWithRedirect(credential);
+  // }
 
-  loginWithGoogle() {
-    // https://docs.mongodb.com/stitch/authentication/linking/
-    const credential = new GoogleRedirectCredential();
-    this.client.auth.loginWithRedirect(credential);
-  }
-
-  async logout() {
-    await this.client.auth.logout();
-    window.location.href = '/';
-  }
-
-  userID() {
-    if (!this.client.auth.user) {
-      return
-    }
-    return this.client.auth.user.id;
-  }
-
+  // Data
 
   // TODO: handle errors in all of these (in case network is gone)
-  async getCharacters(characters: string) {
-    if (!this.isLoggedIn()) {
+  static async getCharacters(characters: string) {
+    if (!Mongodb.isLoggedIn()) {
       return;
     }
-    const collection = this.db.collection('characters');
+    const db = Mongodb.getDB();
+    const collection = db.collection('characters');
     return await collection.find({ character: { $in: characters.split('') } }).toArray();
   }
 
-  async getPhrases({ perPage, page, orderBy, order }: { perPage: number, page: number, orderBy: string, order: number }) {
-    if (!this.isLoggedIn()) {
+  static async getPhrases({ perPage, page, orderBy: filterOrderBy, order }: { perPage: number, page: number, orderBy: string, order: number }) {
+    if (!Mongodb.isLoggedIn()) {
       return [];
     }
-    const sort = `{ 
-      "${orderBy === '' ? '_id' : orderBy}" : 
-      ${order}
-    }`;
-    const collection = this.db.collection('phrases');
+    const db = Mongodb.getDB();
+    const orderBy = filterOrderBy === '' ? '_id' : filterOrderBy;
+    const collection = db.collection('phrases');
     const pipeline = [
-      { '$match': { owner_id: this.userID() } },
-      { '$sort': JSON.parse(sort) },
+      { '$match': { owner_id: Mongodb.userID() } },
+      {
+        '$sort': {
+          [orderBy]: order
+        }
+      },
       { "$skip": page * perPage },
       { "$limit": perPage }
     ];
-    return await collection.aggregate(pipeline).toArray();
+    return await collection.aggregate(pipeline);
   }
 
-  async savePhrase(phrase: Phrase) {
-    if (!this.isLoggedIn()) {
+  static async savePhrase(phrase: Phrase) {
+    if (!Mongodb.isLoggedIn()) {
       return;
     }
-    const collection = this.db.collection('phrases');
-    const userID = this.userID();
+    const db = Mongodb.getDB();
+    const collection = db.collection('phrases');
+    const userID = Mongodb.userID();
 
     if (!userID) {
       return;
@@ -107,15 +125,17 @@ export class Mongodb {
     return await collection.updateOne({ _id: storePhrase._id }, storePhrase);
   }
 
-  async removePhrase(phrase: Phrase) {
-    if (!this.isLoggedIn()) {
+  static async removePhrase(phrase: Phrase) {
+    if (!Mongodb.isLoggedIn()) {
       return;
     }
-    const collection = this.db.collection('phrases');
+    const db = Mongodb.getDB();
+    const collection = db.collection('phrases');
     return await collection.deleteOne({ _id: phrase._id });
   }
 
-  async loadUserData() {
+  static async loadUserData() {
+    // Use graphql here
     // return await Promise.all([
     // call to get the user data
     // call to get the pack data
@@ -125,4 +145,22 @@ export class Mongodb {
       displayCharacterSet: 'trad'
     }
   }
+
+
+  // Private Functions
+
+  private static getApp(): Realm.App {
+    return Realm.App.getApp(Mongodb.RealmAppID);
+  }
+
+  private static getUser(): any {
+    const app = Mongodb.getApp();
+    return app.currentUser;
+  }
+
+  private static getDB() {
+    const client = Mongodb.getUser().mongoClient(Mongodb.ClientName);
+    return client.db(Mongodb.DBName)
+  }
+
 }

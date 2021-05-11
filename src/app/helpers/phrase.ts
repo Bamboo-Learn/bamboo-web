@@ -1,5 +1,5 @@
 
-import { BSON } from 'mongodb-stitch-browser-sdk';
+import { BSON } from 'realm-web';
 
 import { isSet } from './utils'
 
@@ -63,7 +63,7 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
   }
 
   // sets the original to the current (does not save to db)
-  save({ insertedId }: { insertedId: string }) {
+  save({ insertedId }: { insertedId: BSON.ObjectID }) {
     if (isSet(insertedId)) {
       // if this is newly inserted then add id
       this._id = insertedId;

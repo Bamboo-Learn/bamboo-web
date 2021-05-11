@@ -2,18 +2,11 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
+import { Mongodb } from 'app/helpers';
 import { Logo } from 'app/elements';
 import { ChromeWebStoreLink } from 'app/helpers';
 
 import Style from './style.module.css';
-
-// const PAGE_IDS = [
-//   'library',
-//   'my-packs',
-//   'public-packs',
-//   'study',
-//   'settings'
-// ];
 
 const SidebarItem = ({ onClick, label, name, isActive }) => (
   <div className={`${Style.sidebarItem} ${isActive ? Style.active : ''}`} name={name} onClick={onClick}>
@@ -45,8 +38,7 @@ class RawSidebar extends React.Component {
   }
 
   logout() {
-    const { mongodb } = this.props;
-    mongodb.logout();
+    Mongodb.logout();
   }
 
   closeSidebar() {
@@ -71,9 +63,9 @@ class RawSidebar extends React.Component {
             <Link to="/my-packs">
               <SidebarItem label="My Packs" isActive={pageID === 'my-packs'} onClick={this.closeSidebar} />
             </Link>
-            <Link to="/public-packs">
+            {/* TODO: <Link to="/public-packs">
               <SidebarItem label="Public Packs" isActive={pageID === 'public-packs'} onClick={this.closeSidebar} />
-            </Link>
+            </Link> */}
             <Link to="/study-mode">
               <SidebarItem label="Study Mode" isActive={pageID === 'study-mode'} onClick={this.closeSidebar} />
             </Link>

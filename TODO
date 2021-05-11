@@ -1,0 +1,22 @@
+
+1. Library (make this look nice and work well)
+  - Add new
+2. Onload data
+  - Packs
+  - user settings 
+4. Study Mode
+5. Chrome Extension
+
+6. Public Packs
+
+
+Reorganize, put Chrome Extension in src to use same helpers and elements:
+
+- src
+  no files in src
+  - helpers
+  - elements
+  - web
+    index.js serviceWorker, reset.css, react-app-env.d.ts
+  - chrome (delete chrome repo)
+  - native?

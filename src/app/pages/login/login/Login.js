@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Mongodb } from 'app/helpers';
 import { Canvas, Logo, Splash } from 'app/elements';
 
 import { LoginForm } from './login-form/LoginForm';
@@ -22,8 +23,7 @@ class Login extends React.Component {
   }
 
   redirectIfLoggedIn() {
-    const { mongodb } = this.props;
-    if (mongodb.isLoggedIn()) {
+    if (Mongodb.isLoggedIn()) {
       window.location = '/library';
     }
   }
@@ -33,8 +33,7 @@ class Login extends React.Component {
   }
 
   confirmNotLoggedIn() {
-    const { mongodb } = this.props;
-    if (!mongodb.isLoggedIn()) {
+    if (!Mongodb.isLoggedIn()) {
       this.setState({
         isSplashOverlayOpen: false
       });
@@ -43,7 +42,6 @@ class Login extends React.Component {
 
 
   render() {
-    const { mongodb } = this.props;
     const { isSplashOverlayOpen } = this.state;
     return (
       <>
@@ -56,7 +54,7 @@ class Login extends React.Component {
             <div className={Style.containerLeftBody}>
               <h1>Login or Sign Up</h1>
               <p>to start learning Chinese while you browse!</p>
-              <LoginForm mongodb={mongodb} />
+              <LoginForm />
             </div>
           </div>
           <div className={Style.containerRight}>

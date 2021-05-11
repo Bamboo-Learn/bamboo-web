@@ -27,7 +27,7 @@ class TableHeader extends React.Component {
   }
 
   changeOrderBy(orderBy) {
-    const { filter, updateFilter, mongodb } = this.props;
+    const { filter, updateFilter } = this.props;
     let reverse = false;
     if (filter.orderBy === orderBy) {
       if (filter.reverse) {
@@ -38,7 +38,7 @@ class TableHeader extends React.Component {
       }
     }
     const newFilter = { ...filter, ...{ orderBy, reverse } };
-    updateFilter({ filter: newFilter, mongodb });
+    updateFilter({ filter: newFilter });
   }
 
   changeOrder(e) {

@@ -20,7 +20,7 @@ class PublicPacks extends React.Component {
   render() {
     return (
       <>
-        <PageHeader>Public Packs</PageHeader>
+        <PageHeader>{'Public Packs'}</PageHeader>
         <PageBody className={Style.packList}>
         </PageBody>
       </>

@@ -22,7 +22,7 @@ class MyPacks extends React.Component {
     const { packs } = this.state;
     return (
       <>
-        <PageHeader>My Packs</PageHeader>
+        <PageHeader>{'My Packs'}</PageHeader>
         <PageBody className={Style.packList}>
           <NewPack />
           {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Popup, Button, FormText, Slider } from 'app/elements';
-import { isSet } from 'app/helpers';
+import { Mongodb, isSet } from 'app/helpers';
 
 import Style from './style.module.css';
 
@@ -95,7 +95,7 @@ class EditOverlay extends React.Component {
 
     // adds the phrase to the db
     const phrase = this.state.phrase;
-    const insertedPhrase = await this.props.mongodb.savePhrase(phrase);
+    const insertedPhrase = await Mongodb.savePhrase(phrase);
 
     // adds the id to the phrase
     phrase.save(insertedPhrase);
@@ -114,7 +114,7 @@ class EditOverlay extends React.Component {
 
     // delete the phrase from the db
     const phrase = this.state.phrase;
-    await this.props.mongodb.removePhrase(phrase);
+    await Mongodb.removePhrase(phrase);
 
     // delete it from the phrases list
     this.props.changePhraseAction({ action: 'DELETE', phrase });
@@ -128,7 +128,7 @@ class EditOverlay extends React.Component {
 
     // get the pinyin and english for these characters
     const phrase = this.state.phrase;
-    const characters = await this.props.mongodb.getCharacters(phrase.characters);
+    const characters = await Mongodb.getCharacters(phrase.characters);
 
     // edit the phrase to include the new phrases
     const newPhrase = phrase.autofill(characters, {

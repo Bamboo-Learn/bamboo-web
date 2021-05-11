@@ -1,6 +1,8 @@
 import React from 'react'
 
+import { Mongodb } from 'app/helpers';
 import { FormText, Button, FormRow, Form } from 'app/elements';
+
 import { validateEmail, validatePassword } from '../../base';
 
 import Style from './style.module.css';
@@ -98,11 +100,10 @@ class LoginForm extends React.Component {
 
   loginWithEmailAndPassword(e) {
     e.preventDefault();
-    const { mongodb } = this.props;
     const { email, password, valid } = this.isValidEmailAndPassword();
     if (!valid) return;
 
-    mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
+    Mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
       window.location = '/library';
     }).catch(err => {
       this.setState({
@@ -120,14 +121,13 @@ class LoginForm extends React.Component {
 
   createAccountWithEmailAndPassword(e) {
     e.preventDefault();
-    const { mongodb } = this.props;
     const { email, password, valid } = this.isValidEmailAndPassword();
     if (!valid) return;
-    mongodb.createAccountWithEmailAndPassword({ email, password }).then(data => {
+    Mongodb.createAccountWithEmailAndPassword({ email, password }).then(data => {
       this.setState({
         message: 'Account created! Redirecting to application...'
       });
-      mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
+      Mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
         window.location = '/library';
       }).catch(err => {
         console.log(err);
@@ -139,11 +139,10 @@ class LoginForm extends React.Component {
 
   sendPasswordResetEmail(e) {
     e.preventDefault();
-    const { mongodb } = this.props;
     const { email, valid } = this.isValidEmail();
     if (!valid) return;
 
-    mongodb.sendPasswordResetEmail({ email }).then(data => {
+    Mongodb.sendPasswordResetEmail({ email }).then(data => {
       this.setState({
         message: 'Reset email has been sent.'
       });

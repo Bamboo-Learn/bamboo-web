@@ -23,7 +23,7 @@ class App extends React.Component {
 
     this.store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
     // this.store.dispatch(SocketService.startService()); // TODO: mongodb here?
-    this.mongodb = new Mongodb();
+    this.mongodb = Mongodb.init();
   }
 
   render() {
@@ -37,10 +37,10 @@ class App extends React.Component {
             <Reset />
           </Route> */}
             <Route path="/login">
-              <Login mongodb={this.mongodb} />
+              <Login />
             </Route>
             <Route path={["/confirm", "/:pageID", "/"]}>
-              <Main mongodb={this.mongodb} />
+              <Main />
             </Route>
           </Switch>
         </Provider>

@@ -1,5 +1,6 @@
 
 import { Filter } from './reducers';
+
 import { Mongodb } from 'app/helpers'
 
 // library
@@ -21,7 +22,7 @@ export const CHANGE_DISPLAY_CHARACTER_SETTING = 6;
 export const updateFilter = (() => {
   const filterHistory: string[] = [];
   // returns a function that can be dispatched
-  return ({ filter, mongodb }: { filter: Filter, mongodb: Mongodb }) => {
+  return ({ filter }: { filter: Filter }) => {
     const filterString = JSON.stringify(filter);
     // if we have not used this filter before
     if (!filterHistory.includes(filterString)) {
@@ -29,7 +30,7 @@ export const updateFilter = (() => {
       filterHistory.push(filterString);
       return (dispatch: any) => {
         // TODO: dispatch a page loading
-        mongodb.getPhrases(filter).then((loadedPhrases) => {
+        Mongodb.getPhrases(filter).then((loadedPhrases) => {
           // then dispatch append phrases and update the filter
           dispatch(appendPhrases(loadedPhrases));
           dispatch({ type: CHANGE_FILTER, filter });

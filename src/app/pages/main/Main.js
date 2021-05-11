@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { Mongodb } from 'app/helpers';
 import { Splash } from 'app/elements';
 import { updateFilter } from 'app/redux';
 
@@ -27,8 +28,7 @@ class RawMain extends React.Component {
   }
 
   redirectIfNotLoggedIn() {
-    const { mongodb } = this.props;
-    if (!mongodb || !mongodb.isLoggedIn()) {
+    if (!Mongodb.isLoggedIn()) {
       window.location = '/login';
     }
   }
@@ -38,27 +38,26 @@ class RawMain extends React.Component {
   }
 
   confirmLogin() {
-    const { mongodb, filter, updateFilter } = this.props;
-    if (mongodb.isLoggedIn()) {
-      mongodb.loadUserData().then(data => {
+    const { filter, updateFilter } = this.props;
+    if (Mongodb.isLoggedIn()) {
+      Mongodb.loadUserData().then(data => {
         this.setState({
           userData: data,
           isSplashOverlayOpen: false
         });
-        updateFilter({ filter, mongodb });
+        updateFilter({ filter });
       });
     }
     // TODO: wait for initial phrases to load before removing splash
   }
 
   render() {
-    const { mongodb } = this.props;
     const { isSplashOverlayOpen } = this.state;
     return (
       <>
         <Splash isSplashOverlayOpen={isSplashOverlayOpen} />
-        <Sidebar mongodb={mongodb} />
-        <Content mongodb={mongodb} />
+        <Sidebar />
+        <Content />
       </>
     );
   }
@@ -73,8 +72,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  updateFilter: ({ filter, mongodb }) => {
-    dispatch(updateFilter({ filter, mongodb }))
+  updateFilter: ({ filter }) => {
+    dispatch(updateFilter({ filter }))
   }
 });
 

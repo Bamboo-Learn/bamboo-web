@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PageHeader, PageBody, Form, FormRow, FormSelect, FormMessage, Button } from "app/elements";
+import { PageHeader, PageBody, Form, FormRow, FormSelect, FormMessage, Button } from 'app/elements';
 
 const CHARACTER_SETS = [
   {

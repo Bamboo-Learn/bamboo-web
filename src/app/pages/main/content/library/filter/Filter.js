@@ -77,38 +77,38 @@ class Filter extends React.Component {
   }
 
   sendSearch() {
-    const { updateFilter, filter, mongodb } = this.props;
+    const { updateFilter, filter } = this.props;
     const { searchQuery } = this.state;
     const newFilter = { ...filter, ...{ search: searchQuery } };
-    updateFilter({ filter: newFilter, mongodb });
+    updateFilter({ filter: newFilter });
   }
 
   toggleOrder(e) {
     e.preventDefault();
-    const { filter, updateFilter, mongodb } = this.props;
+    const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ order: -1 * filter.order } };
-    updateFilter({ filter: newFilter, mongodb });
+    updateFilter({ filter: newFilter });
   }
 
   updateOrderBy(e) {
     e.preventDefault();
-    const { filter, updateFilter, mongodb } = this.props;
+    const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ orderBy: e.target.value } };
-    updateFilter({ filter: newFilter, mongodb });
+    updateFilter({ filter: newFilter });
   }
 
   updatePack(e) {
     e.preventDefault();
-    const { filter, updateFilter, mongodb } = this.props;
+    const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ pack: e.target.value } };
-    updateFilter({ filter: newFilter, mongodb });
+    updateFilter({ filter: newFilter });
   }
 
   updateProgress(e) {
     e.preventDefault();
-    const { filter, updateFilter, mongodb } = this.props;
+    const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ progress: e.target.value } };
-    updateFilter({ filter: newFilter, mongodb });
+    updateFilter({ filter: newFilter });
   }
 
   render() {

@@ -21,17 +21,17 @@ class RawLibrary extends React.Component {
   }
 
   render() {
-    const { updateFilter, filter, mongodb } = this.props;
+    const { updateFilter, filter } = this.props;
     const displayPhrases = this.displayPhrases();
 
     return (
       <>
-        <PageHeader>Library</PageHeader>
+        <PageHeader>{'Library'}</PageHeader>
         <PageBody>
-          <Filter mongodb={mongodb} filter={filter} updateFilter={updateFilter} />
-          {/* <TableHeader mongodb={mongodb} filter={filter} updateFilter={updateFilter} /> */}
+          <Filter filter={filter} updateFilter={updateFilter} />
+          {/* <TableHeader filter={filter} updateFilter={updateFilter} /> */}
           <div className={Style.tableBody}>
-            <RowAddNew mongodb={mongodb} />
+            <RowAddNew />
             {
               displayPhrases.map((phrase) => (
                 <RowPhrase key={phrase._id} phrase={phrase} />
