@@ -2,6 +2,7 @@ export * from './button/Button.js';
 export * from './canvas';
 export * from './form';
 export * from './icon';
+export * from './inputs';
 export * from './loading/Loading.js';
 export * from './logo/Logo.js';
 export * from './page';

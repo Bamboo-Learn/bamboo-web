@@ -6,8 +6,7 @@ import { PageHeader, PageBody } from 'app/elements';
 import { appendPhrases, updateFilter } from 'app/redux';
 
 import { Filter } from './filter/Filter.js';
-import { RowAddNew, RowPhrase } from './table'; // TableHeader
-
+import { RowAddNew, RowPhrase, RowLoadMore } from './table'; // TableHeader
 import Style from './style.module.css';
 
 class RawLibrary extends React.Component {
@@ -37,6 +36,7 @@ class RawLibrary extends React.Component {
                 <RowPhrase key={phrase._id} phrase={phrase} />
               ))
             }
+            <RowLoadMore />
           </div>
         </PageBody>
       </>

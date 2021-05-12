@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormText, FormSelect } from 'app/elements';
+import { InputText, Select } from 'app/elements';
 import { getIcon } from 'app/elements';
 
 import Style from './style.module.css';
@@ -122,7 +122,7 @@ class Filter extends React.Component {
         >
           {/* search */}
           {/* toggle button to reveal the rest of the filter (mobile) */}
-          <FormText
+          <InputText
             onReturn={e => this.sendSearch(e)}
             onChange={e => this.updateSearch(e)}
             value={searchQuery}
@@ -135,7 +135,7 @@ class Filter extends React.Component {
           iconClassName={Style.iconRotated}
         >
           {/* order by (mobile) multi select and order toggle */}
-          <FormSelect
+          <Select
             onChange={(e) => this.updateOrderBy(e)}
             value={orderBy}
             options={ORDER_BY_OPTIONS}
@@ -143,7 +143,7 @@ class Filter extends React.Component {
         </FilterRow>
         <FilterRow>
           {/* pack multi select */}
-          <FormSelect
+          <Select
             onChange={(e) => this.updatePack(e)}
             value={pack}
             options={PACK_OPTIONS}
@@ -151,7 +151,7 @@ class Filter extends React.Component {
         </FilterRow>
         <FilterRow>
           {/* progress select (study, to study, studied, all) */}
-          <FormSelect
+          <Select
             onChange={(e) => this.updateProgress(e)}
             value={progress}
             options={PROGRESS_OPTIONS}

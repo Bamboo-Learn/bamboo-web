@@ -30,7 +30,7 @@
 
 .FormRow .LabelHolder .Label {
   color: #999;
-  padding: 18px 8px 0;
+  padding: 18px 6px 6px;
   font-size: 14px;
   text-align: left;
 }
@@ -51,36 +51,47 @@
   width: 100%;
 }
 
+/* Input */
+
+.FormRow .InputHolder .Input {
+  font-size: 14px;
+  width: calc(100% - 16px);
+  padding: 8px;
+  border-bottom: 1px solid #0002;
+  margin: 6px auto;
+}
+
+
 /* Detail */
 
-.Detail {
+.FormRow .Detail {
   width: 100%;
   display: flex;
   height: 24px;
   font-size: 12px;
 }
 
-.Detail .Message {
+.FormRow .Detail .Message {
   width: calc(100% - 138px);
   margin-left: 38px;
 }
 
-.Detail .Message span.Error {
+.FormRow .Detail .Message span.Error {
   color: #f00;
 }
 
-.Detail .Link {
+.FormRow .Detail .Link {
   width: 100px;
   font-size: 12px;
   color: #999;
   text-align: right;
 }
 
-.Detail .Link span {
+.FormRow .Detail .Link span {
   cursor: pointer;
 }
 
-.Detail .Link span:hover {
+.FormRow .Detail .Link span:hover {
   color: #888;
   text-decoration: underline;
 }
@@ -100,16 +111,6 @@
   border-bottom: 2px solid #f00;
 }
 
-/* Input */
-
-.Input {
-  font-size: 14px;
-  width: calc(100% - 16px);
-  padding: 8px;
-  border-bottom: 1px solid #0002;
-  margin: 6px auto;
-}
-
 /* TODO: move this or get rid of it even Message */
 
 .FormRow .FormMessage {
@@ -119,9 +120,6 @@
 
 
 @media only screen and (min-width: 768px) {
-  .Form {}
-
-  .FormRow {}
 
   /* Label */
 
@@ -130,50 +128,13 @@
     height: 50px;
   }
 
-  .FormRow.IconRow .LabelHolder {}
-
-  .FormRow .LabelHolder .Icon {}
-
   .FormRow .LabelHolder .Label {
     text-align: center;
   }
 
   /* InputHolder */
 
-  .FormRow .InputHolder {}
-
-  .FormRow.IconRow .InputHolder {}
-
-  .FormRow .InputHolder.InputHolderFullWidth {}
-
-  /* Detail */
-
-  .Detail {}
-
-  .Detail .Message {}
-
-  .Detail .Message span.Error {}
-
-  .Detail .Link {}
-
-  .Detail .Link span {}
-
-  .Detail .Link span:hover {}
-
-  /* Error */
-
-  .FormRow.Error .LabelHolder .Icon {}
-
-  .FormRow.Error .LabelHolder .Label {}
-
-  .FormRow.Error .InputHolder .Input {}
-
-  /* Input */
-
-  .Input {}
-
-  /* TODO: move this or get rid of it even Message */
-
-  .FormRow .FormMessage {}
-
+  .FormRow .InputHolder {
+    width: calc(100% - 130px);
+  }
 }
