@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { InputText, Select } from 'app/elements';
 import { getIcon } from 'app/elements';
+import { updateFilter } from 'app/redux';
 
 import Style from './style.module.css';
 
@@ -45,7 +47,7 @@ const FilterRow = ({
   );
 }
 
-class Filter extends React.Component {
+class RawFilter extends React.Component {
   constructor(props) {
     super(props)
 
@@ -53,58 +55,50 @@ class Filter extends React.Component {
       isOpen: false,
       searchQuery: ''
     }
-
-    this.toggleOpen = this.toggleOpen.bind(this);
-    this.updateSearch = this.updateSearch.bind(this);
-    this.sendSearch = this.sendSearch.bind(this);
-    this.toggleOrder = this.toggleOrder.bind(this);
-    this.updateOrderBy = this.updateOrderBy.bind(this);
-    this.updatePack = this.updatePack.bind(this);
-    this.updateProgress = this.updateProgress.bind(this);
   }
 
-  toggleOpen(e) {
+  toggleOpen = (e) => {
     e.preventDefault();
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
 
-  updateSearch(e) {
+  updateSearch = (e) => {
     this.setState({
       searchQuery: e.target.value
     });
   }
 
-  sendSearch() {
+  sendSearch = () => {
     const { updateFilter, filter } = this.props;
     const { searchQuery } = this.state;
     const newFilter = { ...filter, ...{ search: searchQuery } };
     updateFilter({ filter: newFilter });
   }
 
-  toggleOrder(e) {
+  toggleOrder = (e) => {
     e.preventDefault();
     const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ order: -1 * filter.order } };
     updateFilter({ filter: newFilter });
   }
 
-  updateOrderBy(e) {
+  updateOrderBy = (e) => {
     e.preventDefault();
     const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ orderBy: e.target.value } };
     updateFilter({ filter: newFilter });
   }
 
-  updatePack(e) {
+  updatePack = (e) => {
     e.preventDefault();
     const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ pack: e.target.value } };
     updateFilter({ filter: newFilter });
   }
 
-  updateProgress(e) {
+  updateProgress = (e) => {
     e.preventDefault();
     const { filter, updateFilter } = this.props;
     const newFilter = { ...filter, ...{ progress: e.target.value } };
@@ -161,5 +155,22 @@ class Filter extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    filter: state.filter
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  updateFilter: ({ filter, mongodb }) => {
+    dispatch(updateFilter({ filter, mongodb }))
+  }
+});
+
+const Filter = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RawFilter);
 
 export { Filter };

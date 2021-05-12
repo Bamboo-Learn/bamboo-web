@@ -9,17 +9,16 @@
 }
 
 .header {
-  font-size: 24px;
-  padding: 18px 10px 10px;
+  font-size: 16px;
+  padding: 14px 10px;
   font-weight: bold;
-  border-bottom: 1px solid #0003;
   width: 100%;
   position: fixed;
   background: #f4f2ed;
+  border-bottom: 1px solid #0003;
 }
 
 .pageBody {
-  margin-top: 60px;
   padding: 0 4px;
 }
 
@@ -34,6 +33,7 @@
     padding: 18px 10px;
     font-size: 28px;
     width: calc(100% - 80px);
+    font-size: 24px;
   }
 
   .pageBody {

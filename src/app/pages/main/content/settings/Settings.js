@@ -18,7 +18,7 @@ class Settings extends React.Component {
     super(props);
 
     this.state = {
-      characterSetValue: '',
+      characterSetValue: '', // TODO: remove this and use redux
       message: ''
     };
 
@@ -26,9 +26,11 @@ class Settings extends React.Component {
   }
 
   componentDidMount() {
-    // get current values
+    // TODO: we will get the values when the page loads initially
+    // not here, this can be removed
   }
 
+  // TODO: remove this and use redux
   updateCharacterSetValue(e) {
     this.setState({
       characterSetValue: e.target.value
