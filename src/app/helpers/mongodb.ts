@@ -3,8 +3,7 @@ import * as Realm from 'realm-web';
 
 import { Phrase } from './phrase';
 
-// https://docs.mongodb.com/realm/web/init-realmclient/
-// TODO: this should just be helper functions that take a Realm.App
+// https://docs.mongodb.com/realm/web/
 
 export class Mongodb {
 
@@ -21,6 +20,9 @@ export class Mongodb {
   // Info
 
   static userID() {
+    if (!Mongodb.isLoggedIn()) {
+      return;
+    }
     return Mongodb.getUser().id;
   }
 
@@ -31,7 +33,7 @@ export class Mongodb {
     //   }
     //   return this.client.auth.isLoggedIn;
     const user = Mongodb.getUser();
-    return !!user;
+    return !!user && user.isLoggedIn;
   }
 
   // Authentication
@@ -47,13 +49,8 @@ export class Mongodb {
 
   static async loginWithEmailAndPassword({ email, password }: { email: string, password: string }) {
     const credentials = Realm.Credentials.emailPassword(email, password);
-    try {
-      const app = Mongodb.getApp();
-      const user: Realm.User = await app.logIn(credentials);
-      return user;
-    } catch (err) {
-      return err;
-    }
+    const app = Mongodb.getApp();
+    return await app.logIn(credentials);
   }
 
   static async sendPasswordResetEmail({ email }: { email: string }) {
@@ -61,9 +58,14 @@ export class Mongodb {
     return await app.emailPasswordAuth.sendResetPasswordEmail(email);
   }
 
+  static async resetPassword({ password, token, tokenId }: { password: string, token: string, tokenId: string }) {
+    const app = Mongodb.getApp();
+    return await app.emailPasswordAuth.resetPassword(password, token, tokenId);
+  }
+
   static async logout() {
     const user = Mongodb.getUser();
-    await user.logout();
+    await user.logOut();
     window.location.href = '/'; // redirect to home page after logout
   }
 

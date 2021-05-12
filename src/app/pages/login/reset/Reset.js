@@ -1,70 +1,100 @@
-// import React from 'react';
-// import {
-//   Stitch,
-//   UserPasswordAuthProviderClient,
-// } from 'mongodb-stitch-browser-sdk';
-// import { parse } from 'query-string';
+import React from 'react';
+import { parse } from 'query-string';
 
-// import { Text } from 'app/elements/form/Text.js';
-// import { Popup } from 'app/elements/popup/Popup.js';
-// import { LoginBase } from '../base.js';
+import { Mongodb } from 'app/helpers';
+import { Form, FormRow, FormText, Button } from 'app/elements';
 
-// import Style from './style.module.css';
+import { Container, ContainerLeft, ContainerRight, Display } from '../components';
+import Style from './style.module.css';
 
-// class Reset extends LoginBase {
-//   constructor(props) {
-//     super(props);
+class Reset extends React.Component {
+  constructor(props) {
+    super(props);
 
-//     this.client = Stitch.initializeDefaultAppClient('bamboo-rwymp');
-//     this.emailPassClient = Stitch.defaultAppClient.auth.getProviderClient(UserPasswordAuthProviderClient.factory);
+    this.state = {
+      isSplashOverlayOpen: true,
+      passwordInput: {
+        password: '',
+        errors: []
+      },
+    }
 
-//     this.resetPassword = this.resetPassword.bind(this);
-//   }
+    this.resetPassword = this.resetPassword.bind(this);
+  }
 
-//   resetPassword(e) {
-//     e.preventDefault();
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isSplashOverlayOpen: false
+      })
+    }, 200);
+  }
 
-//     const { token, tokenId } = parse(this.props.location.search);
-//     const { valid, password } = this.isValidPassword();
-//     if (!valid) return;
+  updatePassword(e) {
+    this.setState({
+      passwordInput: {
+        password: e.target.value,
+        errors: []
+      }
+    });
+  }
 
-//     this.emailPassClient.resetPassword(token, tokenId, password).then(() => {
-//       console.log("Successfully reset password!");
-//       window.location = '/';
-//     }).catch(err => {
-//       console.log("Error resetting password:", err);
-//     });
-//   }
+  resetPassword(e) {
+    e.preventDefault();
 
-//   render() {
-//     const { passwordInput } = this.state;
+    const { token, tokenId } = parse(this.props.location.search);
+    const { valid, password } = this.isValidPassword();
+    if (!valid) return;
 
-//     return (
-//       <>
-//         <Popup
-//           title="Reset Password"
-//           action="Reset Password"
-//           isOpen={() => true}
-//           onSubmit={e => this.resetPassword(e)}
-//         >
-//           <div className={Style.Errors}>
-//             {passwordInput.errors.map((err, i) => (<p key={`password-error-${i}`} className={Style.Error}> {err} </p>))}
-//           </div>
-//           <Text
-//             icon="Padlock"
-//             onChange={(e) => this.updatePassword(e)}
-//             value={passwordInput.password}
-//             placeholder="New Password"
-//             buttonVisible={false}
-//             isPassword={true}
-//             isError={passwordInput.errors.length > 0}
-//           />
-//         </Popup>
-//       </>
-//     );
-//   }
-// }
+    Mongodb.resetPassword(token, tokenId, password).then(() => {
+      console.log("Successfully reset password!");
+      window.location = '/';
+    }).catch(err => {
+      console.log("Error resetting password:", err);
+    });
+  }
 
-// export {
-//   Reset
-// };
+  render() {
+    const { passwordInput, isSplashOverlayOpen } = this.state;
+
+    return (
+      <>
+        <Container isSplashOverlayOpen={isSplashOverlayOpen}>
+          <ContainerLeft>
+            <h1>{'Reset Password'}</h1>
+            <Form>
+              <FormRow
+                icon="Padlock"
+                errors={passwordInput.errors}
+              >
+                <FormText
+                  onReturn={e => this.resetPassword(e)}
+                  onChange={(e) => this.updatePassword(e)}
+                  value={passwordInput.password}
+                  placeholder="New Password"
+                  isPassword={true}
+                />
+              </FormRow>
+              <FormRow>
+                <Button
+                  className={Style.Button}
+                  onClick={e => this.loginWithEmailAndPassword(e)}
+                  tab={true}
+                >
+                  {'Reset'}
+                </Button>
+              </FormRow>
+            </Form>
+          </ContainerLeft>
+          <ContainerRight>
+            <Display />
+          </ContainerRight>
+        </Container>
+      </>
+    );
+  }
+}
+
+export {
+  Reset
+};

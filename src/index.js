@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { Mongodb } from 'app/helpers';
-import { Main, Login } from 'app/pages';
+import { Main, Login, Reset } from 'app/pages';
 import { reducer } from 'app/redux';
 
 import * as serviceWorker from './serviceWorker';
@@ -22,20 +22,18 @@ class App extends React.Component {
     super(props);
 
     this.store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
-    // this.store.dispatch(SocketService.startService()); // TODO: mongodb here?
     this.mongodb = Mongodb.init();
   }
 
   render() {
     // TODO: confirm route popup is popup over <Main>
-    // TODO: login reset route <Reset>
     return (
       <Router>
         <Provider store={this.store}>
           <Switch>
-            {/* <Route path="/login/reset">
-            <Reset />
-          </Route> */}
+            <Route path="/login/reset">
+              <Reset />
+            </Route>
             <Route path="/login">
               <Login />
             </Route>

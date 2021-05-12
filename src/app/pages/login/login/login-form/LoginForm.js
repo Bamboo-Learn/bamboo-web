@@ -103,7 +103,7 @@ class LoginForm extends React.Component {
     const { email, password, valid } = this.isValidEmailAndPassword();
     if (!valid) return;
 
-    Mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
+    Mongodb.loginWithEmailAndPassword({ email, password }).then(() => {
       window.location = '/library';
     }).catch(err => {
       this.setState({
@@ -123,17 +123,26 @@ class LoginForm extends React.Component {
     e.preventDefault();
     const { email, password, valid } = this.isValidEmailAndPassword();
     if (!valid) return;
+
     Mongodb.createAccountWithEmailAndPassword({ email, password }).then(data => {
       this.setState({
         message: 'Account created! Redirecting to application...'
       });
+
       Mongodb.loginWithEmailAndPassword({ email, password }).then(data => {
         window.location = '/library';
       }).catch(err => {
         console.log(err);
       });
+
     }).catch(err => {
       console.log(err);
+      this.setState({
+        emailInput: {
+          email,
+          errors: [`${err.error[0].toUpperCase()}${err.error.substring(1)}.`]
+        },
+      });
     });
   }
 
