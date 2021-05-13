@@ -1,4 +1,4 @@
-.Button {
+.button {
   width: 184px;
   max-width: 184px;
   padding: 14px 0;
@@ -14,49 +14,49 @@
   display: flex;
 }
 
-.Button:focus,
-.Button:hover {
+.button:focus,
+.button:hover {
   background: var(--light-green);
 }
 
-.Button.orange {
+.button.orange {
   background: var(--dark-orange);
 }
 
-.Button.orange:hover {
+.button.orange:hover {
   background: var(--light-orange);
 }
 
-.Button.dark-green {
+.button.dark-green {
   background: var(--dark-green);
 }
 
-.Button.red {
+.button.red {
   background: #d11e1e;
 }
 
-.Button.blue {
+.button.blue {
   background: #2e7fb6;
 }
 
-.Button.grey,
-.Button.gray {
+.button.grey,
+.button.gray {
   background: #999;
 }
 
-/* Button Content */
+/* button Content */
 
-.Button .ButtonIconHolder {
+.button .buttonIconHolder {
   width: 22px;
   margin: -4px 0;
 }
 
-.Button .ButtonIconHolder .ButtonIcon {
+.button .buttonIconHolder .buttonIcon {
   width: 22px;
   fill: #FFF;
 }
 
-.Button .Label {
+.button .label {
   color: #FFF;
   width: 100%;
   text-align: center;

@@ -1,10 +1,10 @@
-export { Form } from './Form.js'
-export { FormRow } from './FormRow.js';
+export { Form } from './Form'
+export { FormRow } from './FormRow';
 
 export { FormText } from './FormText';
 export { FormSelect } from './FormSelect';
 export { FormMessage } from './FormMessage.js';
-export { Slider } from './FormSlider/FormSlider';
+export { Slider } from './FormSlider/FormSlider.js';
 
 // export { StatusSlider } from './StatusSlider.js';
 // export { TextArea } from './TextArea.js';

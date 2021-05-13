@@ -20,14 +20,13 @@ export const CHANGE_DISPLAY_CHARACTER_SETTING = 6;
 
 // create the update filter dispatching function
 export const updateFilter = (() => {
-  const filterHistory: string[] = [];
+  const filterHistory = new Set();
   // returns a function that can be dispatched
   return ({ filter }: { filter: Filter }) => {
-    const filterString = JSON.stringify(filter);
     // if we have not used this filter before
-    if (!filterHistory.includes(filterString)) {
+    if (!filterHistory.has(filter)) {
       // add the filter and load new phrases
-      filterHistory.push(filterString);
+      filterHistory.add(filter);
       return (dispatch: any) => {
         // TODO: dispatch a page loading
         Mongodb.getPhrases(filter).then((loadedPhrases) => {

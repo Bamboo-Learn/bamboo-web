@@ -1,0 +1,41 @@
+.row {
+  .col {
+    &.lg {
+      display: none;
+    }
+
+    &.confidence {}
+
+    &.chinese {}
+
+    &.pack {}
+
+    &.pinyin {}
+
+    &.english {}
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .row {
+    .col {
+      &.sm {
+        display: none;
+      }
+
+      &.lg {
+        display: block;
+      }
+
+      &.confidence {}
+
+      &.chinese {}
+
+      &.pack {}
+
+      &.pinyin {}
+
+      &.english {}
+    }
+  }
+}

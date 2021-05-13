@@ -1,10 +1,9 @@
 
 
 import React from 'react';
-import { FormRow } from '../FormRow.js';
 
 
-<StatusSlider
+{/* <StatusSlider
   emptyLabel="To Learn"
   middleLabel="Learning"
   fullLabel="Learned"
@@ -13,8 +12,7 @@ import { FormRow } from '../FormRow.js';
   min
   max
   step
-
-/>
+/> */}
 
 
 import Style from './style.module.css';
@@ -51,23 +49,16 @@ export class Slider extends React.Component {
     const value = this.props.value || 0;
     // const valueClass = (value === 0) ? 'Empty' : (value === 10) ? 'Full' : '';
     return (
-      <FormRow
-        isError={this.props.isError}
-        icon={this.props.icon}
-        label={this.props.label}
-      >
-        {/* TODO: move this input row out of here and use it in the actual form, call it FormRow */}
-        <input
-          type="range"
-          min="0"
-          max="10"
-          step="0.1"
-          value={value}
-          className={Style.Slider}
-          style={sliderBackground(value)}
-          onChange={this.onChange}
-        />
-      </FormRow>
+      <input
+        type="range"
+        min="0"
+        max="10"
+        step="0.1"
+        value={value}
+        className={Style.Slider}
+        style={sliderBackground(value)}
+        onChange={this.onChange}
+      />
     );
   }
 }

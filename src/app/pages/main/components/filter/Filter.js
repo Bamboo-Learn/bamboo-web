@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import { InputText, Select } from 'app/elements';
 import { getIcon } from 'app/elements';
@@ -32,10 +33,14 @@ const FilterRow = ({
   iconAction,
   iconClassName
 }) => {
-  const Icon = getIcon(icon)
+  const Icon = getIcon(icon);
+  const inputHolderClassName = classNames({
+    [Style.inputHolder]: true,
+    [Style.iconInputHolder]: !!icon
+  })
   return (
     <div className={Style.filterRow}>
-      <div className={`${Style.inputHolder} ${!!icon ? Style.iconInputHolder : ''}`}>
+      <div className={inputHolderClassName}>
         {children}
       </div>
       {
@@ -45,7 +50,15 @@ const FilterRow = ({
       }
     </div>
   );
-}
+};
+
+const getFilterClassName = ({ isOpen }) => {
+  return classNames({
+    [Style.filter]: true,
+    [Style.open]: isOpen,
+    [Style.closed]: !isOpen
+  });
+};
 
 class RawFilter extends React.Component {
   constructor(props) {
@@ -105,11 +118,38 @@ class RawFilter extends React.Component {
     updateFilter({ filter: newFilter });
   }
 
-  render() {
+  renderStudyMode() {
+    const { isOpen } = this.state;
+    const { filter: { pack, progress } } = this.props;
+    return (
+      <div className={getFilterClassName({ isOpen })}>
+        <FilterRow
+          icon="Filter"
+          iconAction={e => this.toggleOpen(e)}
+        >
+          <Select
+            onChange={(e) => this.updatePack(e)}
+            value={pack}
+            options={PACK_OPTIONS}
+          />
+        </FilterRow>
+        <FilterRow>
+          {/* progress select (study, to study, studied, all) */}
+          <Select
+            onChange={(e) => this.updateProgress(e)}
+            value={progress}
+            options={PROGRESS_OPTIONS}
+          />
+        </FilterRow>
+      </div>
+    );
+  }
+
+  renderTableMode() {
     const { isOpen, searchQuery } = this.state;
     const { filter: { pack, orderBy, order, progress } } = this.props;
     return (
-      <div className={`${Style.filter} ${isOpen ? Style.open : Style.closed}`}>
+      <div className={getFilterClassName({ isOpen })}>
         <FilterRow
           icon="Filter"
           iconAction={e => this.toggleOpen(e)}
@@ -153,6 +193,14 @@ class RawFilter extends React.Component {
         </FilterRow>
       </div>
     );
+  }
+
+  render() {
+    const { mode } = this.props;
+    if (mode === 'study') {
+      return this.renderStudyMode();
+    }
+    return this.renderTableMode();
   }
 }
 

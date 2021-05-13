@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { PageHeader } from 'app/elements';
+import { PageBody, PageHeader } from 'app/elements';
 
-// TODO: import filter so user can change what they're studying
-// turn search off in this filter
+import { Filter } from '../../components/filter/Filter.js';
 
 class Study extends React.Component {
   render() {
     return (
       <>
         <PageHeader>{'Study'}</PageHeader>
+        <PageBody>
+          <Filter mode={'study'} />
+        </PageBody>
       </>
     );
   }

@@ -5,13 +5,16 @@ import { isSet } from './utils'
 
 // Interfaces
 
-interface PhraseInterface {
-  owner_id: string
+interface PhraseDisplay {
   characters: string
   pinyin: string
   english: string
   category: string
   confidence: number
+}
+
+interface PhraseInterface extends PhraseDisplay {
+  owner_id: string
   [propname: string]: any
 }
 
@@ -20,7 +23,7 @@ interface DBPhraseInterface extends PhraseInterface {
   created_at: string
 }
 
-export type { PhraseInterface, DBPhraseInterface }
+export type { PhraseDisplay, PhraseInterface, DBPhraseInterface }
 
 // Phrase Class
 

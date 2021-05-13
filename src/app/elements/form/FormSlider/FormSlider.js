@@ -1,7 +1,6 @@
 
 
 import React from 'react';
-import { FormRow } from '../FormRow.js';
 
 import Style from './style.module.css';
 
@@ -37,23 +36,16 @@ export class Slider extends React.Component {
     const value = this.props.value || 0;
     // const valueClass = (value === 0) ? 'Empty' : (value === 10) ? 'Full' : '';
     return (
-      <FormRow
-        isError={this.props.isError}
-        icon={this.props.icon}
-        label={this.props.label}
-      >
-        {/* this is different than the one used in the table */}
-        <input
-          type="range"
-          min="0"
-          max="10"
-          step="0.1"
-          value={value}
-          className={Style.Slider}
-          style={sliderBackground(value)}
-          onChange={this.onChange}
-        />
-      </FormRow>
+      <input
+        type="range"
+        min="0"
+        max="10"
+        step="0.1"
+        value={value}
+        className={Style.Slider}
+        style={sliderBackground(value)}
+        onChange={this.onChange}
+      />
     );
   }
 }

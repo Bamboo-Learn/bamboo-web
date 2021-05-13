@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import { CancelIcon } from '../icon';
 import { Loading } from '../loading/Loading.js';
 
@@ -22,11 +24,13 @@ export class Popup extends React.Component {
   }
 
   render() {
+    const overlayClassName = classNames({
+      [Style.Overlay]: true,
+      [Style.Visible]: this.props.isOpen,
+      [Style.Hidden]: !this.props.isOpen
+    })
     return (
-      <div
-        id={this.props.id}
-        className={`${Style.Overlay} ${this.props.isOpen ? Style.Visible : Style.Hidden}`}
-      >
+      <div id={this.props.id} className={overlayClassName}>
         <div className={Style.Popup}>
           <Loading
             color="green"

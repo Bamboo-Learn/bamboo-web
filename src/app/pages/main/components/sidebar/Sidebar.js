@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import classNames from 'classnames';
 
 import { Mongodb } from 'app/helpers';
 import { Logo } from 'app/elements';
@@ -8,11 +9,17 @@ import { ChromeWebStoreLink } from 'app/helpers';
 
 import Style from './style.module.css';
 
-const SidebarItem = ({ onClick, label, name, isActive }) => (
-  <div className={`${Style.sidebarItem} ${isActive ? Style.active : ''}`} name={name} onClick={onClick}>
-    {label}
-  </div>
-);
+const SidebarItem = ({ onClick, label, name, isActive }) => {
+  const className = classNames({
+    [Style.sidebarItem]: true,
+    [Style.active]: isActive
+  });
+  return (
+    <div className={className} name={name} onClick={onClick}>
+      {label}
+    </div>
+  );
+};
 
 class RawSidebar extends React.Component {
   constructor(props) {
@@ -51,10 +58,14 @@ class RawSidebar extends React.Component {
     const { isOpen } = this.state;
     const { pageID } = this.props.match.params;
     // TODO: what if this is not in PAGE_IDS
+    const sidePanelClassName = classNames({
+      [Style.sidebarPanel]: true,
+      [Style.closed]: !isOpen
+    });
     return (
       <div className={Style.sidebar}>
         <div className={Style.sidebarToggle} onClick={this.toggleSidebar} />
-        <div className={`${Style.sidebarPanel} ${!isOpen ? Style.closed : ''}`}>
+        <div className={sidePanelClassName}>
           <Logo className={Style.headerLogo} />
           <div className={Style.sidebarItems}>
             <Link to="/library">
