@@ -1,0 +1,32 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+  min-height: 54px;
+  height: 54px;
+  border-bottom: 1px solid #0001;
+  width: 100%;
+  overflow: hidden;
+
+  &.open {
+    height: 148px;
+  }
+
+  .col {
+    margin: 0;
+    height: 54px;
+
+    .cell {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .background {
+    display: none;
+  }
+}
+
+// display: block;
+// background: #daeedd;
+// height: 100%;

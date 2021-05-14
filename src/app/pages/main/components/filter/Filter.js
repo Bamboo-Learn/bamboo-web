@@ -6,7 +6,7 @@ import { InputText, Select } from 'app/elements';
 import { getIcon } from 'app/elements';
 import { updateFilter } from 'app/redux';
 
-import Style from './style.module.css';
+import Style from './style.module.scss';
 
 const PROGRESS_OPTIONS = [
   { label: 'All Progress', value: '' },

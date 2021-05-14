@@ -6,7 +6,7 @@ import { PageHeader, PageBody } from 'app/elements';
 import { appendPhrases } from 'app/redux';
 
 import { Filter } from '../../components/filter/Filter.js';
-import { RowAddNew, RowPhrase, RowLoadMore } from './table'; // TableHeader
+import { RowAddNew, RowPhrase, RowLoadMore } from './phrases-table'; // TableHeader
 import Style from './style.module.css';
 
 class RawLibrary extends React.Component {
@@ -25,6 +25,7 @@ class RawLibrary extends React.Component {
     return (
       <>
         <PageHeader>{'Library'}</PageHeader>
+        {/* make this take a button */}
         <PageBody>
           <Filter />
           {/* <TableHeader filter={filter} /> */}

@@ -1,27 +1,37 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { PhraseDisplay } from 'app/helpers';
 // import { Button } from 'app/elements';
 
 import { Row } from '../table';
 // import { } from './ColLarge';
-import { ColOpenerSmall, ColConfidenceSmall, ColDefinitionSmall } from './ColSmall'; // ColRevealSmall, ColChineseSmall
-// import Style from './style.module.css';
+import { ColChinese, ColPinyin, ColEnglish, ColOptions } from './Col';
+import { ColOpenerSmall, ColConfidenceSmall } from './ColSmall'; // ColRevealSmall, ColChineseSmall
 
 export const RowPhrase = ({ phrase: { confidence, characters, pinyin, english } }: { phrase: PhraseDisplay }) => {
-  return (
-    <Row confidence={confidence}>
-      {/* <ColOpenerSmall /> */}
-      {/* <ColChinese characters={characters} /> */}
-      <ColDefinitionSmall pinyin={pinyin} english={english} /* TODO: add pack to here */ />
-      {/* ColRevealSmall has the options like edit and delete*/}
-      {/* <RowReveal isOpen={false}> */}
-      <ColConfidenceSmall confidence={confidence} />
-      {/* <ColOptionsSmall /> */}
-      {/* </RowReveal> */}
+  const [isOpen, setIsOpen] = useState(false);
 
-      {/* TODO: Large part here */}
+  const toggleIsOpen = (e: any) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  }
+
+  return (
+    <Row confidence={confidence} isOpen={isOpen}>
+      <ColOpenerSmall isOpen={isOpen} onClick={toggleIsOpen} />
+      <ColChinese characters={characters} />
+      <ColConfidenceSmall confidence={confidence} />
+      {/* hidden-sm */}
+      <ColPinyin pinyin={pinyin} />
+      <ColEnglish english={english} />
+      {/* <ColPackSmall pack={pack} /> */}
+      {/* ColRevealSmall 
+        {/* ColPackLarge */}
+      {/* ColPinyinLarge */}
+      {/* ColEnglishLarge */}
+      {/* ColOptionsLarge */}
+      <ColOptions /> {/* has the options like edit and delete */}
     </Row>
   );
 }

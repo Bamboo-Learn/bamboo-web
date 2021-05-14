@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { getIcon } from '../icon';
 
-import Style from './style.module.css';
+import Style from './style.module.scss';
 
 type ButtonProps = {
   hidden: boolean
@@ -17,6 +17,7 @@ type ButtonProps = {
   tab: boolean
   children: string
   onClick: any
+  size?: 'lg' | 'large' | 'sm' | 'small'
 }
 
 export const Button: FC<ButtonProps> = ({
