@@ -27,8 +27,8 @@ class RawLibrary extends React.Component {
         <PageHeader>
           <PageHeaderTitle>{'Library'}</PageHeaderTitle>
           <PageHeaderActions>
-            <Button>{'Study'}</Button>
-            <Button>{'Add New'}</Button>
+            <Button size="sm" icon="Autofill">{'Study'}</Button>
+            <Button size="sm" icon="Add">{'New'}</Button>
           </PageHeaderActions>
         </PageHeader>
         {/* make this take a button */}

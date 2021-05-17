@@ -1,6 +1,10 @@
 .rowButton {
   border-bottom: none;
 
+  &.rowAddNew {
+    display: none;
+  }
+
   .colButton {
     width: 100%;
 
@@ -12,12 +16,12 @@
 
 
 .colToggleOpen {
-  width: 54px;
+  width: 38px;
 
   .toggle {
     width: 22px;
     height: 22px;
-    margin: 16px;
+    margin: 16px 8px;
     background: #23833d;
     border-radius: 11px;
     cursor: pointer;
@@ -83,6 +87,12 @@
 }
 
 @media only screen and (min-width: 768px) {
+
+  .rowButton {
+    &.rowAddNew {
+      display: block;
+    }
+  }
 
   .confidence {}
 

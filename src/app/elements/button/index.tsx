@@ -17,7 +17,7 @@ type ButtonProps = {
   tab: boolean
   children: string
   onClick: any
-  size?: 'lg' | 'large' | 'sm' | 'small' | 'md' | 'medium'
+  size?: 'sm' | 'small' | 'form'
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -56,8 +56,7 @@ export const Button: FC<ButtonProps> = ({
     [className]: true,
     [Style.disabled]: disabled,
     [Style[color]]: !!color,
-    [sizeClass]: !!size,
-    'green': !color
+    [sizeClass]: !!size
   });
 
   // render

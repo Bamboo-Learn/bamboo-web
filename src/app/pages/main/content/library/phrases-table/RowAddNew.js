@@ -8,7 +8,7 @@ import Style from './style.module.scss';
 
 export const RowAddNew = () => {
   return (
-    <Row className={Style.rowButton}>
+    <Row className={`${Style.rowButton} ${Style.rowAddNew}`}>
       <Col className={Style.colButton}>
         <Button className={Style.button}>{'Add New'}</Button>
       </Col>

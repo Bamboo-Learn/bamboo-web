@@ -5,7 +5,6 @@ import { Mongodb } from 'app/helpers';
 import { Form, FormRow, FormText, Button } from 'app/elements';
 
 import { Container, ContainerLeft, ContainerRight, Display } from '../components';
-import Style from './style.module.css';
 
 class Reset extends React.Component {
   constructor(props) {
@@ -77,7 +76,7 @@ class Reset extends React.Component {
               </FormRow>
               <FormRow>
                 <Button
-                  className={Style.Button}
+                  size="form"
                   onClick={e => this.loginWithEmailAndPassword(e)}
                   tab={true}
                 >

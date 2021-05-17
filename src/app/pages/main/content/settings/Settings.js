@@ -52,12 +52,18 @@ class Settings extends React.Component {
               />
             </FormRow>
             <FormRow>
-              <Button onClick={() => { }} tab={true}>
+              <Button
+                onClick={() => { }}
+                tab={true}
+                // color={'grey'} when no changes
+                size="form"
+              >
                 {"Update"}
               </Button>
               <Button
                 onClick={() => { }}
-                color={'orange'} // grey or gray
+                color={'grey'}
+                size="form"
               >
                 {'Cancel'}
               </Button>

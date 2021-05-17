@@ -5,8 +5,6 @@ import { FormText, Button, FormRow, Form } from 'app/elements';
 
 import { validateEmail, validatePassword } from '../../base';
 
-import Style from './style.module.css';
-
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -193,14 +191,14 @@ class LoginForm extends React.Component {
           message={message} // TODO: make this take a message
         >
           <Button
-            className={Style.Button}
+            size="form"
             onClick={e => this.createAccountWithEmailAndPassword(e)}
             tab={true}
           >
             {'Create Account'}
           </Button>
           <Button
-            className={Style.Button}
+            size="form"
             onClick={e => this.loginWithEmailAndPassword(e)}
             color={'orange'}
             tab={true}
