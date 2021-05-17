@@ -17,7 +17,7 @@ type ButtonProps = {
   tab: boolean
   children: string
   onClick: any
-  size?: 'lg' | 'large' | 'sm' | 'small'
+  size?: 'lg' | 'large' | 'sm' | 'small' | 'md' | 'medium'
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -29,7 +29,8 @@ export const Button: FC<ButtonProps> = ({
   tab,
   children,
   doubleClick,
-  onClick: propsOnClick
+  onClick: propsOnClick,
+  size
 }) => {
 
   const [clickCount, setClickCount] = useState<number>(0)
@@ -49,11 +50,13 @@ export const Button: FC<ButtonProps> = ({
     return null;
   }
 
+  const sizeClass = !!size ? Style[size] : '';
   const buttonClassName = classNames({
     [Style.button]: true,
     [className]: true,
     [Style.disabled]: disabled,
     [Style[color]]: !!color,
+    [sizeClass]: !!size,
     'green': !color
   });
 

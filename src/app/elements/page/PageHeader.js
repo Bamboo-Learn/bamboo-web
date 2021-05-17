@@ -1,16 +1,37 @@
 import React from 'react';
 
-import Style from './style.module.css';
+import Style from './style.module.scss';
 
-class PageHeader extends React.Component {
-  render() {
-    const { children } = this.props;
+export const PageHeader = ({ children }) => {
+  if (typeof children === 'string') {
     return (
-      <div className={Style.header}>
-        {children}
-      </div>
+      <PageHeader>
+        <PageHeaderTitle>
+          {children}
+        </PageHeaderTitle>
+      </PageHeader>
     );
   }
+  return (
+    <div className={Style.header}>
+      {children}
+    </div>
+  );
 }
 
-export { PageHeader };
+export const PageHeaderTitle = ({ children }) => {
+  return (
+    <div className={Style.headerTitle}>
+      {children}
+    </div>
+  );
+}
+
+export const PageHeaderActions = ({ children }) => {
+  return (
+    <div className={Style.headerActions}>
+      {children}
+    </div>
+  );
+}
+

@@ -25,7 +25,7 @@ export class Display extends React.Component {
           Bamboo is a simple Chrome Extension that shows you a Chinese character every time you open a new tab.
           Just add characters to your library and browse the web to start learning.
           </p>
-        <Button color={'orange'} onClick={this.openChromeStore} className={Style.button}>
+        <Button size={'large'} color={'orange'} onClick={this.openChromeStore} className={Style.button}>
           {'Add to Chrome'}
         </Button>
       </div>

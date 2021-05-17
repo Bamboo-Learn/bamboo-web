@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { strCompare } from 'app/helpers';
-import { PageHeader, PageBody } from 'app/elements';
+import { PageHeader, PageBody, PageHeaderTitle, PageHeaderActions, Button } from 'app/elements';
 import { appendPhrases } from 'app/redux';
 
 import { Filter } from '../../components/filter/Filter.js';
@@ -24,7 +24,13 @@ class RawLibrary extends React.Component {
 
     return (
       <>
-        <PageHeader>{'Library'}</PageHeader>
+        <PageHeader>
+          <PageHeaderTitle>{'Library'}</PageHeaderTitle>
+          <PageHeaderActions>
+            <Button>{'Study'}</Button>
+            <Button>{'Add New'}</Button>
+          </PageHeaderActions>
+        </PageHeader>
         {/* make this take a button */}
         <PageBody>
           <Filter />

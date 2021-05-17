@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import Style from './style.module.scss';
 
@@ -19,6 +20,16 @@ export const TextCell: FC<SelectCellProps> = ({ disabled, value, className: clas
   });
   return (
     <input className={`${className} ${classNameProps}`} value={value} />
+  );
+}
+
+export const TextAreaCell: FC<SelectCellProps> = ({ disabled, value, className: classNameProps }) => {
+  const className = classNames({
+    [Style.cell]: true,
+    [Style.disabled]: disabled
+  });
+  return (
+    <TextareaAutosize className={`${className} ${classNameProps}`} value={value} />
   );
 }
 

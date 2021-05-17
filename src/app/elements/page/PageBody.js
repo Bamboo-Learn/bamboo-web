@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Style from './style.module.css'
+import Style from './style.module.scss'
 
 class PageBody extends React.Component {
   render() {

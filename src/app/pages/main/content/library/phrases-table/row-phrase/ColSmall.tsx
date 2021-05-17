@@ -22,7 +22,7 @@ export const ColOpenerSmall: FC<{ isOpen: boolean, onClick: any }> = ({ isOpen, 
 
 export const ColConfidenceSmall: FC<{ confidence: number }> = ({ confidence }) => {
   return (
-    <Col className={Style.confidence}>
+    <Col className={Style.colConfidence}>
       <div
         className={`${Style.confidenceBar} noselect`}
         style={confidenceBackground(confidence)}

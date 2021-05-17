@@ -2,7 +2,7 @@ import React from "react";
 
 import { Loading } from "app/elements";
 
-import Style from "./style.module.css";
+import Style from "./style.module.scss";
 
 class PageContent extends React.Component {
   render() {
