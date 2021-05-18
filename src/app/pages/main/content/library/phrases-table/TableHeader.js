@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-// import { LevelsIcon } from 'app/elements'; // SearchIcon
+import { Row, Col } from 'app/elements'; // SearchIcon
 import { updateFilter } from 'app/redux';
 
-import { Row, Col } from './table';
 import Style from './style.module.scss';
 
 const RawTableHeader = ({ filter, updateFilter }) => {

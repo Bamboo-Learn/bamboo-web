@@ -9,3 +9,4 @@ export * from './page';
 export * from './popup/Popup.js';
 export * from './splash';
 export * from './style';
+export * from './table';

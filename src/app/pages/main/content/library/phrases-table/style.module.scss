@@ -68,13 +68,13 @@
 }
 
 .colPinyin {
-  margin-left: 54px !important;
+  margin-left: 38px !important;
   height: 24px !important;
   width: calc(100% - 54px);
 }
 
 .colEnglish {
-  margin-left: 54px !important;
+  margin-left: 38px !important;
   width: calc(100% - 54px);
   height: auto !important;
 }
@@ -84,6 +84,9 @@
 .colOptions {
   margin-left: 54px !important;
   width: calc(100% - 54px);
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 16px 12px;
 }
 
 @media only screen and (min-width: 768px) {

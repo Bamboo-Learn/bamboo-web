@@ -10,7 +10,7 @@ class EditOverlay extends React.Component {
     super(props);
 
     this.state = {
-      isOpen: false,
+      isOpen: true,
       isLoading: false,
       phrase: {}
     }

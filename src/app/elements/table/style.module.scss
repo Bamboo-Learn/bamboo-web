@@ -3,13 +3,16 @@
   flex-wrap: wrap;
   margin-bottom: 6px;
   min-height: 54px;
+  max-height: 54px;
   height: 54px;
   border-bottom: 1px solid #0001;
   width: 100%;
   overflow: hidden;
+  transition: max-height 0.2s;
 
   &.open {
-    height: 148px;
+    height: auto;
+    max-height: 200px;
   }
 
   .col {

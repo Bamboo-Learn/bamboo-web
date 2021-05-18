@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 
-import { confidenceBackground } from 'app/elements';
+import { confidenceBackground, Col } from 'app/elements';
 
-import { Col } from '../table';
 import Style from '../style.module.scss';
 
 export const ColOpenerSmall: FC<{ isOpen: boolean, onClick: any }> = ({ isOpen, onClick }) => {

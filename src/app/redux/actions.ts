@@ -1,7 +1,7 @@
 
 import { Filter } from './reducers';
 
-import { Mongodb } from 'app/helpers'
+import { Mongodb, DBPhraseInterface } from 'app/helpers'
 
 // library
 export const APPEND_PHRASES = 1; // append phrases to the library from load
@@ -41,7 +41,7 @@ export const updateFilter = (() => {
 })(); // closure to wrap filterHistory
 
 
-export const appendPhrases = (phrases: any) => ({
+export const appendPhrases = (phrases: DBPhraseInterface[]) => ({
   type: APPEND_PHRASES,
   phrases
 });

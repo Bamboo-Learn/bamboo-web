@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
-import { Col, TextCell, TextAreaCell } from '../table';
+import { Col, TextCell, TextAreaCell, Button } from 'app/elements';
+
 import Style from '../style.module.scss';
 
 export const ColChinese: FC<{ characters: string }> = ({ characters }) => {
@@ -30,6 +31,8 @@ export const ColEnglish: FC<{ english: string }> = ({ english }) => {
 export const ColOptions: FC = () => {
   return (
     <Col className={Style.colOptions}>
+      <Button size="sm" onClick={() => { }} icon="Garbage" color="red" doubleClick>{'Delete'}</Button>
+      <Button size="sm" onClick={() => { }} icon="Edit" color="blue">{'Edit'}</Button>
     </Col>
   );
 }

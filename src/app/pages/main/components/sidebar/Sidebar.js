@@ -77,8 +77,8 @@ class RawSidebar extends React.Component {
             {/* TODO: <Link to="/public-packs">
               <SidebarItem label="Public Packs" isActive={pageID === 'public-packs'} onClick={this.closeSidebar} />
             </Link> */}
-            <Link to="/study-mode">
-              <SidebarItem label="Study Mode" isActive={pageID === 'study-mode'} onClick={this.closeSidebar} />
+            <Link to="/study">
+              <SidebarItem label="Study" isActive={pageID === 'study'} onClick={this.closeSidebar} />
             </Link>
           </div>
           <div className={Style.sidebarFooter}>

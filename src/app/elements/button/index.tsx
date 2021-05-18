@@ -8,15 +8,15 @@ import { getIcon } from '../icon';
 import Style from './style.module.scss';
 
 type ButtonProps = {
-  hidden: boolean
-  doubleClick: boolean
-  icon: string
-  disabled: boolean
-  color: string
-  className: string
-  tab: boolean
   children: string
   onClick: any
+  hidden?: boolean
+  doubleClick?: boolean
+  icon?: string
+  disabled?: boolean
+  color?: string
+  className?: string
+  tab?: boolean
   size?: 'sm' | 'small' | 'form'
 }
 
@@ -25,7 +25,7 @@ export const Button: FC<ButtonProps> = ({
   icon,
   disabled,
   color,
-  className,
+  className: classNameProp,
   tab,
   children,
   doubleClick,
@@ -39,6 +39,9 @@ export const Button: FC<ButtonProps> = ({
     e.preventDefault();
     if (doubleClick && clickCount === 0) {
       setClickCount(1);
+      setTimeout(() => {
+        setClickCount(0);
+      }, 2000);
       return;
     }
     propsOnClick(e);
@@ -50,13 +53,15 @@ export const Button: FC<ButtonProps> = ({
     return null;
   }
 
-  const sizeClass = !!size ? Style[size] : '';
+  const classNameSize = !!size ? Style[size] : '';
+  const classNamePropValidated = !!classNameProp ? classNameProp : '';
+  const classNameColor = !!color ? Style[color] : '';
   const buttonClassName = classNames({
     [Style.button]: true,
-    [className]: true,
+    [classNamePropValidated]: true,
     [Style.disabled]: disabled,
-    [Style[color]]: !!color,
-    [sizeClass]: !!size
+    [classNameColor]: !!color,
+    [classNameSize]: !!size
   });
 
   // render

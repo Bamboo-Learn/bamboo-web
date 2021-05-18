@@ -19,7 +19,7 @@ export const TextCell: FC<SelectCellProps> = ({ disabled, value, className: clas
     [Style.disabled]: disabled
   });
   return (
-    <input className={`${className} ${classNameProps}`} value={value} />
+    <input className={`${className} ${classNameProps}`} value={value} onChange={() => { }} />
   );
 }
 
@@ -29,7 +29,7 @@ export const TextAreaCell: FC<SelectCellProps> = ({ disabled, value, className: 
     [Style.disabled]: disabled
   });
   return (
-    <TextareaAutosize className={`${className} ${classNameProps}`} value={value} />
+    <TextareaAutosize className={`${className} ${classNameProps}`} value={value} onChange={() => { }} />
   );
 }
 
@@ -39,6 +39,6 @@ export const SelectCell: FC<CellProps> = ({ disabled, className: classNameProps 
     [Style.disabled]: disabled
   });
   return (
-    <input className={`${className} ${classNameProps}`} />
+    <input className={`${className} ${classNameProps}`} onChange={() => { }} />
   );
 }

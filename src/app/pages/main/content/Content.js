@@ -28,7 +28,7 @@ class RawContent extends React.Component {
         return MyPacks;
       case 'public-packs':
         return PublicPacks;
-      case 'study-mode':
+      case 'study':
         return Study;
       case 'settings':
         return Settings;

@@ -2,9 +2,8 @@
 import React, { useState } from 'react';
 
 import { PhraseDisplay } from 'app/helpers';
-// import { Button } from 'app/elements';
+import { Row } from 'app/elements';
 
-import { Row } from '../table';
 // import { } from './ColLarge';
 import { ColChinese, ColPinyin, ColEnglish, ColOptions } from './Col';
 import { ColOpenerSmall, ColConfidenceSmall } from './ColSmall'; // ColRevealSmall, ColChineseSmall
