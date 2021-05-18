@@ -42,7 +42,7 @@ const RawLibrary = (props: LibraryProps) => {
       <PageHeader>
         <PageHeaderTitle>{'Library'}</PageHeaderTitle>
         <PageHeaderActions>
-          <Button size="sm" icon="Add" onClick={setEditPhraseID('NEW')}>{'New'}</Button>
+          <Button size="sm" icon="Add" onClick={() => setEditPhraseID('NEW')}>{'New'}</Button>
           <Button size="sm" icon="Autofill" color="orange" onClick={redirectToStudy}>{'Study'}</Button>
         </PageHeaderActions>
       </PageHeader>
