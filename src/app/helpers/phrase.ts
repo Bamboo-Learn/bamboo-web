@@ -1,59 +1,53 @@
-
 import { BSON } from 'realm-web';
 
+import { Mongodb } from './mongodb';
 import { isSet } from './utils'
 
-// Interfaces
+// Interface
 
-interface PhraseDisplay {
+export interface PhraseInterface {
   characters: string
   pinyin: string
   english: string
   category: string
   confidence: number
-}
-
-interface PhraseInterface extends PhraseDisplay {
   owner_id: string
   [propname: string]: any
 }
 
-interface DBPhraseInterface extends PhraseInterface {
+export interface DBPhraseInterface extends PhraseInterface {
   _id: BSON.ObjectID
-  created_at: string
+  created_at: Date
 }
-
-export type { PhraseDisplay, PhraseInterface, DBPhraseInterface }
 
 // Phrase Class
 
 export class Phrase implements PhraseInterface, DBPhraseInterface {
 
   _id: BSON.ObjectID
-  created_at: string
+  created_at: Date
   owner_id: string
   characters: string
   pinyin: string
   category: string
   confidence: number
   english: string
-  original: {
-    characters: string;
-    english: string;
-    confidence: number;
-    pinyin: string;
-  }
 
   constructor(phrase: PhraseInterface | DBPhraseInterface) {
-    this._id = phrase._id || null;
-    this.created_at = phrase.created_at || null;
+    this._id = phrase._id || undefined;
+    this.created_at = phrase.created_at || undefined;
     this.owner_id = phrase.owner_id;
     this.characters = phrase.characters;
     this.pinyin = phrase.pinyin;
     this.category = phrase.category;
     this.confidence = phrase.confidence;
     this.english = phrase.english;
-    this.original = this.makeOriginal();
+    Object.preventExtensions(this);
+    Object.freeze(this);
+  }
+
+  set(field: string, value: string | number): Phrase {
+    return new Phrase({ ...this, [field]: value });
   }
 
   makeOriginal() {
@@ -65,86 +59,33 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     };
   }
 
+  // Immutable Functions
+
   // sets the original to the current (does not save to db)
-  save({ insertedId }: { insertedId: BSON.ObjectID }) {
-    if (isSet(insertedId)) {
-      // if this is newly inserted then add id
-      this._id = insertedId;
-    }
-    this.original = this.makeOriginal();
+  save({ insertedId }: { insertedId: BSON.ObjectID }): Phrase {
+    return Object.create({ ...this, _id: insertedId });
   }
 
   // takes the original and sets the actual to that (erases changes)
-  revert() {
-    this.characters = this.original.characters;
-    this.english = this.original.english;
-    this.confidence = this.original.confidence;
-    this.pinyin = this.original.pinyin;
-  }
-
-  // returns true if fields are blank
-  isMissingRequiredField() {
-    return !isSet(this.characters);
-  }
-
-  // returns true when this phrase has been edited
-  isEdited() {
-    return !this.original ||
-      this.original.english !== this.english ||
-      this.original.characters !== this.characters ||
-      this.original.confidence !== this.confidence ||
-      this.original.pinyin !== this.pinyin;
-  }
-
-  isDuplicate(phrases: Phrase[]) {
-    let count = 0;
-    phrases.forEach(phrase => {
-      if (phrase.characters === this.characters) {
-        count++
-        if (count >= 2) return true;
-      }
-    });
-    return count >= 2;
-  }
-
-  isSaveable(phrases: Phrase[]) {
-    // it is saveable if it has been edited, is not missing fields, and is not a duplicate
-    return this.isEdited() && !this.isMissingRequiredField() && !this.isDuplicate(phrases);
-  }
-
-  // returns true when this phrase is registered in db
-  isInDB() {
-    return isSet(this._id);
+  revert(phrases: Phrase[]): Phrase | undefined {
+    return this.getOriginal(phrases);
   }
 
   // changes the confidence
-  cycleStatus() {
+  cycleStatus(): Phrase {
+    let confidence = 1.0;
     switch (this.confidence) {
-      case 0:
-        this.confidence = 5;
-        return;
-      case 10:
-        this.confidence = 0;
-        return;
-      default:
-        this.confidence = 10;
-        return;
+      case 0.0:
+        confidence = 0.5;
+        break;
+      case 1.0:
+        confidence = 0.0;
+        break;
     }
+    return Object.create({ ...this, confidence });
   }
 
-  getStorable(user_id: string) {
-    return {
-      _id: this._id,
-      characters: this.characters,
-      pinyin: this.pinyin,
-      confidence: this.confidence,
-      english: this.english,
-      owner_id: user_id, // necessary
-      created_at: this.created_at || new Date()
-    }
-  }
-
-  autofill(lookupChars: { character: string, english: string, pinyin: string }[], fields: { english: boolean, pinyin: boolean }) {
+  autofill(lookupChars: { character: string, english: string, pinyin: string }[], fields: { english: boolean, pinyin: boolean }): Phrase {
     let pinyin = '';
     let english = '';
     for (let i = 0; i < this.characters.length; i++) {
@@ -158,20 +99,71 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
         pinyin += lookupChar.pinyin[0] + ' ';
       }
     }
+    const newFields: { english?: string, pinyin?: string } = {};
     if (fields.english) {
-      this.english = english.trim();
+      newFields.english = english.trim();
     }
     if (fields.pinyin) {
-      this.pinyin = pinyin.trim();
+      newFields.pinyin = pinyin.trim();
     }
-    return this;
+    return Object.create({ ...this, ...newFields });
+  }
+
+  // Helper Functions
+
+  getOriginal(phrases: Phrase[]): Phrase | undefined {
+    return phrases.find((phrase) => this._id === phrase._id);
+  }
+
+  // returns true if fields are blank
+  isMissingRequiredField(): boolean {
+    return !isSet(this.characters);
+  }
+
+  // returns true when this phrase has been edited
+  isEdited(phrases: Phrase[]): boolean {
+    return this.getOriginal(phrases) !== this;
+  }
+
+  isDuplicate(phrases: Phrase[]): boolean {
+    let count = 0;
+    phrases.forEach(phrase => {
+      if (phrase.characters === this.characters) {
+        count++
+        if (count >= 2) return true;
+      }
+    });
+    return count >= 2;
+  }
+
+  isSaveable(phrases: Phrase[]): boolean {
+    // it is saveable if it has been edited, is not missing fields, and is not a duplicate
+    return this.isEdited(phrases) && !this.isMissingRequiredField() && !this.isDuplicate(phrases);
+  }
+
+  // returns true when this phrase is registered in db
+  isInDB(): boolean {
+    return isSet(this._id);
+  }
+
+  getStorable(user_id: string): DBPhraseInterface {
+    return {
+      _id: this._id,
+      characters: this.characters,
+      pinyin: this.pinyin,
+      category: this.category, // TODO: remove this
+      confidence: this.confidence,
+      english: this.english,
+      owner_id: user_id, // necessary
+      created_at: this.created_at || new Date()
+    }
   }
 }
 
 // makeNewPhrase
 
-export const makeNewPhrase = (userID: string) => new Phrase({
-  owner_id: userID,
+export const makeNewPhrase = () => new Phrase({
+  owner_id: Mongodb.userID(),
   confidence: 0,
   category: '',
   pinyin: '',

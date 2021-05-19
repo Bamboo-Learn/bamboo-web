@@ -1,9 +1,9 @@
-
+import { List, Set } from 'immutable'
 import { combineReducers } from 'redux';
 
 import { Phrase, DBPhraseInterface } from 'app/helpers';
 
-import { APPEND_PHRASES, DELETE_PHRASE, EDIT_PHRASE, CHANGE_DISPLAY_CHARACTER_SETTING, CHANGE_FILTER } from './actions';
+import { APPEND_PHRASES, DELETE_PHRASE, CHANGE_DISPLAY_CHARACTER_SETTING, CHANGE_FILTER, UPDATE_PHRASE } from './actions';
 
 // Filter Reducer
 
@@ -37,37 +37,34 @@ const filterReducer = (state = initFilter, action: any) => {
 // Library Reducer
 
 export interface Library {
-  phrases: Phrase[],
+  phrases: List<Phrase>,
   packs: { name: string, count: number }[],
   totalSize: number
 }
 
 const initLibrary: Library = {
-  phrases: [],
+  phrases: List([]),
   packs: [],
   totalSize: 0,
 };
 
-const libraryReducer = (state = initLibrary, action: any) => {
+const libraryReducer = (state = initLibrary, action: any): Library => {
   switch (action.type) {
     case APPEND_PHRASES:
-      const phrases = [...state.phrases];
-      action.phrases.forEach((phrase: DBPhraseInterface) => {
-        const existingPhrase = phrases.find((p: Phrase) => p._id.equals(phrase._id))
-        if (!existingPhrase) {
-          // if not already in the array then add it
-          phrases.push(new Phrase(phrase));
-        }
-      });
-      return { ...state, ...{ phrases } };
+      const newAppendedPhrases = Set.union<Phrase>([
+        action.phrases.map((phrase: DBPhraseInterface) => new Phrase(phrase)),
+        state.phrases
+      ]).toList();
+      return { ...state, ...{ phrases: newAppendedPhrases } };
+    case UPDATE_PHRASE:
+      const index = state.phrases.findIndex((phrase) => phrase._id === action.updatePhrase._id)
+      const newUpdatedPhrases = state.phrases.set(index, action.updatePhrase);
+      return { ...state, ...{ phrases: newUpdatedPhrases } };
     case DELETE_PHRASE:
-      return { ...state, ...{ phrases: state.phrases.filter(p => p._id !== action.removePhrase._id) } };
-    case EDIT_PHRASE:
-      // find the phrases in the array by id and change the data
-      return { ...state }
-    default:
-      return state;
+      const newDeletedPhrases = state.phrases.delete(action.removePhrase);
+      return { ...state, ...{ phrases: newDeletedPhrases } };
   }
+  return state;
 }
 
 // Settings Reducer
@@ -96,10 +93,15 @@ const settingsReducer = (state = initSettings, action: any) => {
 //   isLoading: true
 // };
 
-const reducer = combineReducers({
+export type ReducerStateType = {
+  library: Library,
+  filter: Filter
+  settings: Settings
+};
+
+export const reducer = combineReducers({
   filter: filterReducer,
   library: libraryReducer,
   setttings: settingsReducer
 });
 
-export { reducer };

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { BSON } from 'realm-web';
 
 import { Col, TextCell, TextAreaCell, Button } from 'app/elements';
 
@@ -28,11 +29,16 @@ export const ColEnglish: FC<{ english: string }> = ({ english }) => {
   );
 }
 
-export const ColOptions: FC = () => {
+type ColOptionsProps = {
+  setEditPhraseID: any,
+  phraseID: BSON.ObjectID
+}
+
+export const ColOptions: FC<ColOptionsProps> = ({ setEditPhraseID, phraseID }) => {
   return (
     <Col className={Style.colOptions}>
       <Button size="sm" onClick={() => { }} icon="Garbage" color="red" doubleClick>{'Delete'}</Button>
-      <Button size="sm" onClick={() => { }} icon="Edit" color="blue">{'Edit'}</Button>
+      <Button size="sm" onClick={() => setEditPhraseID(phraseID)} icon="Edit" color="blue">{'Edit'}</Button>
     </Col>
   );
 }

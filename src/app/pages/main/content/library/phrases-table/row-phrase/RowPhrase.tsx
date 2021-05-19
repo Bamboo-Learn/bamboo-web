@@ -1,14 +1,19 @@
 
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
-import { PhraseDisplay } from 'app/helpers';
+import { Phrase } from 'app/helpers';
 import { Row } from 'app/elements';
 
 // import { } from './ColLarge';
 import { ColChinese, ColPinyin, ColEnglish, ColOptions } from './Col';
 import { ColOpenerSmall, ColConfidenceSmall } from './ColSmall'; // ColRevealSmall, ColChineseSmall
 
-export const RowPhrase = ({ phrase: { confidence, characters, pinyin, english } }: { phrase: PhraseDisplay }) => {
+type RowPhraseProps = {
+  phrase: Phrase,
+  setEditPhraseID: any
+}
+
+export const RowPhrase: FC<RowPhraseProps> = ({ phrase: { _id, confidence, characters, pinyin, english }, setEditPhraseID }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = (e: any) => {
@@ -30,7 +35,7 @@ export const RowPhrase = ({ phrase: { confidence, characters, pinyin, english } 
       {/* ColPinyinLarge */}
       {/* ColEnglishLarge */}
       {/* ColOptionsLarge */}
-      <ColOptions /> {/* has the options like edit and delete */}
+      <ColOptions setEditPhraseID={setEditPhraseID} phraseID={_id} /> {/* has the options like edit and delete */}
     </Row>
   );
 }

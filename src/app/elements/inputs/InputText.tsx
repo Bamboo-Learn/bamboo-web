@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 
 export type InputTextPropTypes = {
   onChange: any,
-  onReturn: any,
+  onReturn?: any,
   value: string,
   placeholder: string,
   isPassword?: boolean,

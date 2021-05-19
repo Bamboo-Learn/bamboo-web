@@ -1,19 +1,42 @@
 
 import { Filter } from './reducers';
 
-import { Mongodb, DBPhraseInterface } from 'app/helpers'
+import { Mongodb, DBPhraseInterface, Phrase } from 'app/helpers'
+import { BSON } from 'realm-web';
+
+
+// Action Types
 
 // library
 export const APPEND_PHRASES = 1; // append phrases to the library from load
 export const DELETE_PHRASE = 2; // requires change to total count and possibly pack list
-export const EDIT_PHRASE = 3; // possibly requires change to pack list
-export const ADD_NEW_PHRASE = 4; // append a new phrase, requires change to total count and possibly pack list
+export const UPDATE_PHRASE = 3; // possibly requires change to pack list
+export const ADD_NEW_PHRASE = 4; // TODO: necessary? append a new phrase, requires change to total count and possibly pack list
 
 // filter
 export const CHANGE_FILTER = 5;
 
 // settings
 export const CHANGE_DISPLAY_CHARACTER_SETTING = 6;
+
+
+// Action Callers
+
+export const appendPhrases = (phrases: DBPhraseInterface[]) => ({
+  type: APPEND_PHRASES,
+  phrases
+});
+
+export const updatePhrase = (id: BSON.ObjectID, updatePhrase: Phrase) => ({
+  type: UPDATE_PHRASE,
+  id, updatePhrase
+});
+
+export const deletePhrase = (id: BSON.ObjectID) => ({
+  type: DELETE_PHRASE,
+  id
+});
+
 
 // TODO: we are doing infinite scroll, so page should reset to 0
 // after every filter update that isn't a page update
@@ -39,10 +62,3 @@ export const updateFilter = (() => {
     return { type: CHANGE_FILTER, filter };
   }
 })(); // closure to wrap filterHistory
-
-
-export const appendPhrases = (phrases: DBPhraseInterface[]) => ({
-  type: APPEND_PHRASES,
-  phrases
-});
-

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { BSON } from 'realm-web';
 
-import { strCompare, DBPhraseInterface } from 'app/helpers';
+import { strCompare, DBPhraseInterface } from 'app/helpers'; // makeNewPhrase, Phrase
 import { PageHeader, PageBody, PageHeaderTitle, PageHeaderActions, Button } from 'app/elements';
 import { appendPhrases, Filter as FilterInterface, Library as LibraryInterface } from 'app/redux';
 
-import { Filter } from '../../components/filter/Filter.js';
+import { Filter, EditOverlay } from '../../components';
 import { RowAddNew, RowPhrase, RowLoadMore } from './phrases-table'; // TableHeader
 import Style from './style.module.css';
-import EditOverlay from '../../components/edit-overlay/EditOverlay.js';
 
 type LibraryProps = {
   filter: FilterInterface
@@ -18,27 +18,25 @@ type LibraryProps = {
 
 const RawLibrary = (props: LibraryProps) => {
 
-  // TODO: use an _id, which can be set to NEW to be NEW, or '' to be not currently editing
-  // pull the _id from the library
-  const [editPhraseID, setEditPhraseID] = useState('');
+  const [editPhraseID, setEditPhraseID] = useState<BSON.ObjectID | null | 'NEW'>(null);
   const history = useHistory();
 
   const displayPhrases = (() => {
     // filters phrases based on the global filter
     const { filter: { orderBy, order }, library: { phrases } } = props; // page, perPage
-    const displayPhrases = [...phrases].sort((a: DBPhraseInterface, b: DBPhraseInterface) => (
-      order * strCompare(a.original[orderBy], b.original[orderBy])
+    const displayPhrases = phrases.sort((a: DBPhraseInterface, b: DBPhraseInterface) => (
+      order * strCompare(a[orderBy], b[orderBy])
     )); // .slice(page * perPage, (page + 1) * perPage);
     return displayPhrases;
   })();
 
   const redirectToStudy = () => {
-    history.push(`/study`)
+    history.push(`/study`);
   }
 
   return (
     <>
-      <EditOverlay editPhrase={editPhraseID} setEditPhraseID={setEditPhraseID} />
+      <EditOverlay editPhraseID={editPhraseID} onClose={() => setEditPhraseID(null)} />
       <PageHeader>
         <PageHeaderTitle>{'Library'}</PageHeaderTitle>
         <PageHeaderActions>
@@ -51,10 +49,14 @@ const RawLibrary = (props: LibraryProps) => {
         <Filter />
         {/* <TableHeader filter={filter} /> */}
         <div className={Style.tableBody}>
-          <RowAddNew />
+          <RowAddNew editPhraseID={editPhraseID} />
           {
             displayPhrases.map((phrase) => (
-              <RowPhrase key={phrase._id.toHexString()} phrase={phrase} />
+              <RowPhrase
+                key={phrase._id.toHexString()}
+                phrase={phrase}
+                setEditPhraseID={setEditPhraseID}
+              />
             ))
           }
           <RowLoadMore />
@@ -68,6 +70,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   appendPhrases: (newPhrases: DBPhraseInterface[]) => {
     dispatch(appendPhrases(newPhrases))
   }
+  // updateFilter: ()
 });
 
 const Library = connect(

@@ -5,11 +5,11 @@ import { Button, Row, Col } from 'app/elements';
 
 import Style from './style.module.scss';
 
-export const RowAddNew = () => {
+export const RowLoadMore = () => {
   return (
-    <Row className={`${Style.rowButton} ${Style.rowAddNew}`}>
+    <Row className={Style.rowButton}>
       <Col className={Style.colButton}>
-        <Button className={Style.button}>{'Add New'}</Button>
+        <Button onClick={() => { }} color="orange" className={Style.button}>{'Load More'}</Button>
       </Col>
     </Row>
   );

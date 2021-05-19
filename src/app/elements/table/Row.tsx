@@ -5,8 +5,8 @@ import Style from './style.module.scss';
 
 type RowProps = {
   className?: string,
-  isOpen: boolean,
-  confidence: number,
+  isOpen?: boolean,
+  confidence?: number,
 }
 
 export const Row: FC<RowProps> = ({ children, confidence, isOpen, className: classNameProps }) => {
@@ -14,10 +14,11 @@ export const Row: FC<RowProps> = ({ children, confidence, isOpen, className: cla
     [Style.row]: true,
     [Style.open]: isOpen
   });
+  const style = !!confidence ? { width: `${100 * confidence / 10}%` } : {};
   return (
     <div className={`${className} ${classNameProps}`}>
       {children}
-      <div className={Style.background} style={{ width: `${100 * confidence / 10}%` }}></div>
+      <div className={Style.background} style={style}></div>
     </div>
   );
 }
