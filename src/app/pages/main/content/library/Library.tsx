@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { BSON } from 'realm-web';
+import { List } from 'immutable';
 
-import { strCompare, DBPhraseInterface } from 'app/helpers'; // makeNewPhrase, Phrase
+import { compare, DBPhraseInterface, Phrase } from 'app/helpers'; // makeNewPhrase, Phrase
 import { PageHeader, PageBody, PageHeaderTitle, PageHeaderActions, Button } from 'app/elements';
-import { appendPhrases, Filter as FilterInterface, Library as LibraryInterface } from 'app/redux';
+import { appendPhrases, updateFilter, FilterStateType, LibraryStateType } from 'app/redux';
 
 import { Filter, EditOverlay } from '../../components';
 import { RowAddNew, RowPhrase, RowLoadMore } from './phrases-table'; // TableHeader
 import Style from './style.module.css';
 
 type LibraryProps = {
-  filter: FilterInterface
-  library: LibraryInterface
+  filter: FilterStateType
+  library: LibraryStateType
 }
 
 const RawLibrary = (props: LibraryProps) => {
@@ -21,11 +22,11 @@ const RawLibrary = (props: LibraryProps) => {
   const [editPhraseID, setEditPhraseID] = useState<BSON.ObjectID | null | 'NEW'>(null);
   const history = useHistory();
 
-  const displayPhrases = (() => {
+  const displayPhrases: List<Phrase> = (() => {
     // filters phrases based on the global filter
     const { filter: { orderBy, order }, library: { phrases } } = props; // page, perPage
     const displayPhrases = phrases.sort((a: DBPhraseInterface, b: DBPhraseInterface) => (
-      order * strCompare(a[orderBy], b[orderBy])
+      order * compare(a[orderBy], b[orderBy])
     )); // .slice(page * perPage, (page + 1) * perPage);
     return displayPhrases;
   })();
@@ -40,8 +41,8 @@ const RawLibrary = (props: LibraryProps) => {
       <PageHeader>
         <PageHeaderTitle>{'Library'}</PageHeaderTitle>
         <PageHeaderActions>
-          <Button size="sm" icon="Add" onClick={() => setEditPhraseID('NEW')}>{'New'}</Button>
-          <Button size="sm" icon="Autofill" color="orange" onClick={redirectToStudy}>{'Study'}</Button>
+          <Button size="sm" icon="add" onClick={() => setEditPhraseID('NEW')}>{'New'}</Button>
+          <Button size="sm" icon="study" color="orange" onClick={redirectToStudy}>{'Study'}</Button>
         </PageHeaderActions>
       </PageHeader>
       {/* make this take a button */}
@@ -66,11 +67,14 @@ const RawLibrary = (props: LibraryProps) => {
   );
 }
 
+
 const mapDispatchToProps = (dispatch: any) => ({
   appendPhrases: (newPhrases: DBPhraseInterface[]) => {
     dispatch(appendPhrases(newPhrases))
+  },
+  updateFilter: ({ filter }: { filter: FilterStateType }) => {
+    dispatch(updateFilter({ filter }))
   }
-  // updateFilter: ()
 });
 
 const Library = connect(

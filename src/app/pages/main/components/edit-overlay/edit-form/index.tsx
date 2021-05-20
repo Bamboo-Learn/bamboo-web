@@ -5,6 +5,8 @@ import React, { FC } from 'react';
 import { FormRow, FormText, } from 'app/elements'; // FormTextarea FormSlider, Button
 import { Phrase, } from 'app/helpers'; // isSet
 
+import Style from './style.module.css';
+
 type EditFormProps = {
   updateField: any,
   deletePhrase: any,
@@ -33,13 +35,14 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
       {/* Chinese */}
       <FormRow
         label="Chinese"
-      // buttonIcon="Autofill"
-      // buttonLabel="Autofill"
-      // buttonVisible={!shouldHideAutofill}
-      // buttonCallback={autofill}
+        buttonIcon="Autofill"
+        buttonLabel="Autofill"
+        buttonVisible={true} // !shouldHideAutofill
+        buttonOnClick={autofill}
       >
         <FormText
-          // name="characters"
+          className={Style.inputChinese}
+          name="characters"
           placeholder="中文"
           value={phrase.characters}
           onChange={updateField}
@@ -53,7 +56,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
         label="Pinyin"
       >
         <FormText
-          // name="pinyin"
+          name="pinyin"
           placeholder="pinyin"
           value={phrase.pinyin}
           onChange={updateField}

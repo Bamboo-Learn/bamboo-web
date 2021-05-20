@@ -31,15 +31,16 @@ const FilterRow = ({
   children,
   icon,
   iconAction,
-  iconClassName
+  iconClassName,
+  className
 }) => {
   const Icon = getIcon(icon);
   const inputHolderClassName = classNames({
     [Style.inputHolder]: true,
-    [Style.iconInputHolder]: !!icon
-  })
+    [Style.iconInputHolder]: !!icon,
+  });
   return (
-    <div className={Style.filterRow}>
+    <div className={`${Style.filterRow} ${className}`}>
       <div className={inputHolderClassName}>
         {children}
       </div>
@@ -164,6 +165,7 @@ class RawFilter extends React.Component {
           />
         </FilterRow>
         <FilterRow
+          className={Style.hiddenLg}
           icon={order === 1 ? 'Next' : 'Previous'}
           iconAction={e => this.toggleOrder(e)}
           iconClassName={Style.iconRotated}
@@ -211,8 +213,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  updateFilter: ({ filter, mongodb }) => {
-    dispatch(updateFilter({ filter, mongodb }))
+  updateFilter: ({ filter }) => {
+    dispatch(updateFilter({ filter }))
   }
 });
 

@@ -13,7 +13,7 @@ export const isSet = (variable: any): boolean => {
   }
 }
 
-export const strCompare = (a: string, b: string): number => {
+export const compare = (a: any, b: any): number => {
   if (a < b) {
     return -1;
   }

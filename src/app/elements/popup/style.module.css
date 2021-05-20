@@ -1,87 +1,87 @@
 .Overlay {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: #0008;
-    z-index: 99;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #0008;
+  z-index: 99;
 }
 
 .Overlay.Visible {
-    opacity: 1;
-    pointer-events: all;
+  opacity: 1;
+  pointer-events: all;
 }
 
 .Overlay.Hidden {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .Overlay .Popup {
-    width: 94%;
-    margin: 48px auto;
-    background: #FFF;
-    border-radius: 6px;
-    box-shadow: 4px 4px 8px 0 #00000033, 4px 6px 20px 0 #00000030;
-    overflow-x: hidden;
+  width: 94%;
+  margin: 48px auto;
+  background: #FFF;
+  border-radius: 6px;
+  box-shadow: 4px 4px 8px 0 #00000033, 4px 6px 20px 0 #00000030;
+  overflow-x: hidden;
 }
 
 .Overlay.Hidden .Popup {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .Overlay .Popup .PopupHeader .Title {
-    color: #999;
-    font-size: 12px;
-    padding: 8px 12px;
-    width: calc(100% - 54px);
-    float: left;
+  color: #999;
+  font-size: 12px;
+  padding: 8px 12px;
+  width: calc(100% - 54px);
+  float: left;
 }
 
 .Overlay .Popup .PopupHeader .CancelIconHolder {
-    padding: 5px;
-    right: 16px;
-    width: 20px;
-    float: left;
+  padding: 5px;
+  right: 16px;
+  width: 20px;
+  float: left;
 }
 
 .Overlay .Popup .PopupHeader .CancelIconHolder .CancelIcon {
-    width: 16px;
-    fill: #aaa;
+  width: 16px;
+  stroke: #aaa;
 }
 
 .Overlay .Popup .PopupBody {
-    padding: 16px;
+  padding: 16px;
 }
 
 .Overlay .Popup .ActionHolder {
-    width: 100%;
-    height: 52px;
+  width: 100%;
+  height: 52px;
 }
 
 .Overlay .Popup .ActionHolder .Action {
-    color: #fff !important;
-    background: var(--light-green);
-    float: left;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 16px;
-    width: 100%;
-    border-radius: 0 0 6px 6px;
-    margin-bottom: 0px;
-    cursor: pointer;
+  color: #fff !important;
+  background: var(--light-green);
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px;
+  width: 100%;
+  border-radius: 0 0 6px 6px;
+  margin-bottom: 0px;
+  cursor: pointer;
 }
 
 .Overlay .Popup .ActionHolder .Action.Disabled {
-    background: #999;
+  background: #999;
 }
 
 @media only screen and (min-width: 768px) {
 
-    .Overlay .Popup {
-        width: 480px;
-    }
+  .Overlay .Popup {
+    width: 480px;
+  }
 
 }

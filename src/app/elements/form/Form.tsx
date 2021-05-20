@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 
-import Style from './style.module.css';
+import Style from './style.module.scss';
 
 type FormProps = {
   children: JSX.Element | JSX.Element[]
@@ -10,7 +10,7 @@ type FormProps = {
 
 export const Form: FC<FormProps> = ({ children }) => {
   return (
-    <div className={Style.Form}>
+    <div className={Style.form}>
       {children}
     </div>
   );

@@ -8,19 +8,18 @@ export type InputTextPropTypes = {
   value: string,
   placeholder: string,
   isPassword?: boolean,
+  className?: string,
+  name?: string
 }
 
-type DecoratedInputTextPropTypes = InputTextPropTypes & {
-  className: string
-};
-
-export const InputText: FC<DecoratedInputTextPropTypes> = ({
+export const InputText: FC<InputTextPropTypes> = ({
   onChange: propsOnChange,
   onReturn: propsOnReturn,
   value,
   placeholder,
   isPassword,
-  className
+  className,
+  name
 }) => {
 
   const onChange = (e: any) => {
@@ -36,6 +35,7 @@ export const InputText: FC<DecoratedInputTextPropTypes> = ({
 
   return (
     <input
+      name={name}
       className={className}
       type={isPassword ? 'password' : 'text'}
       placeholder={placeholder}

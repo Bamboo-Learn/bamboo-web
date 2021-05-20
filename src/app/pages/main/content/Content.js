@@ -49,7 +49,6 @@ class RawContent extends React.Component {
   }
 }
 
-// TODO: remove this from here
 const mapStateToProps = state => {
   return {
     settings: state.settings,

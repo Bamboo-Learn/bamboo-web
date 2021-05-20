@@ -46,13 +46,14 @@
   }
 
   .header {
-    padding: 18px 10px;
+    padding: 6px 10px;
     font-size: 28px;
     width: calc(100% - 80px);
     font-size: 24px;
   }
 
   .pageBody {
+    width: calc(100% - 40px);
     margin-top: 80px;
   }
 }

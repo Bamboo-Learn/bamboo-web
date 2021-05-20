@@ -55,7 +55,7 @@ export class Slider extends React.Component {
         max="10"
         step="0.1"
         value={value}
-        className={Style.Slider}
+        className={Style.slider}
         style={sliderBackground(value)}
         onChange={this.onChange}
       />

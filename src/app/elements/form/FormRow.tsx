@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import classNames from 'classnames'
 
-import { getIcon } from '../icon';
+import { Button } from 'app/elements';
 
-import Style from './style.module.css';
+import { getIcon } from '../icon';
+import Style from './style.module.scss';
 
 const hasIcon = (icon: string | undefined) => !!icon;
 
@@ -12,16 +13,16 @@ type IconLabelSwitchProps = {
   label?: string
 }
 
-const IconLabelSwitch: FC<IconLabelSwitchProps> = ({ icon, label }) => {
+const FormIconLabelSwitch: FC<IconLabelSwitchProps> = ({ icon, label }) => {
   const Icon = getIcon(icon);
   return (
     <>
       {
-        (icon || label) && <div className={Style.LabelHolder}>
+        (icon || label) && <div className={Style.labelHolder}>
           {
             hasIcon(icon) ?
-              <Icon className={Style.Icon} /> :
-              <div className={Style.Label}>{label}</div>
+              <Icon className={Style.icon} /> :
+              <div className={Style.label}>{label}</div>
           }
         </div>
       }
@@ -29,44 +30,44 @@ const IconLabelSwitch: FC<IconLabelSwitchProps> = ({ icon, label }) => {
   )
 }
 
-type InputProps = IconLabelSwitchProps & {
+type FormInputProps = IconLabelSwitchProps & {
   children: JSX.Element | JSX.Element[]
 }
 
-const Input: FC<InputProps> = ({ icon, label, children }) => {
+const FormInput: FC<FormInputProps> = ({ icon, label, children }) => {
   const className = classNames({
-    [Style.InputHolder]: true,
-    [Style.InputHolderFullWidth]: !icon && !label
+    [Style.inputHolder]: true,
+    [Style.inputHolderFullWidth]: !icon && !label
   });
   return (
     <div className={className}> {children} </div>
   )
 };
 
-type DetailProps = {
+type FormDetailProps = {
   linkText?: string
   message?: string
   linkOnClick?: any
   errors?: string[]
 }
 
-const Detail: FC<DetailProps> = ({ message, errors, linkOnClick, linkText }) => {
+const FormDetail: FC<FormDetailProps> = ({ message, errors, linkOnClick, linkText }) => {
   return (
-    <div className={Style.Detail}>
+    <div className={Style.detail}>
       {/* Messages and errors */}
-      <div className={Style.Message}>
+      <div className={Style.message}>
         {
           !!message && <span>{message}</span>
         }
         {
           !message && !!errors && errors.map((error, i) => (
-            <span key={i} className={Style.Error}>{error}</span>
+            <span key={i} className={Style.error}>{error}</span>
           ))
         }
       </div>
       {/* Link */}
       {
-        linkOnClick && linkText && <div className={Style.Link}>
+        linkOnClick && linkText && <div className={Style.link}>
           <span onClick={linkOnClick}>
             {linkText}
           </span>
@@ -76,26 +77,54 @@ const Detail: FC<DetailProps> = ({ message, errors, linkOnClick, linkText }) => 
   )
 }
 
-type FormRowProps = DetailProps & InputProps;
+type FormButtonProps = {
+  buttonOnClick?: () => void,
+  buttonIcon?: string,
+  buttonLabel?: string,
+  buttonVisible?: boolean
+}
 
-export const FormRow: FC<FormRowProps> = ({ icon, errors, children, label, linkOnClick, linkText, message }) => {
+const FormButton: FC<FormButtonProps> = ({ buttonOnClick, buttonVisible, buttonIcon, buttonLabel }) => {
+  return (
+    <Button
+      icon={buttonIcon}
+      onClick={buttonOnClick}
+      hidden={!buttonVisible}
+      color="green"
+      tab={true}
+    >
+      {buttonLabel || ''}
+    </Button>
+  )
+}
+
+
+
+type FormRowProps = FormDetailProps & FormInputProps & FormButtonProps;
+
+export const FormRow: FC<FormRowProps> = ({ icon, errors, children, label, linkOnClick, linkText, message, buttonOnClick, buttonIcon, buttonLabel, buttonVisible }) => {
 
   if (!children) {
     return (<></>);
   }
 
-
   const formRowClassName = classNames({
-    [Style.FormRow]: true,
-    [Style.Error]: !!errors && errors.length > 0,
-    [Style.IconRow]: hasIcon(icon)
+    [Style.formRow]: true,
+    [Style.error]: !!errors && errors.length > 0,
+    [Style.iconRow]: hasIcon(icon)
   });
 
   return (
     <div className={formRowClassName}>
-      <IconLabelSwitch label={label} icon={icon} />
-      <Input icon={icon} label={label}>{children}</Input>
-      <Detail message={message} errors={errors} linkOnClick={linkOnClick} linkText={linkText} />
+      <FormIconLabelSwitch label={label} icon={icon} />
+      {!!buttonOnClick && <FormButton
+        buttonOnClick={buttonOnClick}
+        buttonVisible={buttonVisible}
+        buttonLabel={buttonLabel}
+        buttonIcon={buttonIcon}
+      />}
+      <FormInput icon={icon} label={label}>{children}</FormInput>
+      <FormDetail message={message} errors={errors} linkOnClick={linkOnClick} linkText={linkText} />
     </div>
   );
 };

@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 
 import { Popup } from 'app/elements';
 import { Mongodb, isSet, Phrase, makeNewPhrase } from 'app/helpers';
-import { Library, ReducerStateType } from 'app/redux';
+import { LibraryStateType, ReducerStateType } from 'app/redux';
 
 import { EditForm } from './edit-form';
 
 type EditOverlayPropTypes = {
   editPhraseID: BSON.ObjectID | null | 'NEW',
-  onClose: any,
-  library: Library
+  onClose: () => void,
+  library: LibraryStateType
 };
 
 type EditOverlayStateTypes = {

@@ -47,12 +47,50 @@
 
       .icon {
         width: 16px;
-        fill: #0008;
+        stroke: #0008;
         margin: 3px;
       }
 
       &.iconRotated {
         transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .filter {
+    top: 65px;
+    width: calc(100% - 80px);
+    border-bottom: none;
+
+    &.open,
+    &.closed {
+      max-height: 40px;
+      height: 40px;
+    }
+
+    .filterRow {
+      width: 20%;
+
+      &.hiddenLg {
+        display: none;
+      }
+
+      .inputHolder {
+
+        &.iconInputHolder {
+          width: 100%;
+        }
+      }
+
+      input,
+      select {
+        width: 100%;
+      }
+
+      .iconHolder {
+        display: none;
       }
     }
   }
