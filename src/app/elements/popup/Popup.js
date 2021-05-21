@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { getIcon } from '../icon';
+import { Icon } from 'app/elements';
 import { Loading } from '../loading/Loading.js';
 
 import Style from './style.module.css';
@@ -29,7 +29,6 @@ export class Popup extends React.Component {
       [Style.Visible]: this.props.isOpen,
       [Style.Hidden]: !this.props.isOpen
     });
-    const CancelIcon = getIcon('Cancel');
     return (
       <div id={this.props.id} className={overlayClassName}>
         <div className={Style.Popup}>
@@ -44,7 +43,7 @@ export class Popup extends React.Component {
               {
                 this.props.onClose &&
                 <div className={Style.CancelIconHolder} onClick={this.close}>
-                  <CancelIcon className={Style.CancelIcon} />
+                  <Icon icon={'cancel'} className={Style.CancelIcon} />
                 </div>
               }
             </div>

@@ -11,12 +11,12 @@ export interface PhraseInterface {
   english: string
   category: string
   confidence: number
-  owner_id: string
   [propname: string]: any
 }
 
 export interface DBPhraseInterface extends PhraseInterface {
   _id: BSON.ObjectID
+  owner_id: string
   created_at: Date
 }
 
@@ -144,6 +144,16 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
   // returns true when this phrase is registered in db
   isInDB(): boolean {
     return isSet(this._id);
+  }
+
+  toData(): PhraseInterface {
+    return {
+      characters: this.characters,
+      pinyin: this.pinyin,
+      category: this.category,
+      confidence: this.confidence,
+      english: this.english,
+    }
   }
 
   getStorable(user_id: string): DBPhraseInterface {

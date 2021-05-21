@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { InputText, Select } from 'app/elements';
-import { getIcon } from 'app/elements';
+import { Icon } from 'app/elements';
 import { updateFilter } from 'app/redux';
 
 import Style from './style.module.scss';
@@ -34,7 +34,6 @@ const FilterRow = ({
   iconClassName,
   className
 }) => {
-  const Icon = getIcon(icon);
   const inputHolderClassName = classNames({
     [Style.inputHolder]: true,
     [Style.iconInputHolder]: !!icon,
@@ -46,7 +45,7 @@ const FilterRow = ({
       </div>
       {
         !!icon && <div onClick={e => iconAction(e)} className={Style.iconHolder}>
-          <Icon className={`${Style.icon} ${iconClassName}`} />
+          <Icon icon={icon} className={`${Style.icon} ${iconClassName}`} />
         </div>
       }
     </div>
@@ -166,9 +165,8 @@ class RawFilter extends React.Component {
         </FilterRow>
         <FilterRow
           className={Style.hiddenLg}
-          icon={order === 1 ? 'Next' : 'Previous'}
+          icon={order === 1 ? 'down' : 'up'}
           iconAction={e => this.toggleOrder(e)}
-          iconClassName={Style.iconRotated}
         >
           {/* order by (mobile) multi select and order toggle */}
           <Select

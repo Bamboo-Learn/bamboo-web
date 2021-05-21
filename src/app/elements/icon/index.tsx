@@ -1,4 +1,6 @@
 
+import React, { FC } from 'react';
+
 import {
   FiUser,
   FiPenTool,
@@ -8,15 +10,16 @@ import {
   FiTrash2,
   FiEdit,
   FiMenu,
-  FiFilter
+  FiFilter,
+  FiArrowUp,
+  FiArrowDown
 } from 'react-icons/fi'
 import {
   BiGlassesAlt
 } from 'react-icons/bi'
 
-// ??? make it work like this instead: <Icon image="Autofill" className={Style.} />
 
-export const getIcon = (icon: string | undefined) => {
+const getIcon = (icon: string | undefined) => {
   switch (icon?.toLowerCase()) {
     case 'autofill':
       return FiPenTool;
@@ -42,8 +45,24 @@ export const getIcon = (icon: string | undefined) => {
     case 'cancel':
     case 'x':
       return FiX;
+    case 'down':
+      return FiArrowUp;
+    case 'up':
+      return FiArrowDown;
     default:
       console.error(`Icon (${icon}), does not exist.`);
       return FiX;
   }
+};
+
+type IconProps = {
+  className?: string,
+  icon: string,
+};
+
+export const Icon: FC<IconProps> = ({ className, icon }) => {
+  const IconElement = getIcon(icon);
+  return (
+    <IconElement className={className} />
+  );
 }

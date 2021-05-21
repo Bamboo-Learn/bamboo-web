@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import Style from './style.module.scss';
 
 type ColProps = {
-  children?: JSX.Element | JSX.Element[],
+  children?: JSX.Element | JSX.Element[] | (boolean | Element)[],
   className?: string,
   style?: any
 };

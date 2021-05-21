@@ -3,7 +3,7 @@
 import React, { FC, useState } from 'react';
 import classNames from 'classnames';
 
-import { getIcon } from '../icon';
+import { Icon } from 'app/elements';
 
 import Style from './style.module.scss';
 
@@ -65,7 +65,6 @@ export const Button: FC<ButtonProps> = ({
   });
 
   // render
-  const Icon = getIcon(icon);
   return (
     <div
       className={buttonClassName}
@@ -75,7 +74,7 @@ export const Button: FC<ButtonProps> = ({
       {
         !!icon &&
         <div className={Style.buttonIconHolder}>
-          <Icon className={Style.buttonIcon}></Icon>
+          <Icon icon={icon} className={Style.buttonIcon}></Icon>
         </div>
       }
       <div className={Style.label}>

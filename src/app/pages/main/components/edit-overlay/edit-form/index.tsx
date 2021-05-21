@@ -8,9 +8,9 @@ import { Phrase, } from 'app/helpers'; // isSet
 import Style from './style.module.css';
 
 type EditFormProps = {
-  updateField: any,
-  deletePhrase: any,
-  autofill: any,
+  updateField: (e: any) => void,
+  deletePhrase: () => void,
+  autofill: () => void,
   phrase: Phrase
 }
 

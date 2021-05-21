@@ -2,3 +2,9 @@
   margin: 40px 0 40px;
   width: 100%;
 }
+
+@media only screen and (min-width: 768px) {
+  .buttonHiddenLarge {
+    display: none;
+  }
+}

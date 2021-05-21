@@ -51,8 +51,8 @@ export const updateFilter = (() => {
 
 const initFilter: FilterStateType = {
   perPage: 30,
-  orderBy: 'created_at',
-  order: 1,
+  orderBy: 'created_at', // init created_at
+  order: -1, // descending, this is most recent first
   page: 0,
   search: '',
   pack: ''

@@ -1,12 +1,10 @@
 import React, { FC } from 'react';
 import classNames from 'classnames'
 
-import { Button } from 'app/elements';
+import { Button, Icon } from 'app/elements';
 
-import { getIcon } from '../icon';
 import Style from './style.module.scss';
 
-const hasIcon = (icon: string | undefined) => !!icon;
 
 type IconLabelSwitchProps = {
   icon?: string
@@ -14,14 +12,13 @@ type IconLabelSwitchProps = {
 }
 
 const FormIconLabelSwitch: FC<IconLabelSwitchProps> = ({ icon, label }) => {
-  const Icon = getIcon(icon);
   return (
     <>
       {
         (icon || label) && <div className={Style.labelHolder}>
           {
-            hasIcon(icon) ?
-              <Icon className={Style.icon} /> :
+            !!icon ?
+              <Icon icon={icon} className={Style.icon} /> :
               <div className={Style.label}>{label}</div>
           }
         </div>
@@ -111,7 +108,7 @@ export const FormRow: FC<FormRowProps> = ({ icon, errors, children, label, linkO
   const formRowClassName = classNames({
     [Style.formRow]: true,
     [Style.error]: !!errors && errors.length > 0,
-    [Style.iconRow]: hasIcon(icon)
+    [Style.iconRow]: !!icon
   });
 
   return (

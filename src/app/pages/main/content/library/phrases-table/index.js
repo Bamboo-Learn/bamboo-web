@@ -1,4 +1,4 @@
 export * from './RowAddNew';
-export * from './row-phrase';
+export * from './RowPhrase';
 export * from './TableHeader';
 export * from './RowLoadMore';

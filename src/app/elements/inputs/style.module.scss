@@ -1,0 +1,25 @@
+.slider {
+  appearance: none;
+  outline: none;
+  width: calc(100% - 5px);
+  height: 2px;
+  margin: 0;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background: var(--dark-green);
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background: var(--dark-green);
+    cursor: pointer;
+  }
+}

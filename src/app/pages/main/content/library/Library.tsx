@@ -41,7 +41,7 @@ const RawLibrary = (props: LibraryProps) => {
       <PageHeader>
         <PageHeaderTitle>{'Library'}</PageHeaderTitle>
         <PageHeaderActions>
-          <Button size="sm" icon="add" onClick={() => setEditPhraseID('NEW')}>{'New'}</Button>
+          <Button size="sm" icon="add" className={Style.buttonHiddenLarge} onClick={() => setEditPhraseID('NEW')}>{'New'}</Button>
           <Button size="sm" icon="study" color="orange" onClick={redirectToStudy}>{'Study'}</Button>
         </PageHeaderActions>
       </PageHeader>
@@ -50,7 +50,7 @@ const RawLibrary = (props: LibraryProps) => {
         <Filter />
         {/* <TableHeader filter={filter} /> */}
         <div className={Style.tableBody}>
-          <RowAddNew editPhraseID={editPhraseID} />
+          <RowAddNew />
           {
             displayPhrases.map((phrase) => (
               <RowPhrase

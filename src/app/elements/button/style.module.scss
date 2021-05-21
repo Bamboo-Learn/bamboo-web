@@ -60,7 +60,8 @@
 
       .buttonIcon {
         width: 12px;
-        margin: -5px -6px;
+        margin: -6px -6px;
+        transform: scale(1.4);
       }
     }
 
@@ -94,5 +95,18 @@
   &.grey,
   &.gray {
     background: #999;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .button {
+
+    &.sm,
+    &.small {
+      padding: 8px 14px;
+      height: 28px;
+      max-width: 94px;
+      font-size: 14px;
+    }
   }
 }

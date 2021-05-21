@@ -16,6 +16,8 @@
   }
 
   .col {
+    z-index: 2;
+    position: relative;
     margin: 0;
     height: 54px;
 
@@ -32,7 +34,10 @@
   }
 
   .background {
-    display: none;
+    background: var(--background-green);
+    position: absolute;
+    z-index: 1;
+    height: 54px;
   }
 }
 

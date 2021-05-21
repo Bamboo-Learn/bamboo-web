@@ -1,6 +1,6 @@
 import React from 'react';
 import './SubHeader.css';
-import { getIcon } from '../icon';
+import { Icon } from '../icon';
 
 class SubHeader extends React.Component {
   constructor(props) {
@@ -22,10 +22,10 @@ class SubHeaderItem extends React.Component {
   }
 
   render() {
-    const Icon = getIcon(this.props.icon);
+    const { icon } = this.props;
     return (
       <div className={Style.SubHeaderItem}>
-        <Icon />
+        <Icon icon={icon} />
         {this.props.children}
       </div>
     );
