@@ -1,4 +1,5 @@
 import { BSON } from 'realm-web';
+import _ from 'lodash';
 
 import { Mongodb } from './mongodb';
 import { isSet } from './utils'
@@ -9,8 +10,8 @@ export interface PhraseInterface {
   characters: string
   pinyin: string
   english: string
-  category: string
-  confidence: number
+  pack: string
+  progress: number
   [propname: string]: any
 }
 
@@ -18,6 +19,9 @@ export interface DBPhraseInterface extends PhraseInterface {
   _id: BSON.ObjectID
   owner_id: string
   created_at: Date
+  // legacy
+  category?: string
+  confidence?: number
 }
 
 // Phrase Class
@@ -29,19 +33,25 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
   owner_id: string
   characters: string
   pinyin: string
-  category: string
-  confidence: number
+  pack: string
+  progress: number
   english: string
+  category?: string
+  confidence?: number
 
   constructor(phrase: PhraseInterface | DBPhraseInterface) {
     this._id = phrase._id || undefined;
     this.created_at = phrase.created_at || undefined;
-    this.owner_id = phrase.owner_id;
-    this.characters = phrase.characters;
-    this.pinyin = phrase.pinyin;
-    this.category = phrase.category;
+    this.owner_id = phrase.owner_id || undefined;
+    this.characters = phrase.characters || '';
+    this.pinyin = phrase.pinyin || '';
+    this.english = phrase.english || '';
+    this.pack = phrase.pack || '';
+    this.progress = phrase.progress || phrase.confidence / 10 || 0;
+
     this.confidence = phrase.confidence;
-    this.english = phrase.english;
+    this.category = phrase.category;
+
     Object.preventExtensions(this);
     Object.freeze(this);
   }
@@ -121,8 +131,8 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
   }
 
   // returns true when this phrase has been edited
-  isEdited(phrases: Phrase[]): boolean {
-    return this.getOriginal(phrases) !== this;
+  isEdited(phrase: Phrase): boolean {
+    return !_.isEqual(phrase.toData(), this.toData());
   }
 
   isDuplicate(phrases: Phrase[]): boolean {
@@ -136,9 +146,9 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     return count >= 2;
   }
 
-  isSaveable(phrases: Phrase[]): boolean {
+  isSaveable(originalPhrase: Phrase, phrases: Phrase[]): boolean {
     // it is saveable if it has been edited, is not missing fields, and is not a duplicate
-    return this.isEdited(phrases) && !this.isMissingRequiredField() && !this.isDuplicate(phrases);
+    return this.isEdited(originalPhrase) && !this.isMissingRequiredField() && !this.isDuplicate(phrases);
   }
 
   // returns true when this phrase is registered in db
@@ -146,37 +156,43 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     return isSet(this._id);
   }
 
+  copy(): Phrase {
+    return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+  }
+
   toData(): PhraseInterface {
     return {
       characters: this.characters,
       pinyin: this.pinyin,
-      category: this.category,
-      confidence: this.confidence,
+      pack: this.pack,
+      progress: this.progress,
       english: this.english,
     }
   }
 
-  getStorable(user_id: string): DBPhraseInterface {
+  getStorable(): DBPhraseInterface {
     return {
+      ...this.toData(),
       _id: this._id,
-      characters: this.characters,
-      pinyin: this.pinyin,
-      category: this.category, // TODO: remove this
-      confidence: this.confidence,
-      english: this.english,
-      owner_id: user_id, // necessary
+      owner_id: Mongodb.userID(),
       created_at: this.created_at || new Date()
     }
   }
 }
 
-// makeNewPhrase
-
-export const makeNewPhrase = () => new Phrase({
-  owner_id: Mongodb.userID(),
-  confidence: 0,
-  category: '',
+export const DefaultPhraseData: PhraseInterface = {
+  characters: '',
+  progress: 0,
   pinyin: '',
   english: '',
-  characters: ''
-});
+  pack: ''
+}
+
+// makeNewPhrase
+
+export const makeNewPhrase = () => new Phrase(
+  {
+    ...DefaultPhraseData,
+    owner_id: Mongodb.userID()
+  }
+);

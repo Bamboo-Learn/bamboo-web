@@ -57,7 +57,6 @@ class RawSidebar extends React.Component {
   render() {
     const { isOpen } = this.state;
     const { pageID } = this.props.match.params;
-    // TODO: what if this is not in PAGE_IDS
     const sidePanelClassName = classNames({
       [Style.sidebarPanel]: true,
       [Style.closed]: !isOpen

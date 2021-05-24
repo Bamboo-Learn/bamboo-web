@@ -9,10 +9,11 @@ export type SliderPropTypes = {
   onChange: (e: any) => void
   style?: any
   className?: string
+  name: string
 }
 
 // TODO: too many styles here?
-export const InputSlider: FC<SliderPropTypes> = ({ value, className, onChange, style }) => {
+export const InputSlider: FC<SliderPropTypes> = ({ value, className, onChange, style, name }) => {
 
   const onSliderChange = (e: any) => {
     e.preventDefault();
@@ -21,6 +22,7 @@ export const InputSlider: FC<SliderPropTypes> = ({ value, className, onChange, s
 
   return (
     <input
+      name={name}
       type="range"
       min="0" // TODO: make this variable
       max="1"

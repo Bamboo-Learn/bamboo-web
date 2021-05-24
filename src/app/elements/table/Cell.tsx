@@ -8,34 +8,36 @@ type CellProps = {
   className?: string,
   disabled?: boolean,
   name: string,
-  onChange: (e: any) => void
-}
-
-type SelectCellProps = CellProps & {
+  onChange: (e: any) => void,
+  placeholder?: string
   value: string
 }
 
-export const TextCell: FC<SelectCellProps> = ({ disabled, value, className: classNameProps, name, onChange }) => {
+type SelectCellProps = CellProps & {
+  // options
+}
+
+export const TextCell: FC<CellProps> = ({ disabled, value, className: classNameProps, name, onChange, placeholder }) => {
   const className = classNames({
     [Style.cell]: true,
     [Style.disabled]: disabled
   });
   return (
-    <input name={name} className={`${className} ${classNameProps}`} value={value} onChange={onChange} />
+    <input name={name} className={`${className} ${classNameProps}`} value={value} onChange={onChange} placeholder={placeholder} />
   );
 }
 
-export const TextAreaCell: FC<SelectCellProps> = ({ disabled, value, className: classNameProps, name, onChange }) => {
+export const TextAreaCell: FC<CellProps> = ({ disabled, value, className: classNameProps, name, onChange, placeholder }) => {
   const className = classNames({
     [Style.cell]: true,
     [Style.disabled]: disabled
   });
   return (
-    <TextareaAutosize name={name} className={`${className} ${classNameProps}`} value={value} onChange={onChange} />
+    <TextareaAutosize name={name} className={`${className} ${classNameProps}`} value={value} onChange={onChange} placeholder={placeholder} />
   );
 }
 
-export const SelectCell: FC<CellProps> = ({ disabled, className: classNameProps }) => {
+export const SelectCell: FC<SelectCellProps> = ({ disabled, className: classNameProps }) => {
   const className = classNames({
     [Style.cell]: true,
     [Style.disabled]: disabled

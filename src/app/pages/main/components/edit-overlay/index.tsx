@@ -55,7 +55,7 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
       default:
         this.setState({
           isOpen: true,
-          phrase: library.phrases.find((phrase) => phrase._id === editPhraseID)
+          phrase: library.phrases.find((phrase) => phrase._id === editPhraseID) // TODO: this is wrong, we need to copy
         });
     }
   }

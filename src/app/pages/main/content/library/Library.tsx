@@ -56,7 +56,7 @@ const RawLibrary = (props: LibraryProps) => {
               <RowPhrase
                 key={phrase._id.toHexString()}
                 phrase={phrase}
-                setEditPhraseID={setEditPhraseID}
+                edit={() => setEditPhraseID(phrase._id)}
               />
             ))
           }

@@ -119,7 +119,7 @@ export class Mongodb {
       return;
     }
 
-    const storePhrase = phrase.getStorable(userID);
+    const storePhrase = phrase.getStorable();
 
     if (!storePhrase._id) {
       return await collection.insertOne(storePhrase);

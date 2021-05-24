@@ -133,14 +133,18 @@
 
     .colEnglish {
       margin: 0 !important;
-      width: 30%;
+      width: 36%;
     }
 
     .colOptions {
-      width: auto;
+      width: 28%;
       margin: 0 !important;
       filter: opacity(0);
       transition: filter 0.2s;
+
+      .buttonHideLarge {
+        display: none;
+      }
     }
 
     .colConfidenceLarge {

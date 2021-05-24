@@ -2,27 +2,27 @@
 import React, { FC, useState } from 'react';
 
 import { Row, Col, TextCell, TextAreaCell, Button } from 'app/elements';
-import { PhraseInterface } from 'app/helpers'
+import { PhraseInterface, DefaultPhraseData } from 'app/helpers'
 
 import Style from './style.module.scss';
 
 type RowAddNewProps = {
 }
 
+
+
 // TODO: this is creating a new phrase so the useState hook of setPhrase
 // needs to be 
 export const RowAddNew: FC<RowAddNewProps> = () => {
 
-  const [phrase, setPhrase] = useState<PhraseInterface>({
-    characters: '',
-    confidence: 0,
-    pinyin: '',
-    english: '',
-    category: ''
-  });
+  const [phrase, setPhrase] = useState<PhraseInterface>(DefaultPhraseData);
 
   const updateField = (e: any) => {
     setPhrase({ ...phrase, ...{ [e.target.name]: e.target.value } });
+  }
+
+  const cancel = (e: any) => {
+    setPhrase(DefaultPhraseData);
   }
 
   return (
@@ -34,6 +34,7 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           value={phrase.characters}
           name="characters"
           onChange={updateField}
+          placeholder="新的"
         />
       </Col>
       <Col className={Style.colPinyin}>
@@ -42,6 +43,7 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           value={phrase.pinyin}
           name="pinyin"
           onChange={updateField}
+          placeholder="pinyin"
         />
       </Col>
       <Col className={Style.colEnglish}>
@@ -50,10 +52,11 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           value={phrase.english}
           name="english"
           onChange={updateField}
+          placeholder="english definition"
         />
       </Col>
       <Col className={Style.colOptions}>
-        <Button size="sm" onClick={() => { }} icon="X" color="grey" doubleClick>{'Cancel'}</Button>
+        <Button size="sm" onClick={cancel} icon="X" color="grey">{'Cancel'}</Button>
         <Button size="sm" onClick={() => { }} icon="Edit" color="blue">{'Save'}</Button>
       </Col>
       {/* <ColConfidenceLarge confidence={confidence} updateField={updateField} /> */}

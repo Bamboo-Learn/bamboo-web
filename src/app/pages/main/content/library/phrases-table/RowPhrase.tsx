@@ -1,6 +1,5 @@
 
 import React, { FC, useState, useEffect } from 'react';
-import { BSON } from 'realm-web';
 import classNames from 'classnames';
 
 import { Phrase } from 'app/helpers';
@@ -24,12 +23,12 @@ const ColOpenerSmall: FC<{ isOpen: boolean, onClick: any }> = ({ isOpen, onClick
   );
 }
 
-const ColConfidenceSmall: FC<{ confidence: number }> = ({ confidence }) => {
+const ColProgressSmall: FC<{ progress: number }> = ({ progress }) => {
   return (
     <Col className={Style.colConfidenceSmall}>
       <div
         className={`${Style.confidenceBar} noselect`}
-        style={confidenceBackground(confidence)}
+        style={confidenceBackground(progress)}
       >
       </div>
     </Col>
@@ -38,15 +37,16 @@ const ColConfidenceSmall: FC<{ confidence: number }> = ({ confidence }) => {
 
 // ColLarge
 
-type ColConfidenceLargeProps = {
-  confidence: number,
+type ColProgressLargeProps = {
+  progress: number,
   updateField: (e: any) => void
 }
 
-const ColConfidenceLarge: FC<ColConfidenceLargeProps> = ({ confidence, updateField }) => {
+const ColProgressLarge: FC<ColProgressLargeProps> = ({ progress, updateField }) => {
   return (
     <Col className={Style.colConfidenceLarge}>
-      <InputSlider onChange={updateField} value={confidence} />
+      {/* TODO: in here have a cover that covers the whole row, that says percent and status (learning, learned...) */}
+      <InputSlider onChange={updateField} value={progress} name="progress" />
     </Col>
   );
 }
@@ -55,24 +55,26 @@ const ColConfidenceLarge: FC<ColConfidenceLargeProps> = ({ confidence, updateFie
 
 type OptionButtonsProps = {
   edit: () => void,
+  cancel: () => void,
+  save: () => void,
+  remove: () => void,
   isEdited: boolean
 }
 
-const OptionButtons: FC<OptionButtonsProps> = ({ edit, isEdited }) => {
+const OptionButtons: FC<OptionButtonsProps> = ({ edit, cancel, save, remove, isEdited }) => {
   if (isEdited) {
     return (
       <>
-        <Button size="sm" onClick={() => { }} icon="X" color="grey" doubleClick>{'Cancel'}</Button>
-        <Button size="sm" onClick={() => { }} icon="Edit" color="blue" doubleClick>{'Save'}</Button>
+        <Button size="sm" onClick={cancel} icon="X" color="grey">{'Cancel'}</Button>
+        <Button size="sm" onClick={save} icon="Edit" color="blue">{'Save'}</Button>
       </>
 
     )
   }
   return (
     <>
-      <Button size="sm" onClick={() => { }} icon="Garbage" color="red" doubleClick>{'Delete'}</Button>
-      <Button size="sm" onClick={edit} icon="Edit" color="blue">{'Edit'}</Button>
-      {/* TODO: don't display edit button on large */}
+      <Button size="sm" onClick={remove} icon="Garbage" color="red" doubleClick>{'Delete'}</Button>
+      <Button size="sm" onClick={edit} icon="Edit" color="blue" className={Style.buttonHideLarge}>{'Edit'}</Button>
     </>
   );
 }
@@ -81,12 +83,12 @@ const OptionButtons: FC<OptionButtonsProps> = ({ edit, isEdited }) => {
 
 type RowPhraseProps = {
   phrase: Phrase,
-  setEditPhraseID: (id: BSON.ObjectID | null | 'NEW') => void // this is for the edit button
+  edit: () => void // this is for the edit button
 }
 
-export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, setEditPhraseID }) => {
+export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [phrase, setPhrase] = useState(phraseProp.toData());
+  const [phrase, setPhrase] = useState(phraseProp.copy());
 
   const toggleIsOpen = (e: any) => {
     e.preventDefault();
@@ -94,21 +96,27 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, setEditPhras
   }
 
   useEffect(() => {
-    setPhrase(phraseProp.toData());
+    // if the phrase updates, copy it into state
+    setPhrase(phraseProp.copy());
   }, [phraseProp]);
 
   const updateField = (e: any) => {
     if (e.target.name === 'confidence') {
-      setPhrase({ ...phrase, ...{ confidence: parseFloat(e.target.value) } });
+      setPhrase(phrase.set('confidence', parseFloat(e.target.value)));
       return;
     }
-    setPhrase({ ...phrase, ...{ [e.target.name]: e.target.value } });
+    setPhrase(phrase.set(e.target.name, e.target.value));
   }
 
-  const isEdited = false;
+  const cancel = () => {
+    setPhrase(phraseProp.copy());
+  }
+
+  const isEdited = phrase.isEdited(phraseProp);
 
   return (
-    <Row confidence={phrase.confidence} isOpen={isOpen} className={Style.rowPhrase}>
+    <Row backgroundFill={phrase.progress} isOpen={isOpen} className={Style.rowPhrase}>
+      {/* <AutofillCover /> */}
       <ColOpenerSmall isOpen={isOpen} onClick={toggleIsOpen} />
       <Col className={Style.colChinese}>
         <TextCell
@@ -118,7 +126,7 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, setEditPhras
           onChange={updateField}
         />
       </Col>
-      <ColConfidenceSmall confidence={phrase.confidence} />
+      <ColProgressSmall progress={phrase.progress} />
       <Col className={Style.colPinyin}>
         <TextCell
           className={Style.cellPinyin}
@@ -138,13 +146,15 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, setEditPhras
 
       <Col className={Style.colOptions}>
         <OptionButtons
-          edit={() => setEditPhraseID(phraseProp._id)}
+          edit={edit}
+          cancel={cancel}
+          remove={() => { }}
+          save={() => { }}
           isEdited={isEdited}
         />
       </Col>
 
-
-      <ColConfidenceLarge confidence={phrase.confidence} updateField={updateField} />
+      <ColProgressLarge progress={phrase.progress} updateField={updateField} />
     </Row>
   );
 }
