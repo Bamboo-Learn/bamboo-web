@@ -10,9 +10,9 @@ import Style from './style.module.scss';
 
 const PROGRESS_OPTIONS = [
   { label: 'All Progress', value: '' },
-  { label: 'To Learn', value: 'to_learn' },
-  { label: 'Learning', value: 'learning' },
-  { label: 'Learned', value: 'learned' }
+  { label: 'To Learn', value: '? === 0' },
+  { label: 'Learning', value: '? !==0 && ? !== 1' },
+  { label: 'Learned', value: '? === 1' }
 ];
 
 const ORDER_BY_OPTIONS = [

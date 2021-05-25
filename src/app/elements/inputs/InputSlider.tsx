@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { confidenceBackground } from 'app/elements';
+import { progressBackground } from 'app/elements';
 
 import Style from './style.module.scss'
 
@@ -29,7 +29,7 @@ export const InputSlider: FC<SliderPropTypes> = ({ value, className, onChange, s
       step="0.01"
       className={`${Style.slider} ${className}`}
       value={value}
-      style={style || confidenceBackground(value)}
+      style={style || progressBackground(value)}
       onChange={onSliderChange}
     />
   );

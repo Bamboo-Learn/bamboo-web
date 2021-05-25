@@ -55,16 +55,16 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
       default:
         this.setState({
           isOpen: true,
-          phrase: library.phrases.find((phrase) => phrase._id === editPhraseID) // TODO: this is wrong, we need to copy
+          phrase: library.phrases.find((phrase) => phrase._id === editPhraseID)?.copy()
         });
     }
   }
 
   updateField = (e: any) => {
     const { phrase } = this.state;
-    if (e.target.name === 'confidence') {
+    if (e.target.name === 'progress') {
       this.setState({
-        phrase: phrase?.set('confidence', parseFloat(e.target.value))
+        phrase: phrase?.set('progress', parseFloat(e.target.value))
       });
       return;
     }

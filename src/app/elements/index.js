@@ -6,7 +6,7 @@ export * from './icon';
 export * from './loading/Loading.js';
 export * from './logo';
 export * from './page';
-export * from './popup/Popup.js';
+export * from './popup';
 export * from './splash';
 export * from './style';
 export * from './table';

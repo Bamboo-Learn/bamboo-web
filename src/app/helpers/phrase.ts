@@ -56,24 +56,16 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     Object.freeze(this);
   }
 
-  set(field: string, value: string | number): Phrase {
+  // Immutable Functions
+
+  // set a field
+  set(field: string, value: string | number | BSON.ObjectID): Phrase {
     return new Phrase({ ...this, [field]: value });
   }
 
-  makeOriginal() {
-    return {
-      characters: this.characters,
-      english: this.english,
-      confidence: this.confidence,
-      pinyin: this.pinyin
-    };
-  }
-
-  // Immutable Functions
-
   // sets the original to the current (does not save to db)
   save({ insertedId }: { insertedId: BSON.ObjectID }): Phrase {
-    return Object.create({ ...this, _id: insertedId });
+    return this.set('_id', insertedId);
   }
 
   // takes the original and sets the actual to that (erases changes)
@@ -92,31 +84,43 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
         confidence = 0.0;
         break;
     }
-    return Object.create({ ...this, confidence });
+    return this.set('confidence', confidence);
   }
 
   autofill(lookupChars: { character: string, english: string, pinyin: string }[], fields: { english: boolean, pinyin: boolean }): Phrase {
-    let pinyin = '';
-    let english = '';
-    for (let i = 0; i < this.characters.length; i++) {
-      const character = this.characters.charAt(i);
+    let pinyin: string[] = [];
+    let english: string[] = [];
+    this.characters.split('').forEach((character, i) => {
       const lookupChar = lookupChars.find(luc => luc.character === character);
       if (!lookupChar) {
-        english += ' _ | ';
-        pinyin += '_ ';
+        english.push('_');
+        pinyin.push('_');
       } else {
-        english += (i === this.characters.length - 1) ? lookupChar.english : lookupChar.english + ' | ';
-        pinyin += lookupChar.pinyin[0] + ' ';
+        english.push(lookupChar.english);
+        pinyin.push(lookupChar.pinyin[0]);
       }
-    }
-    const newFields: { english?: string, pinyin?: string } = {};
+    });
+    let newPhrase: Phrase = this;
     if (fields.english) {
-      newFields.english = english.trim();
+      newPhrase = newPhrase.set('english', english.join(' | '));
     }
     if (fields.pinyin) {
-      newFields.pinyin = pinyin.trim();
+      newPhrase = newPhrase.set('pinyin', pinyin.join(' '));
     }
-    return Object.create({ ...this, ...newFields });
+    return newPhrase;
+  }
+
+  makeStorable(): Phrase {
+    return new Phrase({
+      ...this.toData(),
+      _id: this._id,
+      owner_id: Mongodb.userID(),
+      created_at: this.created_at || new Date()
+    });
+  }
+
+  copy(): Phrase {
+    return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
   }
 
   // Helper Functions
@@ -136,14 +140,7 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
   }
 
   isDuplicate(phrases: Phrase[]): boolean {
-    let count = 0;
-    phrases.forEach(phrase => {
-      if (phrase.characters === this.characters) {
-        count++
-        if (count >= 2) return true;
-      }
-    });
-    return count >= 2;
+    return phrases.some(phrase => phrase.characters === this.characters);
   }
 
   isSaveable(originalPhrase: Phrase, phrases: Phrase[]): boolean {
@@ -151,13 +148,14 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     return this.isEdited(originalPhrase) && !this.isMissingRequiredField() && !this.isDuplicate(phrases);
   }
 
+  canAutoFill() {
+    return this.characters.length > 0 && (
+      this.pinyin.length === 0 || this.english.length === 0);
+  }
+
   // returns true when this phrase is registered in db
   isInDB(): boolean {
     return isSet(this._id);
-  }
-
-  copy(): Phrase {
-    return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
   }
 
   toData(): PhraseInterface {
@@ -170,14 +168,6 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     }
   }
 
-  getStorable(): DBPhraseInterface {
-    return {
-      ...this.toData(),
-      _id: this._id,
-      owner_id: Mongodb.userID(),
-      created_at: this.created_at || new Date()
-    }
-  }
 }
 
 export const DefaultPhraseData: PhraseInterface = {

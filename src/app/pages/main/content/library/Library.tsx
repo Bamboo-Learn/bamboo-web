@@ -9,7 +9,7 @@ import { PageHeader, PageBody, PageHeaderTitle, PageHeaderActions, Button } from
 import { appendPhrases, updateFilter, FilterStateType, LibraryStateType } from 'app/redux';
 
 import { Filter, EditOverlay } from '../../components';
-import { RowAddNew, RowPhrase, RowLoadMore } from './phrases-table'; // TableHeader
+import { RowAddNew, RowPhrase, RowLoadMore, TableHeader } from './phrases-table';
 import Style from './style.module.css';
 
 type LibraryProps = {
@@ -48,7 +48,7 @@ const RawLibrary = (props: LibraryProps) => {
       {/* make this take a button */}
       <PageBody>
         <Filter />
-        {/* <TableHeader filter={filter} /> */}
+        <TableHeader />
         <div className={Style.tableBody}>
           <RowAddNew />
           {

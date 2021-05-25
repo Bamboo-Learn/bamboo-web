@@ -5,12 +5,14 @@ import Style from './style.module.scss';
 type ColProps = {
   children?: JSX.Element | JSX.Element[] | (boolean | Element)[],
   className?: string,
-  style?: any
+  style?: any,
+  onClick?: (e: any) => void
 };
 
-const Col: FC<ColProps> = ({ children, className, style }) => {
+const Col: FC<ColProps> = ({ children, className, style, onClick }) => {
   return (
-    <div className={`${Style.col} ${className}`} style={style}>
+    // TODO: if no onClick, focus child
+    <div className={`${Style.col} ${className}`} style={style} onClick={onClick}>
       {children}
     </div>
   );

@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 
-import { FormRow, FormText, } from 'app/elements'; // FormTextarea FormSlider, Button
+import { Form, FormRow, FormText, } from 'app/elements'; // FormTextarea FormSlider, Button
 import { Phrase, } from 'app/helpers'; // isSet
 
 import Style from './style.module.css';
@@ -31,7 +31,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
   // })();
 
   return (
-    <>
+    <Form>
       {/* Chinese */}
       <FormRow
         label="Chinese"
@@ -113,7 +113,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
           />
         </div>
       } */}
-    </>
+    </Form>
   );
 }
 

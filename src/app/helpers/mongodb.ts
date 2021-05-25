@@ -84,7 +84,7 @@ export class Mongodb {
     }
     const db = Mongodb.getDB();
     const collection = db.collection('characters');
-    return await collection.find({ character: { $in: characters.split('') } }).toArray();
+    return await collection.find({ character: { $in: characters.split('') } });
   }
 
   static async getPhrases({ perPage, page, orderBy: filterOrderBy, order }: { perPage: number, page: number, orderBy: string, order: number }) {
@@ -119,9 +119,8 @@ export class Mongodb {
       return;
     }
 
-    const storePhrase = phrase.getStorable();
-
-    if (!storePhrase._id) {
+    const storePhrase = phrase.makeStorable();
+    if (!storePhrase.isInDB()) {
       return await collection.insertOne(storePhrase);
     }
     return await collection.updateOne({ _id: storePhrase._id }, storePhrase);

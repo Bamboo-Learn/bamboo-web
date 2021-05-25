@@ -2,32 +2,53 @@
 import React, { FC, useState } from 'react';
 
 import { Row, Col, TextCell, TextAreaCell, Button } from 'app/elements';
-import { PhraseInterface, DefaultPhraseData } from 'app/helpers'
+import { makeNewPhrase, Phrase, Mongodb, isSet } from 'app/helpers'
 
+import { AutofillCover } from './AutofillCover';
 import Style from './style.module.scss';
 
 type RowAddNewProps = {
 }
 
-
-
-// TODO: this is creating a new phrase so the useState hook of setPhrase
-// needs to be 
 export const RowAddNew: FC<RowAddNewProps> = () => {
 
-  const [phrase, setPhrase] = useState<PhraseInterface>(DefaultPhraseData);
+  const [phrase, setPhrase] = useState<Phrase>(makeNewPhrase());
+  const [disableAutofillFromFocus, setDisableAutofillFromFocus] = useState(false);
+
+  const canAutoFill = !disableAutofillFromFocus && phrase.canAutoFill();
 
   const updateField = (e: any) => {
-    setPhrase({ ...phrase, ...{ [e.target.name]: e.target.value } });
+    setPhrase(phrase.set(`${e.target.name}`, e.target.value));
   }
 
   const cancel = (e: any) => {
-    setPhrase(DefaultPhraseData);
+    setPhrase(makeNewPhrase());
+  }
+
+  const autofill = async () => {
+    if (!canAutoFill) {
+      return;
+    }
+    // get the pinyin and english for these characters
+    const characters = await Mongodb.getCharacters(phrase.characters);
+
+    // edit the phrase to include the new phrases
+    const newPhrase = phrase.autofill(characters, {
+      pinyin: !isSet(phrase.pinyin),
+      english: !isSet(phrase.english)
+    });
+    setPhrase(newPhrase);
   }
 
   return (
     <Row className={`${Style.rowAddNew} ${Style.rowPhrase}`}>
-
+      <div className={Style.cover}>
+        <AutofillCover
+          visible={canAutoFill}
+          pinyin={phrase.pinyin}
+          english={phrase.english}
+        />
+      </div>
       <Col className={Style.colChinese}>
         <TextCell
           className={Style.cellChinese}
@@ -35,6 +56,7 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           name="characters"
           onChange={updateField}
           placeholder="新的"
+          onReturn={autofill}
         />
       </Col>
       <Col className={Style.colPinyin}>
@@ -44,6 +66,8 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           name="pinyin"
           onChange={updateField}
           placeholder="pinyin"
+          onFocus={() => setDisableAutofillFromFocus(true)}
+          onBlur={() => setDisableAutofillFromFocus(false)}
         />
       </Col>
       <Col className={Style.colEnglish}>
@@ -53,6 +77,8 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           name="english"
           onChange={updateField}
           placeholder="english definition"
+          onFocus={() => setDisableAutofillFromFocus(true)}
+          onBlur={() => setDisableAutofillFromFocus(false)}
         />
       </Col>
       <Col className={Style.colOptions}>

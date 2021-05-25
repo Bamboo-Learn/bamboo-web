@@ -2,9 +2,10 @@
 import React, { FC, useState, useEffect } from 'react';
 import classNames from 'classnames';
 
-import { Phrase } from 'app/helpers';
-import { confidenceBackground, Row, Col, TextCell, TextAreaCell, Button, InputSlider } from 'app/elements';
+import { Phrase, Mongodb, isSet } from 'app/helpers';
+import { progressBackground, Row, Col, TextCell, TextAreaCell, Button, InputSlider } from 'app/elements';
 
+import { AutofillCover } from './AutofillCover';
 import Style from './style.module.scss';
 
 // ColSmall
@@ -25,10 +26,10 @@ const ColOpenerSmall: FC<{ isOpen: boolean, onClick: any }> = ({ isOpen, onClick
 
 const ColProgressSmall: FC<{ progress: number }> = ({ progress }) => {
   return (
-    <Col className={Style.colConfidenceSmall}>
+    <Col className={Style.colProgressSmall}>
       <div
-        className={`${Style.confidenceBar} noselect`}
-        style={confidenceBackground(progress)}
+        className={`${Style.progressBar} noselect`}
+        style={progressBackground(progress)}
       >
       </div>
     </Col>
@@ -44,8 +45,8 @@ type ColProgressLargeProps = {
 
 const ColProgressLarge: FC<ColProgressLargeProps> = ({ progress, updateField }) => {
   return (
-    <Col className={Style.colConfidenceLarge}>
-      {/* TODO: in here have a cover that covers the whole row, that says percent and status (learning, learned...) */}
+    <Col className={Style.colProgressLarge}>
+      {/* TODO: in here have a cover that covers the whole row, that says status (learning, learned...) */}
       <InputSlider onChange={updateField} value={progress} name="progress" />
     </Col>
   );
@@ -89,11 +90,10 @@ type RowPhraseProps = {
 export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [phrase, setPhrase] = useState(phraseProp.copy());
+  const [disableAutofillFromFocus, setDisableAutofillFromFocus] = useState(false);
 
-  const toggleIsOpen = (e: any) => {
-    e.preventDefault();
-    setIsOpen(!isOpen);
-  }
+  const isEdited = phrase.isEdited(phraseProp);
+  const canAutoFill = !disableAutofillFromFocus && phrase.canAutoFill();
 
   useEffect(() => {
     // if the phrase updates, copy it into state
@@ -101,22 +101,48 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
   }, [phraseProp]);
 
   const updateField = (e: any) => {
-    if (e.target.name === 'confidence') {
-      setPhrase(phrase.set('confidence', parseFloat(e.target.value)));
+    if (e.target.name === 'progress') {
+      setPhrase(phrase.set('progress', parseFloat(e.target.value)));
       return;
     }
     setPhrase(phrase.set(e.target.name, e.target.value));
+  }
+
+  const toggleIsOpen = (e: any) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  }
+
+  const autofill = async () => {
+    if (!canAutoFill) {
+      return;
+    }
+    // get the pinyin and english for these characters
+    const characters = await Mongodb.getCharacters(phrase.characters);
+
+    // edit the phrase to include the new phrases
+    const newPhrase = phrase.autofill(characters, {
+      pinyin: !isSet(phrase.pinyin),
+      english: !isSet(phrase.english)
+    });
+    setPhrase(newPhrase);
   }
 
   const cancel = () => {
     setPhrase(phraseProp.copy());
   }
 
-  const isEdited = phrase.isEdited(phraseProp);
 
   return (
     <Row backgroundFill={phrase.progress} isOpen={isOpen} className={Style.rowPhrase}>
-      {/* <AutofillCover /> */}
+      <div className={Style.cover}>
+        {/* TODO: RowCover should be in app/elements */}
+        <AutofillCover
+          visible={canAutoFill}
+          pinyin={phrase.pinyin}
+          english={phrase.english}
+        />
+      </div>
       <ColOpenerSmall isOpen={isOpen} onClick={toggleIsOpen} />
       <Col className={Style.colChinese}>
         <TextCell
@@ -124,6 +150,7 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
           value={phrase.characters}
           name="characters"
           onChange={updateField}
+          onReturn={autofill}
         />
       </Col>
       <ColProgressSmall progress={phrase.progress} />
@@ -133,6 +160,8 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
           value={phrase.pinyin}
           name="pinyin"
           onChange={updateField}
+          onFocus={() => setDisableAutofillFromFocus(true)}
+          onBlur={() => setDisableAutofillFromFocus(false)}
         />
       </Col>
       <Col className={Style.colEnglish}>
@@ -141,6 +170,8 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
           value={phrase.english}
           name="english"
           onChange={updateField}
+          onFocus={() => setDisableAutofillFromFocus(true)}
+          onBlur={() => setDisableAutofillFromFocus(false)}
         />
       </Col>
 

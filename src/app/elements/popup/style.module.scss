@@ -1,0 +1,92 @@
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #0008;
+  z-index: 99;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+
+    &.popup {
+      margin: 0 auto;
+    }
+  }
+
+  .popup {
+    width: 94%;
+    margin: 48px auto;
+    background: #FFF;
+    border-radius: 6px;
+    box-shadow: 4px 4px 8px 0 #00000033, 4px 6px 20px 0 #00000030;
+    overflow-x: hidden;
+
+    .popupHeader {
+      .title {
+        color: #999;
+        font-size: 12px;
+        padding: 8px 12px;
+        width: calc(100% - 54px);
+        float: left;
+      }
+
+      .cancelIconHolder {
+        padding: 5px;
+        right: 16px;
+        width: 20px;
+        float: left;
+
+        .cancelIcon {
+          width: 16px;
+          stroke: #aaa;
+        }
+      }
+    }
+
+    .popupBody {
+      padding: 16px;
+    }
+
+    .actionHolder {
+      width: 100%;
+      height: 52px;
+
+      .action {
+        color: #fff !important;
+        background: var(--light-green);
+        float: left;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 16px;
+        width: 100%;
+        border-radius: 0 0 6px 6px;
+        margin-bottom: 0px;
+        cursor: pointer;
+
+        &.disabled {
+          background: #999;
+        }
+      }
+    }
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+
+  .overlay {
+    .popup {
+      width: 480px;
+    }
+  }
+
+}
