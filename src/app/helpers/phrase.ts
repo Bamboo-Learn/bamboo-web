@@ -47,7 +47,7 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     this.pinyin = phrase.pinyin || '';
     this.english = phrase.english || '';
     this.pack = phrase.pack || '';
-    this.progress = phrase.progress || phrase.confidence / 10 || 0;
+    this.progress = phrase.progress === undefined ? phrase.confidence / 10 || 0 : phrase.progress;
 
     this.confidence = phrase.confidence;
     this.category = phrase.category;
@@ -63,7 +63,7 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     return new Phrase({ ...this, [field]: value });
   }
 
-  // sets the original to the current (does not save to db)
+  // sets the _id after insert (does not save to db)
   save({ insertedId }: { insertedId: BSON.ObjectID }): Phrase {
     return this.set('_id', insertedId);
   }
@@ -139,13 +139,15 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
     return !_.isEqual(phrase.toData(), this.toData());
   }
 
+  // this function is a little useless as it only can check duplicates
+  // of already loaded phrases
   isDuplicate(phrases: Phrase[]): boolean {
     return phrases.some(phrase => phrase.characters === this.characters);
   }
 
-  isSaveable(originalPhrase: Phrase, phrases: Phrase[]): boolean {
+  isSaveable(originalPhrase: Phrase): boolean { // phrases: Phrase[]
     // it is saveable if it has been edited, is not missing fields, and is not a duplicate
-    return this.isEdited(originalPhrase) && !this.isMissingRequiredField() && !this.isDuplicate(phrases);
+    return this.isEdited(originalPhrase) && !this.isMissingRequiredField() // && !this.isDuplicate(phrases);
   }
 
   canAutoFill() {

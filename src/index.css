@@ -6,6 +6,7 @@
   --light-orange: #e7b172;
   --dark-orange: #ce995c;
   --action-green: #bbeac2;
+  --font-family: "Source Sans Pro", sans-serif;
   /* --sm: 576px;
   --md: 768px;
   --lg: 992px;
@@ -17,7 +18,7 @@ html {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: var(--font-family);
   background: var(--background-orange);
 }
 

@@ -41,8 +41,8 @@ const RawLibrary = (props: LibraryProps) => {
       <PageHeader>
         <PageHeaderTitle>{'Library'}</PageHeaderTitle>
         <PageHeaderActions>
-          <Button size="sm" icon="add" className={Style.buttonHiddenLarge} onClick={() => setEditPhraseID('NEW')}>{'New'}</Button>
           <Button size="sm" icon="study" color="orange" onClick={redirectToStudy}>{'Study'}</Button>
+          <Button size="sm" icon="add" className={Style.buttonHiddenLarge} onClick={() => setEditPhraseID('NEW')}>{'New'}</Button>
         </PageHeaderActions>
       </PageHeader>
       {/* make this take a button */}

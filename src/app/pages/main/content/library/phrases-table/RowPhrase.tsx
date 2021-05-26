@@ -2,10 +2,10 @@
 import React, { FC, useState, useEffect } from 'react';
 import classNames from 'classnames';
 
-import { Phrase, Mongodb, isSet } from 'app/helpers';
-import { progressBackground, Row, Col, TextCell, TextAreaCell, Button, InputSlider } from 'app/elements';
+import { Phrase, Mongodb, isSet, makeNewPhrase } from 'app/helpers';
+import { progressBackground, Row, Col, TextCell, TextAreaCell, CreatableSelect } from 'app/elements';
 
-import { AutofillCover } from './AutofillCover';
+import { AutofillCover, ColProgressLarge, OptionButtons } from './shared';
 import Style from './style.module.scss';
 
 // ColSmall
@@ -36,49 +36,7 @@ const ColProgressSmall: FC<{ progress: number }> = ({ progress }) => {
   );
 }
 
-// ColLarge
 
-type ColProgressLargeProps = {
-  progress: number,
-  updateField: (e: any) => void
-}
-
-const ColProgressLarge: FC<ColProgressLargeProps> = ({ progress, updateField }) => {
-  return (
-    <Col className={Style.colProgressLarge}>
-      {/* TODO: in here have a cover that covers the whole row, that says status (learning, learned...) */}
-      <InputSlider onChange={updateField} value={progress} name="progress" />
-    </Col>
-  );
-}
-
-// Options
-
-type OptionButtonsProps = {
-  edit: () => void,
-  cancel: () => void,
-  save: () => void,
-  remove: () => void,
-  isEdited: boolean
-}
-
-const OptionButtons: FC<OptionButtonsProps> = ({ edit, cancel, save, remove, isEdited }) => {
-  if (isEdited) {
-    return (
-      <>
-        <Button size="sm" onClick={cancel} icon="X" color="grey">{'Cancel'}</Button>
-        <Button size="sm" onClick={save} icon="Edit" color="blue">{'Save'}</Button>
-      </>
-
-    )
-  }
-  return (
-    <>
-      <Button size="sm" onClick={remove} icon="Garbage" color="red" doubleClick>{'Delete'}</Button>
-      <Button size="sm" onClick={edit} icon="Edit" color="blue" className={Style.buttonHideLarge}>{'Edit'}</Button>
-    </>
-  );
-}
 
 // RowPhrase
 
@@ -87,12 +45,15 @@ type RowPhraseProps = {
   edit: () => void // this is for the edit button
 }
 
+const defaultPhrase = makeNewPhrase();
+
 export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [phrase, setPhrase] = useState(phraseProp.copy());
+  const [phrase, setPhrase] = useState(defaultPhrase);
   const [disableAutofillFromFocus, setDisableAutofillFromFocus] = useState(false);
 
   const isEdited = phrase.isEdited(phraseProp);
+  const isSaveable = phrase.isSaveable(phraseProp);
   const canAutoFill = !disableAutofillFromFocus && phrase.canAutoFill();
 
   useEffect(() => {
@@ -174,6 +135,14 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
           onBlur={() => setDisableAutofillFromFocus(false)}
         />
       </Col>
+      <Col className={Style.colPack}>
+        <CreatableSelect
+          options={[]}
+          value={''}
+          onChange={updateField}
+          name="pack"
+        />
+      </Col>
 
       <Col className={Style.colOptions}>
         <OptionButtons
@@ -182,6 +151,7 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
           remove={() => { }}
           save={() => { }}
           isEdited={isEdited}
+          isSaveable={isSaveable}
         />
       </Col>
 

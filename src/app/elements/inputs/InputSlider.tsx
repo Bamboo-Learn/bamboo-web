@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+// import Slider, { Range } from 'rc-slider'; TODO: maybe use this?
 
 import { progressBackground } from 'app/elements';
 
@@ -24,9 +25,9 @@ export const InputSlider: FC<SliderPropTypes> = ({ value, className, onChange, s
     <input
       name={name}
       type="range"
-      min="0" // TODO: make this variable
-      max="1"
-      step="0.01"
+      min={0.00} // TODO: make this variable
+      max={1.00}
+      step={0.01}
       className={`${Style.slider} ${className}`}
       value={value}
       style={style || progressBackground(value)}

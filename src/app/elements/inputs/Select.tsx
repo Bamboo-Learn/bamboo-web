@@ -7,13 +7,11 @@ export type SelectPropTypes = {
   }[];
   value: string
   onChange: any
+  name?: string
+  className?: string
 }
 
-type DecoratedSelectPropTypes = SelectPropTypes & {
-  className: string
-};
-
-export const Select: FC<DecoratedSelectPropTypes> = ({ options, value, className, onChange }) => {
+export const Select: FC<SelectPropTypes> = ({ options, value, className, onChange }) => {
 
   const onSelectChange = (e: any) => {
     e.preventDefault();

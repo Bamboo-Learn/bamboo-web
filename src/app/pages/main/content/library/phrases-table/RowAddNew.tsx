@@ -1,27 +1,31 @@
 
 import React, { FC, useState } from 'react';
 
-import { Row, Col, TextCell, TextAreaCell, Button } from 'app/elements';
+import { Row, Col, TextCell, TextAreaCell } from 'app/elements';
 import { makeNewPhrase, Phrase, Mongodb, isSet } from 'app/helpers'
 
-import { AutofillCover } from './AutofillCover';
+import { AutofillCover, ColProgressLarge, OptionButtons } from './shared';
 import Style from './style.module.scss';
 
 type RowAddNewProps = {
 }
 
+const newPhrase = makeNewPhrase()
+
 export const RowAddNew: FC<RowAddNewProps> = () => {
 
-  const [phrase, setPhrase] = useState<Phrase>(makeNewPhrase());
+  const [phrase, setPhrase] = useState<Phrase>(newPhrase);
   const [disableAutofillFromFocus, setDisableAutofillFromFocus] = useState(false);
 
   const canAutoFill = !disableAutofillFromFocus && phrase.canAutoFill();
+  const isEdited = phrase.isEdited(newPhrase);
+  const isSaveable = phrase.isSaveable(newPhrase);
 
   const updateField = (e: any) => {
     setPhrase(phrase.set(`${e.target.name}`, e.target.value));
   }
 
-  const cancel = (e: any) => {
+  const cancel = () => {
     setPhrase(makeNewPhrase());
   }
 
@@ -41,7 +45,7 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
   }
 
   return (
-    <Row className={`${Style.rowAddNew} ${Style.rowPhrase}`}>
+    <Row backgroundFill={phrase.progress} className={`${Style.rowAddNew} ${Style.rowPhrase}`}>
       <div className={Style.cover}>
         <AutofillCover
           visible={canAutoFill}
@@ -82,12 +86,15 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
         />
       </Col>
       <Col className={Style.colOptions}>
-        <Button size="sm" onClick={cancel} icon="X" color="grey">{'Cancel'}</Button>
-        <Button size="sm" onClick={() => { }} icon="Edit" color="blue">{'Save'}</Button>
+        <OptionButtons
+          cancel={cancel}
+          save={() => { }}
+          isEdited={isEdited}
+          isSaveable={isSaveable}
+        />
+
       </Col>
-      {/* <ColConfidenceLarge confidence={confidence} updateField={updateField} /> */}
-      {/* ColPackLarge */}
-      {/* <ColOptions /> has the options like save and cancel */}
+      <ColProgressLarge progress={phrase.progress} updateField={updateField} />
     </Row>
   );
 }
