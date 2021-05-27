@@ -38,10 +38,10 @@ class WelcomeOverlay extends React.Component {
         isOpen={this.state.isOpen}
         onClose={this.close}
       >
-        <div className={Style.Message}>{'Welcome to Bamboo! You can now set up Bamboo in Chrome.'}</div>
+        <div className={Style.message}>{'Welcome to Bamboo! You can now set up Bamboo in Chrome.'}</div>
         {/* <Slideshow /> */}
         <p
-          className={Style.Additional}
+          className={Style.additional}
           onClick={this.close}
         >
           {'Continue to web app'}

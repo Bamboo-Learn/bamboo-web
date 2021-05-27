@@ -13,13 +13,19 @@
   --xl: 1200px; */
 }
 
-body,
-html {
+
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0 auto;
   font-family: var(--font-family);
   background: var(--background-orange);
+  overflow-x: hidden;
+}
+
+body {
+  position: relative
 }
 
 input,

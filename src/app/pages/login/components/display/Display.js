@@ -19,7 +19,7 @@ export class Display extends React.Component {
 
   render() {
     return (
-      <div className={Style.Display}>
+      <div className={Style.display}>
         <h1 className={Style.title}>Learn Chinese Throughout the Day</h1>
         <p className={Style.body}>
           Bamboo is a simple Chrome Extension that shows you a Chinese character every time you open a new tab.

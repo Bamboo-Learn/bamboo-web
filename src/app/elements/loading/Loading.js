@@ -3,7 +3,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Style from './style.module.css';
+import Style from './style.module.scss';
 
 
 export class Loading extends React.Component {
@@ -77,17 +77,17 @@ export class Loading extends React.Component {
       height: `${this.state.height}px`
     };
     const loadingBarClassName = classNames({
-      [Style.LoadingBar]: true,
-      [Style.NoAnimation]: !this.state.animatable,
+      [Style.loadingBar]: true,
+      [Style.noAnimation]: !this.state.animatable,
       [this.props.color]: !!this.props.color
     })
     const loadingFormClassName = classNames({
-      [Style.LoadingForm]: true,
-      [Style.Disabled]: this.props.isLoading && this.props.disableWhileLoading
+      [Style.loadingForm]: true,
+      [Style.disabled]: this.props.isLoading && this.props.disableWhileLoading
     })
     return (
       <span>
-        <div className={Style.LoadingBarHolder}>
+        <div className={Style.loadingBarHolder}>
           <div className={loadingBarClassName} style={style} />
         </div>
         <div className={loadingFormClassName}>

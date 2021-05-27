@@ -1,0 +1,27 @@
+.loadingBarHolder {
+  height: 4px;
+  position: absolute;
+  z-index: 10;
+
+  .loadingBar {
+    margin: 0 0;
+
+    &.noAnimation {
+      -webkit-transition: none;
+      transition: none;
+    }
+
+    &.disabled {
+      opacity: .8;
+      pointer-events: none;
+    }
+
+    &.green {
+      background: var(--light-green);
+    }
+
+    &.white {
+      background: #FFF;
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 
-import { Form, FormRow, FormText, FormTextarea } from 'app/elements'; // FormTextarea FormSlider, Button
+import { Form, FormRow, FormText, FormTextarea, FormSlider } from 'app/elements'; // FormTextarea FormSlider, Button
 import { Phrase, } from 'app/helpers'; // isSet
 
 import Style from './style.module.css';
@@ -29,6 +29,8 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
   // const shouldShowDelete = (() => {
   //   return isSet(phrase?._id);
   // })();
+
+  const status = phrase.progress === 1 ? 'Learned' : phrase.progress === 0 ? 'To Learn' : 'Learning'
 
   return (
     <Form>
@@ -91,14 +93,13 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
 
       {/* Confidence / Status */}
       <FormRow
-        label={phrase.confidence === 10 ? 'Learned' : phrase.confidence === 0 ? 'To Learn' : 'Learning'}
+        label={`Progress: ${status}`}
       >
-        {/* <FormSlider
-          name="confidence"
-          placeholder="english definition"
-          value={phrase.confidence}
+        <FormSlider
+          name="progress"
+          value={phrase.progress || 0}
           onChange={updateField}
-        /> */}
+        />
       </FormRow>
 
       {/* Delete Button */}

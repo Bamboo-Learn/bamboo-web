@@ -14,7 +14,7 @@ export const Logo: FC<LogoProps> = ({ color, className, style }) => {
   const img = (color === 'green') ? LogoImgGreen : LogoImg;
   return (
     <img
-      className={`${Style.Logo} ${className}`}
+      className={`${Style.logo} ${className}`}
       style={style}
       src={img}
       alt="Bamboo"

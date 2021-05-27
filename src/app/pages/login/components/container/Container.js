@@ -31,7 +31,7 @@ const Container = ({ children, isSplashOverlayOpen }) => {
       <Splash isSplashOverlayOpen={isSplashOverlayOpen} />
       <div className={Style.container}>
         {children}
-        <Canvas className={Style.Canvas} />
+        <Canvas className={Style.canvas} />
       </div>
     </>
   );
