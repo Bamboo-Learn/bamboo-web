@@ -152,7 +152,8 @@ export class Phrase implements PhraseInterface, DBPhraseInterface {
 
   canAutoFill() {
     return this.characters.length > 0 && (
-      this.pinyin.length === 0 || this.english.length === 0);
+      this.pinyin.length === 0 || this.english.length === 0
+    );
   }
 
   // returns true when this phrase is registered in db

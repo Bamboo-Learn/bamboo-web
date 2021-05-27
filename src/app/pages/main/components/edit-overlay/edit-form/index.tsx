@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 
-import { Form, FormRow, FormText, } from 'app/elements'; // FormTextarea FormSlider, Button
+import { Form, FormRow, FormText, FormTextarea } from 'app/elements'; // FormTextarea FormSlider, Button
 import { Phrase, } from 'app/helpers'; // isSet
 
 import Style from './style.module.css';
@@ -39,6 +39,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
         buttonLabel="Autofill"
         buttonVisible={true} // !shouldHideAutofill
         buttonOnClick={autofill}
+        hideDetail
       >
         <FormText
           className={Style.inputChinese}
@@ -54,6 +55,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
       {/* Pinyin */}
       <FormRow
         label="Pinyin"
+        hideDetail
       >
         <FormText
           name="pinyin"
@@ -66,13 +68,14 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
       {/* English */}
       <FormRow
         label="English"
+        hideDetail
       >
-        {/* <FormTextarea
+        <FormTextarea
           name="english"
           placeholder="english definition"
           value={phrase.english}
           onChange={updateField}
-        /> */}
+        />
       </FormRow>
 
       {/* Pack TODO: use Select, or if select doesn't work maybe make a new one called Suggest */}

@@ -83,23 +83,28 @@ type FormButtonProps = {
 
 const FormButton: FC<FormButtonProps> = ({ buttonOnClick, buttonVisible, buttonIcon, buttonLabel }) => {
   return (
-    <Button
-      icon={buttonIcon}
-      onClick={buttonOnClick}
-      hidden={!buttonVisible}
-      color="green"
-      tab={true}
-    >
-      {buttonLabel || ''}
-    </Button>
+    <div className={Style.buttonHolder}>
+      <Button
+        icon={buttonIcon}
+        onClick={buttonOnClick}
+        hidden={!buttonVisible}
+        color="green"
+        tab={true}
+        size="sm"
+      >
+        {buttonLabel || ''}
+      </Button>
+    </div>
   )
 }
 
 
 
-type FormRowProps = FormDetailProps & FormInputProps & FormButtonProps;
+type FormRowProps = FormDetailProps & FormInputProps & FormButtonProps & {
+  hideDetail?: boolean
+};
 
-export const FormRow: FC<FormRowProps> = ({ icon, errors, children, label, linkOnClick, linkText, message, buttonOnClick, buttonIcon, buttonLabel, buttonVisible }) => {
+export const FormRow: FC<FormRowProps> = ({ icon, errors, children, label, linkOnClick, linkText, message, buttonOnClick, buttonIcon, buttonLabel, buttonVisible, hideDetail }) => {
 
   if (!children) {
     return (<></>);
@@ -121,7 +126,10 @@ export const FormRow: FC<FormRowProps> = ({ icon, errors, children, label, linkO
         buttonIcon={buttonIcon}
       />}
       <FormInput icon={icon} label={label}>{children}</FormInput>
-      <FormDetail message={message} errors={errors} linkOnClick={linkOnClick} linkText={linkText} />
+      {
+        !hideDetail &&
+        <FormDetail message={message} errors={errors} linkOnClick={linkOnClick} linkText={linkText} />
+      }
     </div>
   );
 };

@@ -99,7 +99,7 @@
     width: calc(100% - 54px);
     display: flex;
     justify-content: flex-end;
-    padding: 16px 12px;
+    padding: 12px;
   }
 
   .colProgressLarge {
@@ -158,6 +158,10 @@
       filter: opacity(0);
       transition: filter 0.2s;
 
+      &.forceVisible {
+        filter: opacity(1);
+      }
+
       .buttonHideLarge {
         display: none;
       }
@@ -208,7 +212,6 @@
 
     &:hover {
       .colOptions {
-        padding: 12px;
         filter: opacity(1);
       }
     }

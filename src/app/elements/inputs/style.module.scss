@@ -4,6 +4,7 @@
   width: calc(100% - 5px);
   height: 2px;
   margin: 0;
+  transition: height 0.2s;
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -13,13 +14,30 @@
     border-radius: 8px;
     background: var(--dark-green);
     cursor: pointer;
+    color: #fff;
+    transition: height 0.2s, width 0.2s;
   }
 
   &::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
     width: 8px;
     height: 8px;
     border-radius: 8px;
     background: var(--dark-green);
     cursor: pointer;
+    color: #fff;
   }
+
+  &:focus,
+  &:hover {
+    height: 4px;
+
+    &::-webkit-slider-thumb,
+    &::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
 }

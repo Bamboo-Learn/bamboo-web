@@ -49,7 +49,7 @@ export const ColProgressLarge: FC<ColProgressLargeProps> = ({ progress, updateFi
 
 // Options
 
-type OptionButtonsProps = {
+type ColOptionsProps = {
   edit?: () => void,
   cancel: () => void,
   save: () => void,
@@ -58,7 +58,7 @@ type OptionButtonsProps = {
   isSaveable: boolean
 }
 
-export const OptionButtons: FC<OptionButtonsProps> = ({ edit, cancel, save, remove, isEdited, isSaveable }) => {
+const OptionButtons: FC<ColOptionsProps> = ({ edit, cancel, save, remove, isEdited, isSaveable }) => {
   if (isEdited) {
     return (
       <>
@@ -76,4 +76,23 @@ export const OptionButtons: FC<OptionButtonsProps> = ({ edit, cancel, save, remo
       <Button size="sm" onClick={remove} icon="Garbage" color="red" doubleClick tab>{'Delete'}</Button>
     </>
   );
+}
+
+export const ColOptions: FC<ColOptionsProps> = ({ edit, cancel, save, remove, isEdited, isSaveable }) => {
+  const className = classNames({
+    [Style.colOptions]: true,
+    [Style.forceVisible]: isEdited
+  });
+  return (
+    <Col className={className}>
+      <OptionButtons
+        edit={edit}
+        cancel={cancel}
+        remove={() => { }}
+        save={() => { }}
+        isEdited={isEdited}
+        isSaveable={isSaveable}
+      />
+    </Col>
+  )
 }

@@ -32,20 +32,21 @@
     .popupHeader {
       .title {
         color: #999;
-        font-size: 12px;
-        padding: 8px 12px;
+        font-size: 16px;
+        padding: 12px;
         width: calc(100% - 54px);
         float: left;
       }
 
       .cancelIconHolder {
-        padding: 5px;
-        right: 16px;
-        width: 20px;
-        float: left;
+        padding: 8px;
+        margin-right: 24px;
+        width: 18px;
+        float: right;
 
         .cancelIcon {
-          width: 16px;
+          width: 24px;
+          height: 24px;
           stroke: #aaa;
         }
       }

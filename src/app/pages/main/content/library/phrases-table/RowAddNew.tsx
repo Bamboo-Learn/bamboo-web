@@ -4,7 +4,7 @@ import React, { FC, useState } from 'react';
 import { Row, Col, TextCell, TextAreaCell } from 'app/elements';
 import { makeNewPhrase, Phrase, Mongodb, isSet } from 'app/helpers'
 
-import { AutofillCover, ColProgressLarge, OptionButtons } from './shared';
+import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
 import Style from './style.module.scss';
 
 type RowAddNewProps = {
@@ -15,9 +15,10 @@ const newPhrase = makeNewPhrase()
 export const RowAddNew: FC<RowAddNewProps> = () => {
 
   const [phrase, setPhrase] = useState<Phrase>(newPhrase);
-  const [disableAutofillFromFocus, setDisableAutofillFromFocus] = useState(false);
+  const [enableAutofillFromFocus, setEnableAutofillFromFocus] = useState(false);
 
-  const canAutoFill = !disableAutofillFromFocus && phrase.canAutoFill();
+
+  const canAutoFill = enableAutofillFromFocus && phrase.canAutoFill();
   const isEdited = phrase.isEdited(newPhrase);
   const isSaveable = phrase.isSaveable(newPhrase);
 
@@ -30,7 +31,7 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
   }
 
   const autofill = async () => {
-    if (!canAutoFill) {
+    if (!phrase.canAutoFill()) {
       return;
     }
     // get the pinyin and english for these characters
@@ -61,6 +62,8 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           onChange={updateField}
           placeholder="新的"
           onReturn={autofill}
+          onFocus={() => setEnableAutofillFromFocus(true)}
+          onBlur={() => setEnableAutofillFromFocus(false)}
         />
       </Col>
       <Col className={Style.colPinyin}>
@@ -70,8 +73,6 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           name="pinyin"
           onChange={updateField}
           placeholder="pinyin"
-          onFocus={() => setDisableAutofillFromFocus(true)}
-          onBlur={() => setDisableAutofillFromFocus(false)}
         />
       </Col>
       <Col className={Style.colEnglish}>
@@ -81,20 +82,15 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
           name="english"
           onChange={updateField}
           placeholder="english definition"
-          onFocus={() => setDisableAutofillFromFocus(true)}
-          onBlur={() => setDisableAutofillFromFocus(false)}
         />
-      </Col>
-      <Col className={Style.colOptions}>
-        <OptionButtons
-          cancel={cancel}
-          save={() => { }}
-          isEdited={isEdited}
-          isSaveable={isSaveable}
-        />
-
       </Col>
       <ColProgressLarge progress={phrase.progress} updateField={updateField} />
+      <ColOptions
+        cancel={cancel}
+        save={() => { }}
+        isEdited={isEdited}
+        isSaveable={isSaveable}
+      />
     </Row>
   );
 }

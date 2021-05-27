@@ -4,7 +4,6 @@
 
   .formRow {
     width: 100%;
-    margin: 24px 0;
     height: auto;
     min-height: 68px;
     display: flex;
@@ -13,6 +12,7 @@
     .labelHolder {
       width: 100%;
       text-align: right;
+      padding: 0 8px;
 
       .icon {
         stroke: #999;
@@ -22,7 +22,7 @@
 
       .label {
         color: #999;
-        padding: 18px 6px 6px;
+        padding: 6px 6px 0;
         font-size: 14px;
         text-align: left;
       }
@@ -83,6 +83,17 @@
       font-weight: bold;
     }
 
+    .buttonHolder {
+      position: relative;
+      width: 100%;
+      height: 0;
+      margin: 0;
+
+      div {
+        float: right;
+      }
+    }
+
     &.iconRow {
       .labelHolder {
         width: 32px;
@@ -117,11 +128,15 @@
 @media only screen and (min-width: 768px) {
   .form {
     .formRow {
+      margin: 24px 0;
+
       .labelHolder {
         width: 130px;
         height: 50px;
+        padding: 0;
 
         .label {
+          padding: 18px 6px 6px;
           text-align: center;
         }
       }
