@@ -1,4 +1,4 @@
-import { Mongodb } from 'app/helpers'
+import { Mongodb } from 'app/classes'
 
 import { appendPhrases } from './library';
 
@@ -14,13 +14,13 @@ export type FilterStateType = {
 }
 
 type FilterActionType = {
-  type: number,
+  type: string,
   filter: FilterStateType
 }
 
 // Filter Actions
 
-const CHANGE_FILTER = 5;
+const CHANGE_FILTER = 'CHANGE_FILTER';
 
 // TODO: we are doing infinite scroll, so page should reset to 0
 // after every filter update that isn't a page update
@@ -35,7 +35,8 @@ export const updateFilter = (() => {
       // add the filter and load new phrases
       filterHistory.add(filter);
       return (dispatch: any) => {
-        // TODO: dispatch a page loading
+        // TODO: dispatch a page loading here
+        // dispatch(pageLoading(true))
         Mongodb.getPhrases(filter).then((loadedPhrases) => {
           // then dispatch append phrases and update the filter
           dispatch(appendPhrases(loadedPhrases));

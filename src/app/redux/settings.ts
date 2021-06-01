@@ -6,14 +6,18 @@ export type SettingsStateType = {
 }
 
 type SettingsActionType = {
-  type: number,
-  displayCharacterSet?: string
+  type: string,
+  displayCharacterSet?: 'simp' | 'trad'
 }
 
 // Settings Actions
 
+const CHANGE_DISPLAY_CHARACTER_SETTING = 'CHANGE_DISPLAY_CHARACTER_SETTING';
 
-const CHANGE_DISPLAY_CHARACTER_SETTING = 6;
+export const changeCharacterSet = (displayCharacterSet: 'trad' | 'simp'): SettingsActionType => ({
+  type: CHANGE_DISPLAY_CHARACTER_SETTING,
+  displayCharacterSet
+});
 
 // Settings Reducer
 

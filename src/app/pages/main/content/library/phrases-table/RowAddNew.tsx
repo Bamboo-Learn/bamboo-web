@@ -2,7 +2,7 @@
 import React, { FC, useState } from 'react';
 
 import { Row, Col, TextCell, TextAreaCell } from 'app/elements';
-import { makeNewPhrase, Phrase, Mongodb, isSet } from 'app/helpers'
+import { makeNewPhrase, Phrase, Mongodb, isSet } from 'app/classes'
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
 import Style from './style.module.scss';
@@ -26,8 +26,21 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
     setPhrase(phrase.set(`${e.target.name}`, e.target.value));
   }
 
+  const cycleStatus = () => {
+    setPhrase(phrase.cycleStatus());
+  }
+
   const cancel = () => {
     setPhrase(makeNewPhrase());
+  }
+
+  const remove = () => {
+    console.log('remove');
+  }
+
+  const save = () => {
+    // TODO: TODO: TODO:
+    cancel();
   }
 
   const autofill = async () => {
@@ -87,9 +100,12 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
       <ColProgressLarge progress={phrase.progress} updateField={updateField} />
       <ColOptions
         cancel={cancel}
-        save={() => { }}
+        save={save}
+        remove={remove}
         isEdited={isEdited}
         isSaveable={isSaveable}
+        cycleStatus={cycleStatus}
+        progress={phrase.progress}
       />
     </Row>
   );

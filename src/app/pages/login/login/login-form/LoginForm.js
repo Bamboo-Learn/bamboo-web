@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Mongodb } from 'app/helpers';
+import { Mongodb } from 'app/classes';
 import { FormText, Button, FormRow, Form } from 'app/elements';
 
 import { validateEmail, validatePassword } from '../../base';

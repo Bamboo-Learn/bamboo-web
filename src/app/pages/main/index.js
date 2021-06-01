@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Mongodb } from 'app/helpers';
+import { Mongodb } from 'app/classes';
 import { Splash } from 'app/elements';
 import { updateFilter } from 'app/redux';
 
@@ -9,8 +9,6 @@ import { Sidebar } from './components';
 import { Content } from './content/Content.js';
 
 // TODO: uncomment this just debugging FIXME: import WelcomeOverlay from './welcome-overlay/WelcomeOverlay.js';
-
-
 
 class RawMain extends React.Component {
   constructor(props) {

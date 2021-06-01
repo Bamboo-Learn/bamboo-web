@@ -56,12 +56,25 @@ type ColOptionsProps = {
   remove?: () => void,
   isEdited: boolean
   isSaveable: boolean
+  cycleStatus: () => void,
+  progress: number
 }
 
-const OptionButtons: FC<ColOptionsProps> = ({ edit, cancel, save, remove, isEdited, isSaveable }) => {
+const OptionButtons: FC<ColOptionsProps> = ({ edit, cancel, save, remove, isEdited, isSaveable, cycleStatus, progress }) => {
+  const statusPrompt: string = ((): string => {
+    if (progress === 0) {
+      return 'To Learn';
+    } else if (progress === 1) {
+      return 'Learned';
+    }
+    return 'Learning'
+  })();
   if (isEdited) {
     return (
       <>
+        {/* TODO: make this first button flex to the left */}
+        {/* Or maybe the column should just be a button with plus and minus on either side, click in the middle to cycle*/}
+        <Button size="sm" onClick={cycleStatus} icon="" color="green">{statusPrompt}</Button>
         { isSaveable && <Button size="sm" onClick={save} icon="Edit" color="blue" tab>{'Save'}</Button>}
         <Button size="sm" onClick={cancel} icon="X" color="grey" tab>{'Cancel'}</Button>
       </>
@@ -72,13 +85,14 @@ const OptionButtons: FC<ColOptionsProps> = ({ edit, cancel, save, remove, isEdit
   }
   return (
     <>
+      <Button size="sm" onClick={cycleStatus} icon="" color="green">{statusPrompt}</Button>
       <Button size="sm" onClick={edit} icon="Edit" color="blue" className={Style.buttonHideLarge}>{'Edit'}</Button>
-      <Button size="sm" onClick={remove} icon="Garbage" color="red" doubleClick tab>{'Delete'}</Button>
+      <Button size="sm" onClick={remove} icon="Garbage" color="red" doubleClick>{'Delete'}</Button>
     </>
   );
 }
 
-export const ColOptions: FC<ColOptionsProps> = ({ edit, cancel, save, remove, isEdited, isSaveable }) => {
+export const ColOptions: FC<ColOptionsProps> = ({ edit, cancel, save, remove, isEdited, isSaveable, cycleStatus, progress }) => {
   const className = classNames({
     [Style.colOptions]: true,
     [Style.forceVisible]: isEdited
@@ -88,10 +102,12 @@ export const ColOptions: FC<ColOptionsProps> = ({ edit, cancel, save, remove, is
       <OptionButtons
         edit={edit}
         cancel={cancel}
-        remove={() => { }}
-        save={() => { }}
+        remove={remove}
+        save={save}
         isEdited={isEdited}
         isSaveable={isSaveable}
+        cycleStatus={cycleStatus}
+        progress={progress}
       />
     </Col>
   )

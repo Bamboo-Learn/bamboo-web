@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { Button } from 'app/elements';
-import { ChromeWebStoreLink } from 'app/helpers';
+import { ChromeWebStoreLink } from 'app/classes';
 
 import Style from './style.module.css';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Mongodb } from 'app/helpers';
+import { Mongodb } from 'app/classes';
 
 import { Container, ContainerLeft, ContainerRight, Display } from '../components';
 import { LoginForm } from './login-form/LoginForm';

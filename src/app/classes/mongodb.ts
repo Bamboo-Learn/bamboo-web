@@ -1,7 +1,8 @@
 
 import * as Realm from 'realm-web';
 
-import { Phrase } from './phrase';
+import { Error } from './error'
+import { Phrase, DBPhrase, DBPhraseInterface } from './phrase';
 
 // https://docs.mongodb.com/realm/web/
 
@@ -107,26 +108,43 @@ export class Mongodb {
     return await collection.aggregate(pipeline);
   }
 
-  static async savePhrase(phrase: Phrase) {
+  static async savePhrase(phrase: Phrase | DBPhrase): Promise<[DBPhraseInterface | null, Error | null]> {
     if (!Mongodb.isLoggedIn()) {
-      return;
+      return [
+        null,
+        new Error({
+          code: Error.NOT_LOGGED_IN,
+          message: 'Not logged in'
+        })
+      ];
     }
     const db = Mongodb.getDB();
     const collection = db.collection('phrases');
     const userID = Mongodb.userID();
 
     if (!userID) {
-      return;
+      return [
+        null,
+        new Error({
+          code: Error.NO_USER_ID,
+          message: 'No user id'
+        })
+      ];
     }
 
-    const storePhrase = phrase.makeStorable();
-    if (!storePhrase.isInDB()) {
-      return await collection.insertOne(storePhrase);
+    if (phrase instanceof DBPhrase) {
+      return await [
+        collection.updateOne({ _id: phrase._id }, phrase.makeStorableData()),
+        null
+      ];
     }
-    return await collection.updateOne({ _id: storePhrase._id }, storePhrase);
+    return await [
+      collection.insertOne(phrase.makeStorableData()),
+      null
+    ];
   }
 
-  static async removePhrase(phrase: Phrase) {
+  static async removePhrase(phrase: DBPhrase) {
     if (!Mongodb.isLoggedIn()) {
       return;
     }

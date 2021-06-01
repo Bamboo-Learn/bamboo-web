@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { Mongodb } from 'app/helpers';
+import { Mongodb } from 'app/classes';
 import { Main, Login, Reset } from 'app/pages';
 import { reducer } from 'app/redux';
 

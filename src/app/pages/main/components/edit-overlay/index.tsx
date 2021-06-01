@@ -5,19 +5,20 @@ import { BSON } from 'realm-web';
 import { connect } from 'react-redux';
 
 import { Popup } from 'app/elements';
-import { Mongodb, isSet, Phrase, makeNewPhrase } from 'app/helpers';
-import { LibraryStateType, ReducerStateType } from 'app/redux';
+import { Mongodb, isSet, Phrase, DBPhrase, makeNewPhrase, DBPhraseInterface } from 'app/classes';
+import { LibraryStateType, ReducerStateType, appendPhrases } from 'app/redux';
 
 import { EditForm } from './edit-form';
 
 type EditOverlayPropTypes = {
   editPhraseID: BSON.ObjectID | null | 'NEW',
   onClose: () => void,
-  library: LibraryStateType
+  library: LibraryStateType,
+  appendPhrases: (newPhrases: DBPhraseInterface[]) => void
 };
 
 type EditOverlayStateTypes = {
-  phrase: Phrase | null | undefined,
+  phrase: Phrase | DBPhrase | null | undefined,
   isOpen: boolean,
   isLoading: boolean,
 }
@@ -91,14 +92,6 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
   }
 
   cancel = () => {
-    const { library } = this.props;
-    const { phrase } = this.state;
-    if (isSet(phrase?._id)) {
-      this.setState({
-        phrase: phrase?.revert(library.phrases.toArray())
-      });
-    }
-    // close the window
     this.closeWindow();
   }
 
@@ -108,28 +101,25 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
       return;
     }
 
-
     this.setIsLoading(true);
 
     // adds the phrase to the db
-    const insertedPhrase = await Mongodb.savePhrase(phrase);
+    const [insertedPhraseData, error] = await Mongodb.savePhrase(phrase);
 
-    // adds the id to the phrase
-    phrase.save(insertedPhrase);
-    if (isSet(insertedPhrase.insertedId)) {
-      // add phrase if newly insert to the phrases list
-      // TODO: this is a redux action now
-      // this.props.changePhraseAction({ action: 'ADD', phrase });
-    } // otherwise it the object has been changed so no need to update phrases list
-    // TODO: should we use 'UPDATE' as a phrase action
+    if (!!error) {
+      console.log(error);
+      return;
+    } else if (!!insertedPhraseData) {
+      this.props.appendPhrases([insertedPhraseData]);
+    }
 
-    // close the window
+    this.setIsLoading(false);
     this.closeWindow();
   }
 
   delete = async () => {
     const { phrase } = this.state;
-    if (!phrase) {
+    if (!phrase || !(phrase instanceof DBPhrase)) {
       return;
     }
 
@@ -178,7 +168,7 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
     }
     return (
       <Popup
-        title={(!!phrase._id) ? "Edit Phrase" : "Add New Phrase"}
+        title={(phrase instanceof DBPhrase) ? "Edit Phrase" : "Add New Phrase"}
         isOpen={isOpen}
         action="Save"
         onSubmit={this.save}
@@ -202,13 +192,13 @@ const mapStateToProps = (state: ReducerStateType) => {
   };
 };
 
-// const mapDispatchToProps = (dispatch: any) => ({
-//   appendPhrases: (newPhrases: DBPhraseInterface[]) => {
-//     dispatch(appendPhrases(newPhrases))
-//   }
-// });
+const mapDispatchToProps = (dispatch: any) => ({
+  appendPhrases: (newPhrases: DBPhraseInterface[]) => {
+    dispatch(appendPhrases(newPhrases))
+  }
+});
 
 export const EditOverlay = connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(RawEditOverlay);

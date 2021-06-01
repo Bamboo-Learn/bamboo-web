@@ -1,7 +1,7 @@
 import React from 'react';
 import { parse } from 'query-string';
 
-import { Mongodb } from 'app/helpers';
+import { Mongodb } from 'app/classes';
 import { Form, FormRow, FormText, Button } from 'app/elements';
 
 import { Container, ContainerLeft, ContainerRight, Display } from '../components';

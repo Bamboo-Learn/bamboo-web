@@ -3,7 +3,7 @@
 import React, { FC } from 'react';
 
 import { Form, FormRow, FormText, FormTextarea, FormSlider } from 'app/elements'; // FormTextarea FormSlider, Button
-import { Phrase, } from 'app/helpers'; // isSet
+import { DBPhrase, Phrase, } from 'app/classes'; // isSet
 
 import Style from './style.module.css';
 
@@ -11,7 +11,7 @@ type EditFormProps = {
   updateField: (e: any) => void,
   deletePhrase: () => void,
   autofill: () => void,
-  phrase: Phrase
+  phrase: Phrase | DBPhrase
 }
 
 export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofill, phrase }) => {
@@ -92,6 +92,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofil
       </FormRow>
 
       {/* Confidence / Status */}
+      {/* TODO: maybe make a link at the bottom say status */}
       <FormRow
         label={`Progress: ${status}`}
       >

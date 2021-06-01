@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import classNames from 'classnames';
 
-import { Mongodb } from 'app/helpers';
+import { Mongodb } from 'app/classes';
 import { Logo } from 'app/elements';
-import { ChromeWebStoreLink } from 'app/helpers';
+import { ChromeWebStoreLink } from 'app/classes';
 
 import Style from './style.module.css';
 

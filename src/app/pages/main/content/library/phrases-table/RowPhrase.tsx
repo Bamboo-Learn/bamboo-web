@@ -1,9 +1,11 @@
 
 import React, { FC, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-import { Phrase, Mongodb, isSet, makeNewPhrase } from 'app/helpers';
+import { DBPhrase, Mongodb, isSet, makeNewPhrase } from 'app/classes';
 import { progressBackground, Row, Col, TextCell, TextAreaCell, CreatableSelect } from 'app/elements';
+import { updatePhrase, removePhrase } from 'app/redux';
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
 import Style from './style.module.scss';
@@ -41,13 +43,15 @@ const ColProgressSmall: FC<{ progress: number }> = ({ progress }) => {
 // RowPhrase
 
 type RowPhraseProps = {
-  phrase: Phrase,
+  phrase: DBPhrase,
   edit: () => void // this is for the edit button
+  updatePhrase: (phrase: DBPhrase) => void
+  removePhrase: (phrase: DBPhrase) => void
 }
 
 const defaultPhrase = makeNewPhrase();
 
-export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
+const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhrase, updatePhrase }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [phrase, setPhrase] = useState(defaultPhrase);
   const [enableAutofillFromFocus, setEnableAutofillFromFocus] = useState(false);
@@ -93,6 +97,28 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
     setPhrase(phraseProp.copy());
   }
 
+  const cycleStatus = () => {
+    setPhrase(phrase.cycleStatus());
+  }
+
+  const remove = async () => {
+    if (phrase instanceof DBPhrase) {
+      await Mongodb.removePhrase(phrase);
+      removePhrase(phrase);
+    }
+  }
+
+  const save = async () => {
+    const [updatedPhraseData, error] = await Mongodb.savePhrase(phrase);
+
+    if (!!error) {
+      console.log(error);
+      return;
+    } else if (!!updatedPhraseData) {
+      // TODO: this needs to update existing phrase at id
+      updatePhrase(new DBPhrase(updatedPhraseData));
+    }
+  }
 
   return (
     <Row backgroundFill={phrase.progress} isOpen={isOpen} className={Style.rowPhrase}>
@@ -145,8 +171,10 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
       <ColOptions
         edit={edit}
         cancel={cancel}
-        remove={() => { }}
-        save={() => { }}
+        remove={remove}
+        save={save}
+        cycleStatus={cycleStatus}
+        progress={phrase.progress}
         isEdited={isEdited}
         isSaveable={isSaveable}
       />
@@ -155,4 +183,19 @@ export const RowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit }) => {
   );
 }
 
+
+
+const mapDispatchToProps = (dispatch: any) => ({
+  removePhrase: (phrase: DBPhrase) => {
+    dispatch(removePhrase(phrase))
+  },
+  updatePhrase: (phrase: DBPhrase) => {
+    dispatch(updatePhrase(phrase));
+  }
+});
+
+export const RowPhrase = connect(
+  null,
+  mapDispatchToProps
+)(RawRowPhrase);
 

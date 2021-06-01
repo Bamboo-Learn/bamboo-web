@@ -84,3 +84,14 @@ export const Button: FC<ButtonProps> = ({
   );
 }
 
+// TODO: FIXME: TODO: FIXME: TODO:
+
+
+// ButtonCore - extraction with tabbing, colors, onReturn, onClick
+
+// Button - text only button
+// Icon Button, button with an icon, expandable
+
+// In other folders
+// FormButton
+// Popup Button

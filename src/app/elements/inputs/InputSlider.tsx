@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-// import Slider, { Range } from 'rc-slider'; TODO: maybe use this?
 
 import { progressBackground } from 'app/elements';
 

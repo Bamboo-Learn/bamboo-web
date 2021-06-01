@@ -1,3 +1,4 @@
 
-export * from './main/Main.js';
+export * from './main';
 export * from './login';
+// TODO: export * from './404
