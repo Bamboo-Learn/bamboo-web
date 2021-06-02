@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Popup } from 'app/elements';
 import { Mongodb, isSet, Phrase, DBPhrase, makeNewPhrase, DBPhraseInterface } from 'app/classes';
-import { LibraryStateType, ReducerStateType, appendPhrases, updatePhrase } from 'app/redux';
+import { LibraryStateType, ReducerStateType, LibraryActions } from 'app/redux';
 
 import { EditForm } from './edit-form';
 
@@ -192,10 +192,10 @@ const mapStateToProps = (state: ReducerStateType) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   appendNewPhrase: (newPhrase: DBPhraseInterface) => {
-    dispatch(appendPhrases([newPhrase]))
+    dispatch(LibraryActions.appendNewPhrase(new DBPhrase(newPhrase)))
   },
   updatePhrase: (phrase: DBPhrase) => {
-    dispatch(updatePhrase(phrase));
+    dispatch(LibraryActions.updatePhrase(phrase));
   }
 });
 

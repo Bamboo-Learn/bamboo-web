@@ -1,24 +1,14 @@
 import { Mongodb } from 'app/classes'
 
-import { appendPhrases } from './library';
+import { LibraryActions } from './library';
 
-// Filter Types
 
-export type FilterStateType = {
-  perPage: number,
-  orderBy: 'created_at' | 'characters' | 'pinyin' | 'english',
-  order: number,
-  page: number,
-  search: string,
-  pack: string
-}
+// Filter Actions
 
 type FilterActionType = {
   type: string,
   filter: FilterStateType
 }
-
-// Filter Actions
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 
@@ -36,11 +26,12 @@ export const updateFilter = (() => {
       filterHistory.add(filter);
       return (dispatch: any) => {
         // TODO: dispatch a page loading here
-        // dispatch(pageLoading(true))
+        // dispatch(PageActions.pageLoading(true))
         Mongodb.getPhrases(filter).then((loadedPhrases) => {
           // then dispatch append phrases and update the filter
-          dispatch(appendPhrases(loadedPhrases));
+          dispatch(LibraryActions.appendPhrasesFromLoad(loadedPhrases));
           dispatch({ type: CHANGE_FILTER, filter });
+          // TODO: dispatch PageActions.pageLoadingFalse
         });
       }
     }
@@ -48,7 +39,17 @@ export const updateFilter = (() => {
   }
 })(); // closure to wrap filterHistory
 
+
 // Filter Reducer
+
+export type FilterStateType = {
+  perPage: number,
+  orderBy: 'created_at' | 'characters' | 'pinyin' | 'english',
+  order: number,
+  page: number,
+  search: string,
+  pack: string
+}
 
 const initFilter: FilterStateType = {
   perPage: 30,

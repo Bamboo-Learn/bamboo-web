@@ -2,9 +2,9 @@
 import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { appendPhrases } from 'app/redux';
+import { LibraryActions } from 'app/redux';
 import { Row, Col, TextCell, TextAreaCell } from 'app/elements';
-import { makeNewPhrase, Phrase, Mongodb, isSet, DBPhraseInterface } from 'app/classes'
+import { makeNewPhrase, Phrase, Mongodb, isSet, DBPhraseInterface, DBPhrase } from 'app/classes'
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
 import Style from './style.module.scss';
@@ -113,7 +113,7 @@ const RawRowAddNew: FC<RowAddNewProps> = ({ appendNewPhrase }) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   appendNewPhrase: (newPhrase: DBPhraseInterface) => {
-    dispatch(appendPhrases([newPhrase]))
+    dispatch(LibraryActions.appendNewPhrase(new DBPhrase(newPhrase)))
   }
 });
 

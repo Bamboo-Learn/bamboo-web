@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { DBPhrase, Mongodb, isSet } from 'app/classes';
 import { progressBackground, Row, Col, TextCell, TextAreaCell, CreatableSelect } from 'app/elements';
-import { updatePhrase, removePhrase } from 'app/redux';
+import { LibraryActions } from 'app/redux';
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
 import Style from './style.module.scss';
@@ -186,10 +186,10 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
 
 const mapDispatchToProps = (dispatch: any) => ({
   removePhrase: (phrase: DBPhrase) => {
-    dispatch(removePhrase(phrase))
+    dispatch(LibraryActions.removePhrase(phrase))
   },
   updatePhrase: (phrase: DBPhrase) => {
-    dispatch(updatePhrase(phrase));
+    dispatch(LibraryActions.updatePhrase(phrase));
   }
 });
 
