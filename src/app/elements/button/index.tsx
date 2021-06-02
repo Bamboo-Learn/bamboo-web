@@ -1,6 +1,6 @@
 
 
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { Icon } from 'app/elements';
@@ -33,13 +33,20 @@ export const Button: FC<ButtonProps> = ({
   size
 }) => {
 
-  const [clickCount, setClickCount] = useState<number>(0)
+  const [clickCount, setClickCount] = useState<number>(0);
+  let timeOut: any = 0;
+
+  useEffect(() => {
+    return function cleanup() {
+      clearTimeout(timeOut);
+    };
+  })
 
   const onClick = (e: any) => {
     e.preventDefault();
     if (doubleClick && clickCount === 0) {
       setClickCount(1);
-      setTimeout(() => {
+      timeOut = setTimeout(() => {
         setClickCount(0);
       }, 2000);
       return;

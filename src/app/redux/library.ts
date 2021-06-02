@@ -72,9 +72,7 @@ export const libraryReducer = (state = initLibrary, action: LibraryAction): Libr
       if (!action.removePhrase) {
         break;
       }
-      console.log({ phrases: state.phrases });
       const newDeletedPhrases = state.phrases.filter((phrase) => action.removePhrase?._id !== phrase._id);
-      console.log({ newDeletedPhrases });
       return { ...state, ...{ phrases: newDeletedPhrases } };
   }
   return state;

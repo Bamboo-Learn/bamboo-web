@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Popup } from 'app/elements';
 import { Mongodb, isSet, Phrase, DBPhrase, makeNewPhrase, DBPhraseInterface } from 'app/classes';
-import { LibraryStateType, ReducerStateType, appendPhrases } from 'app/redux';
+import { LibraryStateType, ReducerStateType, appendPhrases, updatePhrase } from 'app/redux';
 
 import { EditForm } from './edit-form';
 
@@ -14,7 +14,8 @@ type EditOverlayPropTypes = {
   editPhraseID: BSON.ObjectID | null | 'NEW',
   onClose: () => void,
   library: LibraryStateType,
-  appendPhrases: (newPhrases: DBPhraseInterface[]) => void
+  appendNewPhrase: (newPhrase: DBPhraseInterface) => void
+  updatePhrase: (phrase: DBPhrase) => void
 };
 
 type EditOverlayStateTypes = {
@@ -42,10 +43,7 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
     }
     switch (editPhraseID) {
       case null:
-        this.setState({
-          isOpen: false,
-          phrase: null
-        });
+        // do nothing when editPhrase is null
         break;
       case 'NEW':
         this.setState({
@@ -95,6 +93,17 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
     this.closeWindow();
   }
 
+  updatePhrase = async (phrase: DBPhrase) => {
+    await Mongodb.updatePhrase(phrase); // TODO: const data = 
+    this.props.updatePhrase(phrase);
+  }
+
+  createPhrase = async (phrase: Phrase) => {
+    const insertableData = phrase.makeStorableData();
+    const savedPhraseData = await Mongodb.createPhrase(insertableData);
+    this.props.appendNewPhrase({ ...insertableData, _id: savedPhraseData.insertedId });
+  }
+
   save = async () => {
     const { phrase } = this.state;
     if (!phrase) {
@@ -103,38 +112,27 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
 
     this.setIsLoading(true);
 
-    // adds the phrase to the db
-    const [insertedPhraseData, error] = await Mongodb.savePhrase(phrase);
-
-    if (!!error) {
-      console.log(error);
-      return;
-    } else if (!!insertedPhraseData) {
-      this.props.appendPhrases([insertedPhraseData]);
+    if (phrase instanceof DBPhrase) {
+      await this.updatePhrase(phrase);
+    } else {
+      await this.createPhrase(phrase);
     }
 
     this.setIsLoading(false);
     this.closeWindow();
   }
 
-  delete = async () => {
-    const { phrase } = this.state;
-    if (!phrase || !(phrase instanceof DBPhrase)) {
-      return;
-    }
-
-    this.setIsLoading(true);
-
-    // delete the phrase from the db
-    await Mongodb.removePhrase(phrase);
-
-    // delete it from the phrases list
-    // TODO: this is a redux action now
-    // this.props.changePhraseAction({ action: 'DELETE', phrase });
-
-    // close the window
-    this.closeWindow();
-  }
+  // delete = async () => {
+  //   const { phrase } = this.state;
+  //   if (!phrase || !(phrase instanceof DBPhrase)) {
+  //     return;
+  //   }
+  //   this.setIsLoading(true);
+  //   // delete the phrase from the db
+  //   await Mongodb.removePhrase(phrase);
+  //   // close the window
+  //   this.closeWindow();
+  // }
 
   autofill = async () => {
     const { phrase } = this.state;
@@ -178,7 +176,7 @@ class RawEditOverlay extends React.Component<EditOverlayPropTypes, EditOverlaySt
         <EditForm
           phrase={phrase}
           updateField={this.updateField}
-          deletePhrase={this.delete}
+          // deletePhrase={this.delete}
           autofill={this.autofill}
         />
       </Popup>
@@ -193,8 +191,11 @@ const mapStateToProps = (state: ReducerStateType) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  appendPhrases: (newPhrases: DBPhraseInterface[]) => {
-    dispatch(appendPhrases(newPhrases))
+  appendNewPhrase: (newPhrase: DBPhraseInterface) => {
+    dispatch(appendPhrases([newPhrase]))
+  },
+  updatePhrase: (phrase: DBPhrase) => {
+    dispatch(updatePhrase(phrase));
   }
 });
 

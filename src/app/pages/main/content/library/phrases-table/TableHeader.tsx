@@ -14,13 +14,15 @@ type TableHeaderPropTypes = {
 const RawTableHeader: FC<TableHeaderPropTypes> = ({ filter, updateFilter }) => {
 
   const changeOrderBy = (orderBy: "created_at" | "characters" | "pinyin" | "english") => {
-    console.log({ orderBy });
     let order = 1;
     if (filter.orderBy === orderBy) {
+      // if double click
       if (filter.order) {
+        // if order is ASC, unset
         orderBy = 'created_at';
       } else {
-        order = -1;
+        // else change from DESC to ASC
+        order = 1;
       }
     }
     updateFilter({ ...filter, ...{ orderBy, order } });

@@ -9,12 +9,12 @@ import Style from './style.module.css';
 
 type EditFormProps = {
   updateField: (e: any) => void,
-  deletePhrase: () => void,
+  // deletePhrase: () => void,
   autofill: () => void,
   phrase: Phrase | DBPhrase
 }
 
-export const EditForm: FC<EditFormProps> = ({ updateField, deletePhrase, autofill, phrase }) => {
+export const EditForm: FC<EditFormProps> = ({ updateField, autofill, phrase }) => { // deletePhrase
 
   // const shouldHideAutofill = (() => {
   //   if (!isSet(phrase?.characters)) {

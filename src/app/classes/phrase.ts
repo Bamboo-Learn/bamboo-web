@@ -26,7 +26,7 @@ export interface PhraseInterface {
  * @interface DBPhraseInsertableInterface
  * represents a phrase that can be inserted into the database
  */
-interface DBPhraseInsertableInterface extends PhraseInterface {
+export interface DBPhraseInsertableInterface extends PhraseInterface {
   _id?: BSON.ObjectID // _id is not required for insert, required for update
   owner_id: string
   created_at: Date
@@ -81,14 +81,14 @@ export class Phrase implements PhraseInterface {
    * @param value a new value for the field
    * @returns a new Phrase with those parameters set
    */
-  set(field: string, value: string | number | BSON.ObjectID): Phrase | DBPhrase {
-    return new Phrase({ ...this, [field]: value });
+  set(field: string, value: string | number | BSON.ObjectID) {
+    return Object.assign(Object.create(Object.getPrototypeOf(this)), { ...this, [field]: value });
   }
 
   /**
    * @returns a new Phrase with the progress changed between top, middle, and bottom
    */
-  cycleStatus(): Phrase | DBPhrase {
+  cycleStatus() {
     let progress = 1.0;
     switch (this.progress) {
       case 0.0:
@@ -101,7 +101,7 @@ export class Phrase implements PhraseInterface {
     return this.set('progress', progress);
   }
 
-  autofill(lookupChars: { character: string, english: string, pinyin: string }[], fields: { english: boolean, pinyin: boolean }): Phrase | DBPhrase {
+  autofill(lookupChars: { character: string, english: string, pinyin: string }[], fields: { english: boolean, pinyin: boolean }) {
     let pinyin: string[] = [];
     let english: string[] = [];
     this.characters.split('').forEach((character, i) => {
@@ -114,7 +114,7 @@ export class Phrase implements PhraseInterface {
         pinyin.push(lookupChar.pinyin[0]);
       }
     });
-    let newPhrase: Phrase = this;
+    let newPhrase = this;
     if (fields.english) {
       newPhrase = newPhrase.set('english', english.join(' | '));
     }
@@ -127,7 +127,7 @@ export class Phrase implements PhraseInterface {
   /**
    * @returns an Immutable copy of this phrase
    */
-  copy(): Phrase | DBPhrase {
+  copy() {
     return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
   }
 

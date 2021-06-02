@@ -1,18 +1,21 @@
 
 import React, { FC, useState } from 'react';
+import { connect } from 'react-redux';
 
+import { appendPhrases } from 'app/redux';
 import { Row, Col, TextCell, TextAreaCell } from 'app/elements';
-import { makeNewPhrase, Phrase, Mongodb, isSet } from 'app/classes'
+import { makeNewPhrase, Phrase, Mongodb, isSet, DBPhraseInterface } from 'app/classes'
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
 import Style from './style.module.scss';
 
 type RowAddNewProps = {
+  appendNewPhrase: (newPhrases: DBPhraseInterface) => void
 }
 
-const newPhrase = makeNewPhrase()
+const newPhrase = makeNewPhrase();
 
-export const RowAddNew: FC<RowAddNewProps> = () => {
+const RawRowAddNew: FC<RowAddNewProps> = ({ appendNewPhrase }) => {
 
   const [phrase, setPhrase] = useState<Phrase>(newPhrase);
   const [enableAutofillFromFocus, setEnableAutofillFromFocus] = useState(false);
@@ -34,12 +37,10 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
     setPhrase(makeNewPhrase());
   }
 
-  const remove = () => {
-    console.log('remove');
-  }
-
-  const save = () => {
-    // TODO: TODO: TODO:
+  const create = async () => {
+    const insertableData = phrase.makeStorableData()
+    const savedPhraseData = await Mongodb.createPhrase(insertableData);
+    appendNewPhrase({ ...insertableData, _id: savedPhraseData.insertedId });
     cancel();
   }
 
@@ -100,8 +101,7 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
       <ColProgressLarge progress={phrase.progress} updateField={updateField} />
       <ColOptions
         cancel={cancel}
-        save={save}
-        remove={remove}
+        save={create}
         isEdited={isEdited}
         isSaveable={isSaveable}
         cycleStatus={cycleStatus}
@@ -110,3 +110,12 @@ export const RowAddNew: FC<RowAddNewProps> = () => {
     </Row>
   );
 }
+
+const mapDispatchToProps = (dispatch: any) => ({
+  appendNewPhrase: (newPhrase: DBPhraseInterface) => {
+    dispatch(appendPhrases([newPhrase]))
+  }
+});
+
+
+export const RowAddNew = connect(null, mapDispatchToProps)(RawRowAddNew);

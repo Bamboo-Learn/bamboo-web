@@ -3,7 +3,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-import { DBPhrase, Mongodb, isSet, makeNewPhrase } from 'app/classes';
+import { DBPhrase, Mongodb, isSet } from 'app/classes';
 import { progressBackground, Row, Col, TextCell, TextAreaCell, CreatableSelect } from 'app/elements';
 import { updatePhrase, removePhrase } from 'app/redux';
 
@@ -49,16 +49,14 @@ type RowPhraseProps = {
   removePhrase: (phrase: DBPhrase) => void
 }
 
-const defaultPhrase = makeNewPhrase();
-
 const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhrase, updatePhrase }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [phrase, setPhrase] = useState(defaultPhrase);
+  const [phrase, setPhrase] = useState<DBPhrase>();
   const [enableAutofillFromFocus, setEnableAutofillFromFocus] = useState(false);
 
-  const isEdited = phrase.isEdited(phraseProp);
-  const isSaveable = phrase.isSaveable(phraseProp);
-  const canAutoFill = enableAutofillFromFocus && phrase.canAutoFill();
+  const isEdited = phrase?.isEdited(phraseProp) || false;
+  const isSaveable = phrase?.isSaveable(phraseProp) || false;
+  const canAutoFill = (enableAutofillFromFocus && phrase?.canAutoFill()) || false;
 
   useEffect(() => {
     // if the phrase updates, copy it into state
@@ -67,10 +65,10 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
 
   const updateField = (e: any) => {
     if (e.target.name === 'progress') {
-      setPhrase(phrase.set('progress', parseFloat(e.target.value)));
+      setPhrase(phrase?.set('progress', parseFloat(e.target.value)));
       return;
     }
-    setPhrase(phrase.set(e.target.name, e.target.value));
+    setPhrase(phrase?.set(e.target.name, e.target.value));
   }
 
   const toggleIsOpen = (e: any) => {
@@ -79,7 +77,7 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
   }
 
   const autofill = async () => {
-    if (!canAutoFill) {
+    if (!phrase || !canAutoFill) {
       return;
     }
     // get the pinyin and english for these characters
@@ -98,7 +96,7 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
   }
 
   const cycleStatus = () => {
-    setPhrase(phrase.cycleStatus());
+    setPhrase(phrase?.cycleStatus());
   }
 
   const remove = async () => {
@@ -108,16 +106,17 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
     }
   }
 
-  const save = async () => {
-    const [updatedPhraseData, error] = await Mongodb.savePhrase(phrase);
-
-    if (!!error) {
-      console.log(error);
+  const update = async () => {
+    if (!phrase) {
       return;
-    } else if (!!updatedPhraseData) {
-      // TODO: this needs to update existing phrase at id
-      updatePhrase(new DBPhrase(updatedPhraseData));
     }
+    await Mongodb.updatePhrase(phrase); // const data =
+    // TODO: USE DATA SHAPE: {matchedCount: 1, modifiedCount: 1}
+    updatePhrase(phrase);
+  }
+
+  if (!phrase) {
+    return null;
   }
 
   return (
@@ -172,7 +171,7 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
         edit={edit}
         cancel={cancel}
         remove={remove}
-        save={save}
+        save={update}
         cycleStatus={cycleStatus}
         progress={phrase.progress}
         isEdited={isEdited}
