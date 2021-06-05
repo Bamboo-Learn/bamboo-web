@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { DBPhrase, Mongodb, isSet } from 'app/classes';
-import { progressBackground, Row, Col, TextCell, TextAreaCell, CreatableSelect } from 'app/elements';
+import { progressBackground, Row, Col, TextCell, TextAreaCell, InputSuggest } from 'app/elements';
 import { LibraryActions } from 'app/redux';
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
@@ -101,7 +101,9 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
 
   const remove = async () => {
     if (phrase instanceof DBPhrase) {
+      // TODO: start remove animation here (turn the background red)
       await Mongodb.removePhrase(phrase);
+      // TODO: finish the animation here (make the row height 0)
       removePhrase(phrase);
     }
   }
@@ -159,7 +161,7 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
         />
       </Col>
       <Col className={Style.colPack}>
-        <CreatableSelect
+        <InputSuggest
           options={[]}
           value={''}
           onChange={updateField}

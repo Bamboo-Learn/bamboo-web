@@ -6,6 +6,7 @@ export { FormTextarea } from './FormTextarea';
 export { FormSelect } from './FormSelect';
 export { FormMessage } from './FormMessage.js';
 export { FormSlider } from './FormSlider';
+export { FormSuggest } from './FormSuggest';
 
 // export { StatusSlider } from './StatusSlider.js';
 // export { TextArea } from './TextArea.js';

@@ -1,17 +1,19 @@
 import React, { FC } from "react";
 
-export type SelectPropTypes = {
-  options: {
-    label: string
-    value: string
-  }[];
+export type OptionType = {
+  label: string
+  value: string
+};
+
+export type InputSelectPropTypes = {
+  options: OptionType[];
   value: string
   onChange: any
   name?: string
   className?: string
 }
 
-export const Select: FC<SelectPropTypes> = ({ options, value, className, onChange }) => {
+export const InputSelect: FC<InputSelectPropTypes> = ({ options, value, className, onChange }) => {
 
   const onSelectChange = (e: any) => {
     e.preventDefault();

@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 
-import { Form, FormRow, FormText, FormTextarea, FormSlider } from 'app/elements'; // FormTextarea FormSlider, Button
+import { Form, FormRow, FormText, FormTextarea, FormSlider, FormSuggest } from 'app/elements'; // FormTextarea FormSlider, Button
 import { DBPhrase, Phrase, } from 'app/classes'; // isSet
 
 import Style from './style.module.css';
@@ -80,21 +80,30 @@ export const EditForm: FC<EditFormProps> = ({ updateField, autofill, phrase }) =
         />
       </FormRow>
 
-      {/* Pack TODO: use Select, or if select doesn't work maybe make a new one called Suggest */}
+      {/* Pack */}
       <FormRow
         label="Pack"
+        hideDetail
       >
-        {/* <FormSelect
+        <FormSuggest
           name="pack"
           value={phrase.pack}
+          options={[
+            { value: '', label: 'None' },
+            { value: 'option', label: 'Option' },
+            // { value: phrase.pack, label: phrase.pack }
+          ]}
+          placeholder={'pack'}
           onChange={updateField}
-        /> */}
+        />
       </FormRow>
 
-      {/* Confidence / Status */}
+      {/* Progress / Status */}
       {/* TODO: maybe make a link at the bottom say status */}
       <FormRow
         label={`Progress: ${status}`}
+      // linkOnClick={}
+      // linkText={status}
       >
         <FormSlider
           name="progress"

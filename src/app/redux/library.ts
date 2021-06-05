@@ -12,7 +12,7 @@ type LibraryActionType = {
 }
 
 const APPEND_NEW_PHRASE = 'APPEND_NEW_PHRASE';
-const APPEND_PHRASES_FROM_LOAD = 'APPEND_PHRASES_FROM_LOAD' // append phrases to the library from load
+const APPEND_PHRASES_FROM_LOAD = 'APPEND_PHRASES_FROM_LOAD'; // append phrases to the library from load
 const REMOVE_PHRASE = 'REMOVE_PHRASE'; // requires change to total count and possibly pack list
 const UPDATE_PHRASE = 'UPDATE_PHRASE'; // possibly requires change to pack list
 

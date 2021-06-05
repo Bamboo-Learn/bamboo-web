@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
-import { InputText, Select } from 'app/elements';
+import { InputText, InputSelect } from 'app/elements';
 import { Icon } from 'app/elements';
 import { updateFilter } from 'app/redux';
 
@@ -127,7 +127,7 @@ class RawFilter extends React.Component {
           icon="Filter"
           iconAction={e => this.toggleOpen(e)}
         >
-          <Select
+          <InputSelect
             onChange={(e) => this.updatePack(e)}
             value={pack}
             options={PACK_OPTIONS}
@@ -135,7 +135,7 @@ class RawFilter extends React.Component {
         </FilterRow>
         <FilterRow>
           {/* progress select (study, to study, studied, all) */}
-          <Select
+          <InputSelect
             onChange={(e) => this.updateProgress(e)}
             value={progress}
             options={PROGRESS_OPTIONS}
@@ -169,7 +169,7 @@ class RawFilter extends React.Component {
           iconAction={e => this.toggleOrder(e)}
         >
           {/* order by (mobile) multi select and order toggle */}
-          <Select
+          <InputSelect
             onChange={(e) => this.updateOrderBy(e)}
             value={orderBy}
             options={ORDER_BY_OPTIONS}
@@ -177,7 +177,7 @@ class RawFilter extends React.Component {
         </FilterRow>
         <FilterRow>
           {/* pack multi select */}
-          <Select
+          <InputSelect
             onChange={(e) => this.updatePack(e)}
             value={pack}
             options={PACK_OPTIONS}
@@ -185,7 +185,7 @@ class RawFilter extends React.Component {
         </FilterRow>
         <FilterRow>
           {/* progress select (study, to study, studied, all) */}
-          <Select
+          <InputSelect
             onChange={(e) => this.updateProgress(e)}
             value={progress}
             options={PROGRESS_OPTIONS}

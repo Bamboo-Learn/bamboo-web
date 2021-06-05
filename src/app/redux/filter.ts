@@ -30,8 +30,9 @@ export const updateFilter = (() => {
         Mongodb.getPhrases(filter).then((loadedPhrases) => {
           // then dispatch append phrases and update the filter
           dispatch(LibraryActions.appendPhrasesFromLoad(loadedPhrases));
-          dispatch({ type: CHANGE_FILTER, filter });
           // TODO: dispatch PageActions.pageLoadingFalse
+        }).then(() => {
+          dispatch({ type: CHANGE_FILTER, filter });
         });
       }
     }

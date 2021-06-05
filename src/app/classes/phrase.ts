@@ -1,5 +1,5 @@
 import { BSON } from 'realm-web';
-import _ from 'lodash';
+import { isEqual, trim } from 'lodash';
 
 import { Mongodb } from './mongodb';
 import { isSet } from './utils'
@@ -159,7 +159,7 @@ export class Phrase implements PhraseInterface {
    * @returns true when this phrase data is not equal to the original
    */
   isEdited(originalPhrase: Phrase): boolean {
-    return !_.isEqual(originalPhrase.toData(), this.toData());
+    return !isEqual(originalPhrase.toData(), this.toData());
   }
 
   // it is saveable if it has been edited, is not missing fields
@@ -187,11 +187,11 @@ export class Phrase implements PhraseInterface {
    */
   toData(): PhraseInterface {
     return {
-      characters: this.characters,
-      pinyin: this.pinyin,
-      pack: this.pack,
+      characters: trim(this.characters),
+      pinyin: trim(this.pinyin),
+      pack: trim(this.pack),
       progress: this.progress,
-      english: this.english,
+      english: trim(this.english),
     }
   }
 
