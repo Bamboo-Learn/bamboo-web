@@ -1,7 +1,7 @@
 import React, { FC, } from "react"; // useState
 import { connect } from 'react-redux';
 
-import { ReducerStateType, SettingsStateType, changeCharacterSet } from 'app/redux';
+import { ReducerStateType, SettingsStateType, SettingsActions } from 'app/redux';
 import { PageHeader, PageBody, Form, FormRow, FormSelect, FormMessage, Button } from 'app/elements';
 
 const CHARACTER_SETS = [
@@ -15,12 +15,12 @@ const CHARACTER_SETS = [
   }
 ];
 
-type SettingsType = {
+type SettingsPropTypes = {
   settings: SettingsStateType,
   changeCharacterSet: (displayCharacterSet: 'trad' | 'simp') => void
 }
 
-const RawSettings: FC<SettingsType> = ({ settings: { displayCharacterSet }, changeCharacterSet }) => {
+const RawSettings: FC<SettingsPropTypes> = ({ settings: { displayCharacterSet }, changeCharacterSet }) => {
   // const [message, setMessage] = useState<string>('');
   const message = '';
 
@@ -70,7 +70,7 @@ const mapStateToProps = (state: ReducerStateType) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   changeCharacterSet: (displayCharacterSet: 'trad' | 'simp') => {
-    dispatch(changeCharacterSet(displayCharacterSet))
+    dispatch(SettingsActions.changeCharacterSet(displayCharacterSet))
   }
 });
 

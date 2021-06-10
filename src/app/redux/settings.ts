@@ -1,29 +1,31 @@
 
-// Settings Types
 
-export type SettingsStateType = {
-  displayCharacterSet: 'simp' | 'trad'
-}
+
+// Settings Actions
 
 type SettingsActionType = {
   type: string,
   displayCharacterSet?: 'simp' | 'trad'
 }
 
-// Settings Actions
-
 const CHANGE_DISPLAY_CHARACTER_SETTING = 'CHANGE_DISPLAY_CHARACTER_SETTING';
 
-export const changeCharacterSet = (displayCharacterSet: 'trad' | 'simp'): SettingsActionType => ({
-  type: CHANGE_DISPLAY_CHARACTER_SETTING,
-  displayCharacterSet
-});
+export const SettingsActions = {
+  changeCharacterSet: (displayCharacterSet: 'trad' | 'simp'): SettingsActionType => ({
+    type: CHANGE_DISPLAY_CHARACTER_SETTING,
+    displayCharacterSet
+  })
+}
 
 // Settings Reducer
 
+export type SettingsStateType = {
+  displayCharacterSet: 'simp' | 'trad'
+}
+
 const initSettings: SettingsStateType = {
   // user data
-  displayCharacterSet: 'trad',
+  displayCharacterSet: 'simp', // 'trad'
 };
 
 export const settingsReducer = (state = initSettings, action: SettingsActionType) => {

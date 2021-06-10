@@ -43,9 +43,11 @@ export const updateFilter = (() => {
 
 // Filter Reducer
 
+export type FilterOrderByOptions = 'created_at' | 'characters' | 'pinyin' | 'english' | 'pack';
+
 export type FilterStateType = {
   perPage: number,
-  orderBy: 'created_at' | 'characters' | 'pinyin' | 'english',
+  orderBy: FilterOrderByOptions,
   order: number,
   page: number,
   search: string,

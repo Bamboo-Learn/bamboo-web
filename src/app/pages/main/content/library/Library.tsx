@@ -17,7 +17,7 @@ type LibraryProps = {
   library: LibraryStateType
 }
 
-const RawLibrary = ({ filter: { orderBy, order }, library: { phrases } }: LibraryProps) => { // page, perPage
+const RawLibrary = ({ filter: { orderBy, order }, library: { phrases, lastLoadedPhraseID } }: LibraryProps) => { // page, perPage
 
   const [editPhraseID, setEditPhraseID] = useState<BSON.ObjectID | null | 'NEW'>(null);
   const history = useHistory();
@@ -33,6 +33,8 @@ const RawLibrary = ({ filter: { orderBy, order }, library: { phrases } }: Librar
   const redirectToStudy = () => {
     history.push(`/study`);
   }
+
+  const loadMoreRowIndex: number = (lastLoadedPhraseID) ? displayPhrases.findIndex(p => p._id.equals(lastLoadedPhraseID)) : displayPhrases.size - 1;
 
   return (
     <>
@@ -57,9 +59,8 @@ const RawLibrary = ({ filter: { orderBy, order }, library: { phrases } }: Librar
                 phrase={phrase}
                 edit={() => setEditPhraseID(phrase._id)}
               />
-            ))
+            )).insert(loadMoreRowIndex + 1, <RowLoadMore key="RowLoadMore" />)
           }
-          <RowLoadMore />
         </div>
       </PageBody>
     </>

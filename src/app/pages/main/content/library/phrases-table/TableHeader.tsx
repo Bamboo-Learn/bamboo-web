@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { connect } from 'react-redux';
 
 import { Row, Col } from 'app/elements'; // SearchIcon
-import { updateFilter, FilterStateType, ReducerStateType } from 'app/redux';
+import { updateFilter, FilterStateType, ReducerStateType, FilterOrderByOptions } from 'app/redux';
 
 import Style from './style.module.scss';
 
@@ -13,7 +13,7 @@ type TableHeaderPropTypes = {
 
 const RawTableHeader: FC<TableHeaderPropTypes> = ({ filter, updateFilter }) => {
 
-  const changeOrderBy = (orderBy: "created_at" | "characters" | "pinyin" | "english") => {
+  const changeOrderBy = (orderBy: FilterOrderByOptions) => {
     let order = 1;
     if (filter.orderBy === orderBy) {
       // if double click
@@ -37,11 +37,11 @@ const RawTableHeader: FC<TableHeaderPropTypes> = ({ filter, updateFilter }) => {
       <Col className={`${Style.colChinese} ${Style.colHeader}`} onClick={(e) => changeOrderBy('characters')}>
         <span>{'Chinese'}</span>
       </Col>
-      {/* <Col className={Style.pack}>
-        {'Pack'}
-      </Col> */}
       <Col className={`${Style.colPinyin} ${Style.colHeader}`} onClick={(e) => changeOrderBy('pinyin')} >
         <span>{'Pinyin'}</span>
+      </Col>
+      <Col className={`${Style.colPack} ${Style.colHeader}`} onClick={(e) => changeOrderBy('pack')} >
+        <span>{'Pack'}</span>
       </Col>
       <Col className={`${Style.colEnglish} ${Style.colHeader}`} onClick={(e) => changeOrderBy('english')}>
         <span>{'English'}</span>

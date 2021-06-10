@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { DBPhrase, Mongodb, isSet } from 'app/classes';
-import { progressBackground, Row, Col, TextCell, TextAreaCell, InputSuggest } from 'app/elements';
+import { progressBackground, Row, Col, CellText, CellTextArea, CellSuggest } from 'app/elements';
 import { LibraryActions } from 'app/redux';
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
@@ -133,7 +133,7 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
       </div>
       <ColOpenerSmall isOpen={isOpen} onClick={toggleIsOpen} />
       <Col className={Style.colChinese}>
-        <TextCell
+        <CellText
           className={Style.cellChinese}
           value={phrase.characters}
           name="characters"
@@ -145,27 +145,27 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
       </Col>
       <ColProgressSmall progress={phrase.progress} />
       <Col className={Style.colPinyin}>
-        <TextCell
+        <CellText
           className={Style.cellPinyin}
           value={phrase.pinyin}
           name="pinyin"
           onChange={updateField}
         />
       </Col>
+      <Col className={Style.colPack}>
+        <CellSuggest
+          options={[]}
+          value={phrase.pack}
+          onChange={updateField}
+          name="pack"
+        />
+      </Col>
       <Col className={Style.colEnglish}>
-        <TextAreaCell
+        <CellTextArea
           className={Style.cellEnglish}
           value={phrase.english}
           name="english"
           onChange={updateField}
-        />
-      </Col>
-      <Col className={Style.colPack}>
-        <InputSuggest
-          options={[]}
-          value={''}
-          onChange={updateField}
-          name="pack"
         />
       </Col>
       <ColProgressLarge progress={phrase.progress} updateField={updateField} />

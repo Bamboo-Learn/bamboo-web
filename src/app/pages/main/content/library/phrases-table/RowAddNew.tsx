@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { LibraryActions } from 'app/redux';
-import { Row, Col, TextCell, TextAreaCell } from 'app/elements';
+import { Row, Col, CellText, CellTextArea, CellSuggest } from 'app/elements';
 import { makeNewPhrase, Phrase, Mongodb, isSet, DBPhraseInterface, DBPhrase } from 'app/classes'
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
@@ -69,7 +69,7 @@ const RawRowAddNew: FC<RowAddNewProps> = ({ appendNewPhrase }) => {
         />
       </div>
       <Col className={Style.colChinese}>
-        <TextCell
+        <CellText
           className={Style.cellChinese}
           value={phrase.characters}
           name="characters"
@@ -81,7 +81,7 @@ const RawRowAddNew: FC<RowAddNewProps> = ({ appendNewPhrase }) => {
         />
       </Col>
       <Col className={Style.colPinyin}>
-        <TextCell
+        <CellText
           className={Style.cellPinyin}
           value={phrase.pinyin}
           name="pinyin"
@@ -89,8 +89,20 @@ const RawRowAddNew: FC<RowAddNewProps> = ({ appendNewPhrase }) => {
           placeholder="pinyin"
         />
       </Col>
+      <Col className={Style.colPack}>
+        <CellSuggest
+          name="pack"
+          onChange={updateField}
+          value={phrase.pack}
+          options={[
+            { value: '', label: 'None' },
+            { value: 'option', label: 'Option' },
+            // { value: phrase.pack, label: phrase.pack }
+          ]}
+        />
+      </Col>
       <Col className={Style.colEnglish}>
-        <TextAreaCell
+        <CellTextArea
           className={Style.cellEnglish}
           value={phrase.english}
           name="english"

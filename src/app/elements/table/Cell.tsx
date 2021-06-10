@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import classNames from 'classnames';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { InputSuggest, OptionType } from 'app/elements';
+
 import Style from './style.module.scss';
 
 type CellProps = {
@@ -16,11 +18,11 @@ type CellProps = {
   onReturn?: () => void
 }
 
-type SelectCellProps = CellProps & {
-  // options
+type CellSuggestProps = CellProps & {
+  options: OptionType[]
 }
 
-export const TextCell: FC<CellProps> = ({
+export const CellText: FC<CellProps> = ({
   disabled, value, className: classNameProps,
   name, onChange, placeholder, onFocus, onBlur, onReturn
 }) => {
@@ -47,7 +49,7 @@ export const TextCell: FC<CellProps> = ({
   );
 }
 
-export const TextAreaCell: FC<CellProps> = ({
+export const CellTextArea: FC<CellProps> = ({
   disabled, value,
   className: classNameProps,
   name, onChange, placeholder, onFocus, onBlur
@@ -61,16 +63,12 @@ export const TextAreaCell: FC<CellProps> = ({
   );
 }
 
-export const SelectCell: FC<SelectCellProps> = ({
-  disabled,
-  className: classNameProps,
-  onChange
-}) => {
+export const CellSuggest: FC<CellSuggestProps> = (props) => {
   const className = classNames({
     [Style.cell]: true,
-    [Style.disabled]: disabled
+    [Style.disabled]: props.disabled
   });
   return (
-    <input className={`${className} ${classNameProps}`} onChange={onChange} />
+    <InputSuggest className={`${className} ${props.className}`} {...props} />
   );
 }

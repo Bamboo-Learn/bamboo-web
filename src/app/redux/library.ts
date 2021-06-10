@@ -37,6 +37,8 @@ export const LibraryActions = {
 
 // Library Reducer
 
+export type LoadMoreMarker = boolean;
+
 export type LibraryStateType = {
   phrases: List<DBPhrase>,
   lastLoadedPhraseID?: BSON.ObjectID
