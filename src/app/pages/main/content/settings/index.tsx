@@ -24,7 +24,6 @@ const RawSettings: FC<SettingsPropTypes> = ({ settings: { displayCharacterSet },
   // const [message, setMessage] = useState<string>('');
   const message = '';
 
-
   return (
     <>
       <PageHeader>{'Settings'}</PageHeader>

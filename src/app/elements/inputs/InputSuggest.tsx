@@ -65,3 +65,9 @@ export const InputSuggest: FC<InputSuggestPropTypes> = ({
     />
   );
 }
+
+// TODO: this might be better exporting two general classes and doing it manually
+// because the form and the cell will be different
+
+// InputSuggest
+// InputSuggestList

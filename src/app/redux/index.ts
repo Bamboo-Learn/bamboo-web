@@ -13,7 +13,7 @@ export type ReducerStateType = {
 export const reducer = combineReducers({
   library: libraryReducer,
   filter: filterReducer,
-  setttings: settingsReducer
+  settings: settingsReducer
 });
 
 export * from './library';

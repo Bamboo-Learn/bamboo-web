@@ -34,7 +34,9 @@ const RawLibrary = ({ filter: { orderBy, order }, library: { phrases, lastLoaded
     history.push(`/study`);
   }
 
-  const loadMoreRowIndex: number = (lastLoadedPhraseID) ? displayPhrases.findIndex(p => p._id.equals(lastLoadedPhraseID)) : displayPhrases.size - 1;
+  const loadMoreRowIndex: number = (lastLoadedPhraseID) ?
+    displayPhrases.findIndex(p => p._id.equals(lastLoadedPhraseID)) :
+    displayPhrases.size - 1;
 
   return (
     <>
