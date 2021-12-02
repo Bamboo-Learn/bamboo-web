@@ -147,7 +147,7 @@ class RawFilter extends React.Component {
 
   renderTableMode() {
     const { isOpen, searchQuery } = this.state;
-    const { filter: { pack, orderBy, order, progress } } = this.props;
+    const { filter: { orderBy, order, progress } } = this.props; // pack
     return (
       <div className={getFilterClassName({ isOpen })}>
         <FilterRow
