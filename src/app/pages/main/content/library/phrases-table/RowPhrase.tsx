@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { DBPhrase, Mongodb, isSet } from 'app/classes';
-import { progressBackground, Row, Col, CellText, CellTextArea, CellSuggest } from 'app/elements';
+import { progressBackground, Row, Col, CellText, CellTextArea } from 'app/elements'; // CellSuggest
 import { LibraryActions } from 'app/redux';
 
 import { AutofillCover, ColProgressLarge, ColOptions } from './shared';
@@ -152,14 +152,15 @@ const RawRowPhrase: FC<RowPhraseProps> = ({ phrase: phraseProp, edit, removePhra
           onChange={updateField}
         />
       </Col>
-      <Col className={Style.colPack}>
+      {/* TODO: */}
+      {/* <Col className={Style.colPack}>
         <CellSuggest
           options={[]}
           value={phrase.pack}
           onChange={updateField}
           name="pack"
         />
-      </Col>
+      </Col> */}
       <Col className={Style.colEnglish}>
         <CellTextArea
           className={Style.cellEnglish}

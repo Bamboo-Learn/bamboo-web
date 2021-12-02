@@ -40,9 +40,9 @@ const RawTableHeader: FC<TableHeaderPropTypes> = ({ filter, updateFilter }) => {
       <Col className={`${Style.colPinyin} ${Style.colHeader}`} onClick={(e) => changeOrderBy('pinyin')} >
         <span>{'Pinyin'}</span>
       </Col>
-      <Col className={`${Style.colPack} ${Style.colHeader}`} onClick={(e) => changeOrderBy('pack')} >
+      {/* <Col className={`${Style.colPack} ${Style.colHeader}`} onClick={(e) => changeOrderBy('pack')} >
         <span>{'Pack'}</span>
-      </Col>
+      </Col> */}
       <Col className={`${Style.colEnglish} ${Style.colHeader}`} onClick={(e) => changeOrderBy('english')}>
         <span>{'English'}</span>
       </Col>
