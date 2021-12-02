@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 
-import { Form, FormRow, FormText, FormTextarea, FormSlider, FormSuggest } from 'app/elements'; // FormTextarea FormSlider, Button
+import { Form, FormRow, FormText, FormTextarea, FormSlider } from 'app/elements'; // FormTextarea FormSlider, Button, FormSuggest
 import { DBPhrase, Phrase, } from 'app/classes'; // isSet
 
 import Style from './style.module.css';
@@ -81,7 +81,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, autofill, phrase }) =
       </FormRow>
 
       {/* Pack */}
-      <FormRow
+      {/* <FormRow
         label="Pack"
         hideDetail
       >
@@ -96,7 +96,7 @@ export const EditForm: FC<EditFormProps> = ({ updateField, autofill, phrase }) =
           placeholder={'pack'}
           onChange={updateField}
         />
-      </FormRow>
+      </FormRow> */}
 
       {/* Progress / Status */}
       {/* TODO: maybe make a link at the bottom say status */}
