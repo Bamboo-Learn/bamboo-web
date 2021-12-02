@@ -175,14 +175,14 @@ class RawFilter extends React.Component {
             options={ORDER_BY_OPTIONS}
           />
         </FilterRow>
-        <FilterRow>
-          {/* pack multi select */}
+        {/* TODO: pack multi select */}
+        {/* <FilterRow>
           <InputSelect
             onChange={(e) => this.updatePack(e)}
             value={pack}
             options={PACK_OPTIONS}
           />
-        </FilterRow>
+        </FilterRow> */}
         <FilterRow>
           {/* progress select (study, to study, studied, all) */}
           <InputSelect

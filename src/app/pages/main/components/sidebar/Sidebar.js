@@ -70,15 +70,15 @@ class RawSidebar extends React.Component {
             <Link to="/library">
               <SidebarItem label="Library" isActive={!pageID || pageID === 'library'} onClick={this.closeSidebar} />
             </Link>
-            <Link to="/my-packs">
+            {/* TODO:  <Link to="/my-packs">
               <SidebarItem label="My Packs" isActive={pageID === 'my-packs'} onClick={this.closeSidebar} />
-            </Link>
-            {/* TODO: <Link to="/public-packs">
+            </Link> */}
+            {/* <Link to="/public-packs">
               <SidebarItem label="Public Packs" isActive={pageID === 'public-packs'} onClick={this.closeSidebar} />
             </Link> */}
-            <Link to="/study">
+            {/* TODO:  <Link to="/study">
               <SidebarItem label="Study" isActive={pageID === 'study'} onClick={this.closeSidebar} />
-            </Link>
+            </Link> */}
           </div>
           <div className={Style.sidebarFooter}>
             <SidebarItem label="Add To Chrome" onClick={this.openChromeStore} />
