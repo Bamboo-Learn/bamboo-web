@@ -5,10 +5,10 @@ import { ReducerStateType, SettingsStateType, SettingsActions } from 'app/redux'
 import { PageHeader, PageBody, Form, FormRow, FormSelect, FormMessage, Button } from 'app/elements';
 
 const CHARACTER_SETS = [
-  {
-    value: 'trad',
-    label: 'Traditional'
-  },
+  // {
+  //   value: 'trad',
+  //   label: 'Traditional'
+  // },
   {
     value: 'simp',
     label: 'Simplified'
